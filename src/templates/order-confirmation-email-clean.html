@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation - Best Brightness</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #4682B4 0%, #2C3E50 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            margin: 0 0 10px 0;
+        }
+        
+        .header p {
+            font-size: 16px;
+            margin: 0;
+            opacity: 0.9;
+        }
+        
+        .order-number {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2C3E50;
+        }
+        
+        .order-details {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 4px solid #4682B4;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            color: #2C3E50;
+        }
+        
+        .detail-value {
+            color: #666;
+        }
+        
+        .items-section {
+            margin: 20px 0;
+        }
+        
+        .items-header {
+            background-color: #4682B4;
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+        }
+        
+        .items-content {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            white-space: pre-line;
+            font-family: monospace;
+        }
+        
+        .totals-section {
+            background-color: #e8f4fd;
+            border: 1px solid #87CEEB;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .total-row.final {
+            border-top: 2px solid #4682B4;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .shipping-info {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .shipping-info h3 {
+            color: #856404;
+            margin: 0 0 10px 0;
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4682B4 0%, #2C3E50 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: bold;
+            margin: 10px;
+        }
+        
+        .footer {
+            background-color: #2C3E50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+        }
+        
+        .footer a {
+            color: #87CEEB;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎉 Order Confirmed!</h1>
+            <p>Thank you for your purchase</p>
+            <div class="order-number">Order #{{order_number}}</div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <div class="greeting">
+                Hello {{customer_name}},
+            </div>
+            
+            <p>We're excited to confirm that we've received your order and it's being processed! Your order details are below.</p>
+            
+            <!-- Order Summary -->
+            <div class="order-details">
+                <div class="detail-row">
+                    <span class="detail-label">Order Date:</span>
+                    <span class="detail-value">{{order_date}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Order Status:</span>
+                    <span class="detail-value">{{order_status}}</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">Payment Method:</span>
+                    <span class="detail-value">{{payment_method}}</span>
+                </div>
+            </div>
+            
+            <!-- Order Items -->
+            <div class="items-section">
+                <div class="items-header">
+                    📦 Order Items ({{total_items}})
+                </div>
+                <div class="items-content">{{order_items_list}}</div>
+            </div>
+            
+            <!-- Order Totals -->
+            <div class="totals-section">
+                <div class="total-row">
+                    <span>Subtotal:</span>
+                    <span>R {{subtotal}}</span>
+                </div>
+                <div class="total-row">
+                    <span>Shipping:</span>
+                    <span>R {{shipping_cost}}</span>
+                </div>
+                <div class="total-row">
+                    <span>Tax:</span>
+                    <span>R {{tax_amount}}</span>
+                </div>
+                <div class="total-row final">
+                    <span>Total:</span>
+                    <span>R {{total_amount}}</span>
+                </div>
+            </div>
+            
+            <!-- Shipping Information -->
+            <div class="shipping-info">
+                <h3>🚚 Shipping Information</h3>
+                <p>
+                    <strong>{{shipping_name}}</strong><br>
+                    {{shipping_address_line1}}<br>
+                    {{shipping_city}}, {{shipping_state}} {{shipping_zip}}<br>
+                    {{shipping_country}}
+                </p>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="cta-section">
+                <a href="{{track_order_url}}" class="cta-button">📦 Track Your Order</a>
+                <a href="{{shop_url}}" class="cta-button">🛒 Continue Shopping</a>
+            </div>
+            
+            <p>Thank you for choosing Best Brightness for your cleaning and hygiene needs. We appreciate your business!</p>
+            
+            <p>If you have any questions about your order, please don't hesitate to contact our customer service team.</p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Best Brightness</strong></p>
+            <p>Your trusted partner in cleaning and hygiene solutions</p>
+            <p>© {{current_year}} Best Brightness. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

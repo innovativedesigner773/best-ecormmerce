@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Great News! {{product_name}} is Back in Stock</title>
+    <style>
+        /* Reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #4682B4 0%, #2C3E50 100%);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        /* Main content */
+        .content {
+            padding: 40px 30px;
+        }
+        
+        .greeting {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: #2C3E50;
+        }
+        
+        .product-section {
+            background-color: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 25px 0;
+            border-left: 4px solid #4682B4;
+        }
+        
+        .product-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .product-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-details h3 {
+            font-size: 22px;
+            color: #2C3E50;
+            margin-bottom: 8px;
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: #4682B4;
+            margin-bottom: 10px;
+        }
+        
+        .availability-badge {
+            display: inline-block;
+            background-color: #28a745;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #4682B4 0%, #2C3E50 100%);
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            margin: 20px 0;
+            transition: transform 0.2s ease;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+        }
+        
+        .urgency-note {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            color: #856404;
+        }
+        
+        .urgency-note strong {
+            color: #d63031;
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #2C3E50;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .footer a {
+            color: #4682B4;
+            text-decoration: none;
+        }
+        
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .social-links {
+            margin: 20px 0;
+        }
+        
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            color: #4682B4;
+            font-size: 18px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 600px) {
+            .email-container {
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .product-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .product-image {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .header h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🎉 Great News!</h1>
+            <p>Your requested product is back in stock</p>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="content">
+            <div class="greeting">
+                Hello {{to_name}},
+            </div>
+            
+            <p>We're excited to let you know that <strong>{{product_name}}</strong> is now back in stock! You requested to be notified when this product became available, and we're happy to inform you that you can now place your order.</p>
+            
+            <div class="product-section">
+                <div class="product-info">
+                    <img src="{{product_image}}" alt="{{product_name}}" class="product-image">
+                    <div class="product-details">
+                        <h3>{{product_name}}</h3>
+                        <div class="product-price">${{product_price}}</div>
+                        <span class="availability-badge">✅ In Stock</span>
+                    </div>
+                </div>
+                
+                <div class="urgency-note">
+                    <strong>⏰ Limited Time:</strong> Popular items like this tend to sell out quickly. We recommend placing your order soon to secure your items.
+                </div>
+                
+                <a href="{{product_url}}" class="cta-button">🛒 Order Now</a>
+            </div>
+            
+            <p>Thank you for choosing Best Brightness for your cleaning and hygiene needs. We appreciate your patience and look forward to serving you!</p>
+            
+            <p>If you have any questions or need assistance with your order, please don't hesitate to contact our customer service team.</p>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <p><strong>Best Brightness</strong></p>
+            <p>Your trusted partner in cleaning and hygiene solutions</p>
+            
+            <div class="social-links">
+                <a href="#">📧</a>
+                <a href="#">📱</a>
+                <a href="#">🌐</a>
+            </div>
+            
+            <p style="font-size: 12px; opacity: 0.7;">
+                This email was sent on {{notification_date}} because you requested to be notified when this product became available.
+            </p>
+            
+            <p style="font-size: 12px; opacity: 0.7;">
+                <a href="{{unsubscribe_url}}">Unsubscribe</a> | 
+                <a href="#">Privacy Policy</a> | 
+                <a href="#">Terms of Service</a>
+            </p>
+            
+            <p style="font-size: 12px; opacity: 0.7;">
+                © {{current_year}} Best Brightness. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- SEO Meta Tags -->
+    <title>Best Brightness - Professional Cleaning Supplies E-Commerce</title>
+    <meta name="description" content="Best Brightness offers comprehensive cleaning supplies with barcode scanning, POS system, and multi-role access control. Perfect for businesses and professionals." />
+    <meta name="keywords" content="cleaning supplies, e-commerce, barcode scanner, POS system, professional cleaning, Best Brightness" />
+    <meta name="author" content="Best Brightness" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Best Brightness - Professional Cleaning Supplies" />
+    <meta property="og:description" content="Comprehensive e-commerce platform for cleaning supplies with offline capabilities" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://bestbrightness.com" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Best Brightness - Professional Cleaning Supplies" />
+    <meta name="twitter:description" content="Comprehensive e-commerce platform for cleaning supplies with offline capabilities" />
+    <meta name="twitter:image" content="/og-image.png" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4682B4" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="Best Brightness" />
+    
+    <!-- Icons -->
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/icon-16.png" />
+    <link rel="manifest" href="/manifest.json" />
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Font Loading with Fallbacks -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Critical CSS Inline -->
+    <style>
+      /* Critical styles for initial render */
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+      
+      html {
+        font-size: 14px;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      
+      body {
+        margin: 0;
+        padding: 0;
+        background-color: #f8f9fa;
+        color: #2c3e50;
+        line-height: 1.5;
+      }
+      
+      #root {
+        min-height: 100vh;
+      }
+      
+      /* Loading Screen */
+      .loading-screen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #4682B4 0%, #87CEEB 100%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+      }
+      
+      .loading-spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(255, 255, 255, 0.3);
+        border-top: 4px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+      
+      .loading-text {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 8px;
+      }
+      
+      .loading-subtitle {
+        font-size: 14px;
+        opacity: 0.8;
+        text-align: center;
+        max-width: 300px;
+      }
+      
+      /* Offline Indicator */
+      .offline-banner {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: #ff6b35;
+        color: white;
+        text-align: center;
+        padding: 8px;
+        font-size: 12px;
+        z-index: 1000;
+        display: none;
+      }
+      
+      .offline-banner.show {
+        display: block;
+      }
+      
+      /* Hide loading screen when app loads */
+      .app-loaded .loading-screen {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Offline Indicator -->
+    <div id="offline-banner" class="offline-banner">
+      📱 Working offline - Changes will sync when you're back online
+    </div>
+    
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="loading-screen">
+      <div class="loading-spinner"></div>
+      <div class="loading-text">Best Brightness</div>
+      <div class="loading-subtitle">Loading your cleaning supplies platform...</div>
+    </div>
+    
+    <!-- App Root -->
+    <div id="root"></div>
+    
+    <!-- Error Fallback -->
+    <div id="error-fallback" style="display: none; padding: 20px; text-align: center; color: #721c24; background: #f8d7da; border: 1px solid #f5c6cb;">
+      <h2>Something went wrong</h2>
+      <p>Please refresh the page or try again later.</p>
+      <button onclick="window.location.reload()" style="padding: 8px 16px; background: #dc3545; color: white; border: none; border-radius: 4px; cursor: pointer;">
+        Refresh Page
+      </button>
+    </div>
+    
+    <!-- Offline Management Script -->
+    <script>
+      // Offline detection and management
+      (function() {
+        'use strict';
+        
+        const offlineBanner = document.getElementById('offline-banner');
+        const loadingScreen = document.getElementById('loading-screen');
+        const errorFallback = document.getElementById('error-fallback');
+        let appLoadTimeout;
+        
+        // Update offline status
+        function updateOfflineStatus() {
+          if (navigator.onLine) {
+            offlineBanner.classList.remove('show');
+            console.log('🌐 Online - Full functionality available');
+          } else {
+            offlineBanner.classList.add('show');
+            console.log('📱 Offline - Using cached data and mock services');
+          }
+        }
+        
+        // Initialize offline status
+        updateOfflineStatus();
+        
+        // Listen for online/offline events
+        window.addEventListener('online', updateOfflineStatus);
+        window.addEventListener('offline', updateOfflineStatus);
+        
+        // App loading timeout
+        appLoadTimeout = setTimeout(function() {
+          console.warn('⚠️ App taking longer than expected to load');
+          if (loadingScreen) {
+            const subtitle = loadingScreen.querySelector('.loading-subtitle');
+            if (subtitle) {
+              subtitle.textContent = 'Taking longer than usual... The app will load shortly.';
+            }
+          }
+        }, 5000);
+        
+        // Hide loading screen when app loads
+        window.addEventListener('DOMContentLoaded', function() {
+          clearTimeout(appLoadTimeout);
+        });
+        
+        // Service Worker Registration (for PWA)
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', function() {
+            navigator.serviceWorker.register('/sw.js')
+              .then(function(registration) {
+                console.log('✅ Service Worker registered successfully');
+              })
+              .catch(function(error) {
+                console.log('⚠️ Service Worker registration failed:', error);
+              });
+          });
+        }
+        
+        // Global error handler
+        window.addEventListener('error', function(event) {
+          console.error('💥 Global error:', event.error);
+          if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+          }
+          if (errorFallback) {
+            errorFallback.style.display = 'block';
+          }
+        });
+        
+        // Unhandled promise rejection handler
+        window.addEventListener('unhandledrejection', function(event) {
+          console.error('💥 Unhandled promise rejection:', event.reason);
+          event.preventDefault(); // Prevent default browser error handling
+        });
+        
+        // Performance monitoring
+        window.addEventListener('load', function() {
+          if (performance && performance.timing) {
+            const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+            console.log(\`📊 Page load time: \${loadTime}ms\`);
+          }
+        });
+        
+        // Clean up function
+        window.hideLoadingScreen = function() {
+          if (loadingScreen) {
+            loadingScreen.style.display = 'none';
+          }
+          document.body.classList.add('app-loaded');
+          clearTimeout(appLoadTimeout);
+        };
+        
+        // Install prompt for PWA
+        let deferredPrompt;
+        window.addEventListener('beforeinstallprompt', function(e) {
+          e.preventDefault();
+          deferredPrompt = e;
+          console.log('📱 PWA install prompt available');
+          
+          // Show custom install button if desired
+          const installButton = document.getElementById('install-button');
+          if (installButton) {
+            installButton.style.display = 'block';
+            installButton.addEventListener('click', function() {
+              deferredPrompt.prompt();
+              deferredPrompt.userChoice.then(function(choiceResult) {
+                if (choiceResult.outcome === 'accepted') {
+                  console.log('✅ User accepted PWA install');
+                } else {
+                  console.log('❌ User declined PWA install');
+                }
+                deferredPrompt = null;
+              });
+            });
+          }
+        });
+      })();
+    </script>
+    
+    <!-- Main App Script -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
