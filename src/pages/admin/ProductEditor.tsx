@@ -143,6 +143,13 @@ export default function AdminProductEditor() {
   const handleUploadImages = async (files: FileList | null) => {
     if (!files || !files.length) return;
     try {
+      // Check if storage bucket exists before attempting upload
+      const { StorageSetup } = await import('../../utils/storage-setup');
+      const bucketExists = await StorageSetup.checkBucketExists('product-images');
+      if (!bucketExists) {
+        throw new Error('Storage bucket "product-images" not found. Please set up the storage bucket first.');
+      }
+
       const uploads: string[] = [];
       for (const file of Array.from(files)) {
         const ext = file.name.split('.').pop();
@@ -154,7 +161,19 @@ export default function AdminProductEditor() {
       }
       setForm(prev => ({ ...prev, images: [...prev.images, ...uploads] }));
     } catch (e: any) {
-      setError(e?.message || 'Failed to upload images');
+      let errorMessage = 'Failed to upload images.';
+      
+      if (e.message?.includes('bucket not found') || e.message?.includes('Storage bucket')) {
+        errorMessage = 'Storage bucket not found. Please set up the "product-images" bucket in Supabase.';
+      } else if (e.message?.includes('permission')) {
+        errorMessage = 'Permission denied. Please check your storage bucket permissions.';
+      } else if (e.message?.includes('size')) {
+        errorMessage = 'File too large. Maximum file size is 5MB.';
+      } else {
+        errorMessage = e?.message || 'Failed to upload images';
+      }
+      
+      setError(errorMessage);
     }
   };
 

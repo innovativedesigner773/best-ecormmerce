@@ -8,8 +8,10 @@ import { BarcodeScanner } from './BarcodeScanner';
 import { QuickStartGuide } from './QuickStartGuide';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import ProductCard from './common/ProductCard';
+import StorageDiagnostic from './admin/StorageDiagnostic';
 import { supabase } from '../lib/supabase';
 import { useAuth } from '../contexts/AuthContext';
+import { StorageSetup } from '../utils/storage-setup';
 
 interface Product {
   id: string;
@@ -489,6 +491,12 @@ export function ProductManagement() {
     setUploadError(null);
     const urls: string[] = [];
     try {
+      // Check if storage bucket exists before attempting upload
+      const bucketExists = await StorageSetup.checkBucketExists('product-images');
+      if (!bucketExists) {
+        throw new Error('Storage bucket "product-images" not found. Please set up the storage bucket first.');
+      }
+
       for (const file of files) {
         const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
         const path = `products/${user?.id || 'anon'}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
@@ -498,9 +506,21 @@ export function ProductManagement() {
         if (pub?.publicUrl) urls.push(pub.publicUrl);
       }
       return urls;
-    } catch (e) {
+    } catch (e: any) {
       console.error('Image upload failed:', e);
-      setUploadError('Image upload failed. Ensure the "product-images" bucket exists and is public.');
+      let errorMessage = 'Image upload failed.';
+      
+      if (e.message?.includes('bucket not found') || e.message?.includes('Storage bucket')) {
+        errorMessage = 'Storage bucket not found. Please set up the "product-images" bucket in Supabase.';
+      } else if (e.message?.includes('permission')) {
+        errorMessage = 'Permission denied. Please check your storage bucket permissions.';
+      } else if (e.message?.includes('size')) {
+        errorMessage = 'File too large. Maximum file size is 5MB.';
+      } else {
+        errorMessage = `Upload failed: ${e.message || 'Unknown error'}`;
+      }
+      
+      setUploadError(errorMessage);
       return [];
     } finally {
       setIsUploadingImages(false);
@@ -693,6 +713,11 @@ export function ProductManagement() {
           <AlertTriangle className="h-6 w-6 mr-3 text-red-600" />
           <span className="font-semibold">{error}</span>
         </div>
+      )}
+
+      {/* Storage Diagnostic - Only show if there are upload issues */}
+      {(uploadError || error?.includes('upload') || error?.includes('storage')) && (
+        <StorageDiagnostic />
       )}
 
       {/* Success Message Display */}
