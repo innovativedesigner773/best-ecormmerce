@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, useLocation, useSearchParams } from 'react-router-dom';
 import { CreditCard, Truck, MapPin, Check, ArrowLeft, Package, ShoppingBag } from 'lucide-react';
-import { Elements } from '@stripe/react-stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
 import { useCart } from '../../contexts/CartContext';
 import { useAuth } from '../../contexts/AuthContext';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
@@ -9,8 +9,9 @@ import { ImageWithFallback } from '../../components/figma/ImageWithFallback';
 import { OrderService, OrderData } from '../../utils/order-service';
 import { ShareableCartService, ShareableCart } from '../../utils/shareable-cart';
 import { sendOrderConfirmation } from '../../utils/order-email-integration';
-import { getStripe } from '../../config/stripe';
-import StripePaymentForm from '../../components/payment/StripePaymentForm';
+// import { getStripe } from '../../config/stripe';
+// import StripePaymentForm from '../../components/payment/StripePaymentForm';
+import CustomPaymentForm from '../../components/payment/CustomPaymentForm';
 import { toast } from 'sonner';
 
 export default function Checkout() {
@@ -541,37 +542,15 @@ export default function Checkout() {
             {/* Step 2: Payment Information */}
             {currentStep === 2 && (
               <>
-                {getStripe() ? (
-                  <Elements stripe={getStripe()}>
-                    <StripePaymentForm
-                      amount={finalTotal}
-                      currency="zar"
-                      onSuccess={handleStripePaymentSuccess}
-                      onError={handleStripePaymentError}
-                      onBack={() => setCurrentStep(1)}
-                      customerEmail={shippingInfo.email}
-                      customerName={`${shippingInfo.firstName} ${shippingInfo.lastName}`}
-                    />
-                  </Elements>
-                ) : (
-                  <div className="bg-red-50 border border-red-200 rounded-2xl p-8">
-                    <h3 className="text-xl font-bold text-red-800 mb-4">⚠️ Stripe Configuration Error</h3>
-                    <p className="text-red-700 mb-4">
-                      The Stripe payment system is not configured. Please follow these steps:
-                    </p>
-                    <ol className="list-decimal list-inside space-y-2 text-red-700 mb-6">
-                      <li>Ensure <code className="bg-red-100 px-2 py-1 rounded">.env.local</code> file exists in project root</li>
-                      <li>Add: <code className="bg-red-100 px-2 py-1 rounded text-xs">VITE_STRIPE_PUBLISHABLE_KEY=pk_test_...</code></li>
-                      <li><strong>RESTART the dev server</strong> (Stop with Ctrl+C, then run <code className="bg-red-100 px-2 py-1 rounded">npm run dev</code>)</li>
-                    </ol>
-                    <button
-                      onClick={() => setCurrentStep(1)}
-                      className="bg-red-600 text-white py-3 px-6 rounded-xl hover:bg-red-700 transition-all"
-                    >
-                      Go Back
-                    </button>
-                  </div>
-                )}
+                <CustomPaymentForm
+                  amount={finalTotal}
+                  currency="zar"
+                  onSuccess={handleStripePaymentSuccess}
+                  onError={handleStripePaymentError}
+                  onBack={() => setCurrentStep(1)}
+                  customerEmail={shippingInfo.email}
+                  customerName={`${shippingInfo.firstName} ${shippingInfo.lastName}`}
+                />
               </>
             )}
 

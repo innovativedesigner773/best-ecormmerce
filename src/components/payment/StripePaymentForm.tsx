@@ -2,14 +2,13 @@ import React, { useState } from 'react';
 import {
   PaymentElement,
   CardElement,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCvcElement,
   useStripe,
   useElements,
 } from '@stripe/react-stripe-js';
 import { CreditCard, Lock } from 'lucide-react';
 import LoadingSpinner from '../common/LoadingSpinner';
+import visaIcon from '/assets/visa-svgrepo-com.svg';
+import mastercardIcon from '/assets/mastercard-svgrepo-com.svg';
 
 interface StripePaymentFormProps {
   amount: number;
@@ -34,11 +33,7 @@ export default function StripePaymentForm({
   const elements = useElements();
   const [loading, setLoading] = useState(false);
   const [cardBrand, setCardBrand] = useState<string>('unknown');
-  const [cardComplete, setCardComplete] = useState({
-    cardNumber: false,
-    cardExpiry: false,
-    cardCvc: false,
-  });
+  const [cardComplete, setCardComplete] = useState(false);
 
   // Card brand icons/colors
   const getCardBrandInfo = (brand: string) => {
@@ -64,6 +59,29 @@ export default function StripePaymentForm({
 
   const brandInfo = getCardBrandInfo(cardBrand);
 
+  // Inline SVG icons for common brands
+  const renderBrandIcon = (brand: string) => {
+    if (brand === 'visa') {
+      return (
+        <img src={visaIcon} alt="Visa" width={36} height={24} />
+      );
+    }
+    if (brand === 'mastercard') {
+      return (
+        <img src={mastercardIcon} alt="Mastercard" width={36} height={24} />
+      );
+    }
+    if (brand === 'amex') {
+      return (
+        <svg width="36" height="24" viewBox="0 0 48 32" xmlns="http://www.w3.org/2000/svg" aria-label="American Express">
+          <rect width="48" height="32" rx="4" fill="#2E77BC" />
+          <rect x="8" y="12" width="32" height="8" fill="#fff" />
+        </svg>
+      );
+    }
+    return null;
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -72,14 +90,14 @@ export default function StripePaymentForm({
       return;
     }
 
-    const cardNumberElement = elements.getElement(CardNumberElement);
-    if (!cardNumberElement) {
+    const cardElement = elements.getElement(CardElement);
+    if (!cardElement) {
       onError('Card element not found. Please refresh the page.');
       return;
     }
 
-    // Check if all fields are complete
-    if (!cardComplete.cardNumber || !cardComplete.cardExpiry || !cardComplete.cardCvc) {
+    // Check if field is complete
+    if (!cardComplete) {
       onError('Please complete all card fields.');
       return;
     }
@@ -90,7 +108,7 @@ export default function StripePaymentForm({
       // Create payment method
       const { error: paymentMethodError, paymentMethod } = await stripe.createPaymentMethod({
         type: 'card',
-        card: cardNumberElement,
+        card: cardElement,
         billing_details: {
           name: customerName,
           email: customerEmail,
@@ -164,65 +182,33 @@ export default function StripePaymentForm({
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Card Number */}
+        {/* Combined Card Element (number, expiry, CVC) */}
         <div>
           <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-            Card Number *
+            Card Details *
           </label>
           <div className="relative">
             <div className="w-full px-4 py-3 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-[#4682B4] focus-within:border-transparent transition-all duration-300">
-              <CardNumberElement
+              <CardElement
                 options={elementOptions}
                 onChange={(e) => {
-                  setCardBrand(e.brand);
-                  setCardComplete({ ...cardComplete, cardNumber: e.complete });
+                  setCardBrand(e.brand || 'unknown');
+                  setCardComplete(!!e.complete);
                 }}
               />
             </div>
-            {brandInfo.label && (
-              <div className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                <span className={`text-sm font-semibold ${brandInfo.color}`}>
-                  {brandInfo.label}
-                </span>
+            {(cardBrand !== 'unknown') && (
+              <div className="absolute right-3 top-1/2 transform -translate-y-1/2 flex items-center space-x-2">
+                {renderBrandIcon(cardBrand)}
+                {brandInfo.label && (
+                  <span className={`text-xs font-semibold ${brandInfo.color}`}>{brandInfo.label}</span>
+                )}
               </div>
             )}
           </div>
           {cardBrand !== 'unknown' && (
-            <p className="mt-2 text-xs text-gray-500">
-              ✓ Valid {brandInfo.label} card detected
-            </p>
+            <p className="mt-2 text-xs text-gray-500">✓ {brandInfo.label} detected</p>
           )}
-        </div>
-
-        {/* Expiry and CVC */}
-        <div className="grid grid-cols-2 gap-6">
-          <div>
-            <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-              Expiry Date *
-            </label>
-            <div className="w-full px-4 py-3 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-[#4682B4] focus-within:border-transparent transition-all duration-300">
-              <CardExpiryElement
-                options={elementOptions}
-                onChange={(e) => {
-                  setCardComplete({ ...cardComplete, cardExpiry: e.complete });
-                }}
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-              CVC *
-            </label>
-            <div className="w-full px-4 py-3 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-[#4682B4] focus-within:border-transparent transition-all duration-300">
-              <CardCvcElement
-                options={elementOptions}
-                onChange={(e) => {
-                  setCardComplete({ ...cardComplete, cardCvc: e.complete });
-                }}
-              />
-            </div>
-          </div>
         </div>
 
         {/* Payment Amount Display */}
@@ -257,7 +243,7 @@ export default function StripePaymentForm({
           </button>
           <button
             type="submit"
-            disabled={loading || !stripe || !cardComplete.cardNumber || !cardComplete.cardExpiry || !cardComplete.cardCvc}
+            disabled={loading || !stripe || !cardComplete}
             className="flex-1 bg-[#4682B4] text-white py-4 px-6 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
           >
             {loading ? (
