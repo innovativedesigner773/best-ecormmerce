@@ -79,7 +79,7 @@ export function BarcodeScanner({ onProductScanned, onClose }: BarcodeScannerProp
       const { projectId, publicAnonKey } = await import('../utils/supabase/info');
       
       // First check if product already exists
-      const checkResponse = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/barcode/check/${barcode}`, {
+      const checkResponse = await fetch(`${window.location.origin}/make-server-8880f2f2/barcode/check/${barcode}`, {
         headers: {
           'Authorization': `Bearer ${publicAnonKey}`,
         },
@@ -96,7 +96,7 @@ export function BarcodeScanner({ onProductScanned, onClose }: BarcodeScannerProp
       }
 
       // Lookup product from API
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/barcode/lookup`, {
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/barcode/lookup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -333,7 +333,7 @@ export default function Home() {
   useEffect(() => {
     const checkServerStatus = async () => {
       try {
-        const serverUrl = `https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2`;
+        const serverUrl = `${window.location.origin}/make-server-8880f2f2`;
         console.log('Testing server health at:', `${serverUrl}/health`);
         
         const response = await fetch(`${serverUrl}/health`, {

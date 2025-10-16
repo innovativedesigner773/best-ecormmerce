@@ -36,7 +36,7 @@ export default function AppHealthChecker() {
 
   const testServerConnection = async () => {
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/health`, {
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/health`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export default function AppHealthChecker() {
 
   const testDatabaseConnection = async () => {
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/test-db`);
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/test-db`);
       const data = await response.json();
       
       if (response.ok && data.status === 'success') {

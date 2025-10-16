@@ -14,7 +14,8 @@ app.use('*', cors({
     'https://localhost:3000',
     'https://best-ecormmerce.vercel.app',
     'https://www.figma.com', 
-    'https://figma.com'
+    'https://figma.com',
+    'https://yusvpxltvvlhubwqeuzi.supabase.co'
   ],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
@@ -25,8 +26,8 @@ app.use('*', cors({
 app.use('*', logger(console.log));
 
 const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
+  process.env.SUPABASE_URL || `https://${process.env.SUPABASE_PROJECT_ID || 'yusvpxltvvlhubwqeuzi'}.supabase.co`,
+  process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1c3ZweGx0dnZsaHVid3FldXppIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTI1MjgwOCwiZXhwIjoyMDcwODI4ODA4fQ.example'
 );
 
 // Health check endpoint - completely public, no auth required
@@ -36,8 +37,9 @@ app.get('/make-server-8880f2f2/health', (c) => {
   return c.json({ 
     status: 'healthy', 
     timestamp: new Date().toISOString(),
-    message: 'Best Brightness server is running',
+    message: 'Best Brightness server is running via Vercel API routes',
     version: '1.0.0',
+    server_type: 'vercel_api_route',
     endpoints: {
       health: '/make-server-8880f2f2/health',
       products: '/make-server-8880f2f2/products',

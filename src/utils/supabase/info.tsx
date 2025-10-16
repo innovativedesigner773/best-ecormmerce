@@ -2,3 +2,8 @@
 
 export const projectId = "yusvpxltvvlhubwqeuzi"
 export const publicAnonKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl1c3ZweGx0dnZsaHVid3FldXppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyNTI4MDgsImV4cCI6MjA3MDgyODgwOH0.wM4oWt5Io75ezM95Ny4baCvgferpKT4I9oo-xuq78h4"
+
+// Server configuration - using Vercel API routes instead of Supabase Edge Functions
+export const SERVER_URL = typeof window !== 'undefined' 
+  ? `${window.location.origin}/make-server-8880f2f2`
+  : 'https://best-ecormmerce.vercel.app/make-server-8880f2f2'

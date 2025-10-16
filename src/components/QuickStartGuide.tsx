@@ -28,7 +28,7 @@ export function QuickStartGuide({ onDatabaseInitialized }: QuickStartGuideProps)
         throw new Error('Not authenticated. Please log in first.');
       }
 
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/init-database`, {
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/init-database`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

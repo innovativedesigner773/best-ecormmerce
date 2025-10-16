@@ -25,7 +25,7 @@ export default function ServerStatusBanner() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
 
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/health`, {
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/health`, {
         method: 'GET',
         signal: controller.signal,
         headers: {

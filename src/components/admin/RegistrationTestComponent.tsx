@@ -32,7 +32,7 @@ export default function RegistrationTestComponent() {
     try {
       console.log('🧪 Testing server connection...');
       
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/health`);
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/health`);
       
       if (response.ok) {
         const data = await response.json();
@@ -67,7 +67,7 @@ export default function RegistrationTestComponent() {
     try {
       console.log('🧪 Testing database connection...');
       
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/test-db`);
+      const response = await fetch(`${window.location.origin}/make-server-8880f2f2/test-db`);
       const data = await response.json();
       
       if (response.ok && data.status === 'success') {
