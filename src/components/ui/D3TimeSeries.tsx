@@ -23,6 +23,12 @@ export default function D3TimeSeries({ data, height = 260 }: D3TimeSeriesProps) 
     const innerH = Math.max(0, height - margin.top - margin.bottom);
 
     svg.attr('width', width).attr('height', height);
+    
+    // Ensure width and height are valid numbers
+    if (typeof width !== 'number' || typeof height !== 'number') {
+      console.warn('Invalid SVG dimensions:', { width, height });
+      return;
+    }
     svg.selectAll('*').remove();
 
     const g = svg

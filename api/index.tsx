@@ -9,7 +9,13 @@ const app = new Hono();
 
 // Enhanced CORS configuration
 app.use('*', cors({
-  origin: ['http://localhost:3000', 'https://www.figma.com', 'https://figma.com'],
+  origin: [
+    'http://localhost:3000', 
+    'https://localhost:3000',
+    'https://best-ecormmerce.vercel.app',
+    'https://www.figma.com', 
+    'https://figma.com'
+  ],
   allowedMethods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   credentials: true,

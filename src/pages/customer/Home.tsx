@@ -341,7 +341,9 @@ export default function Home() {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${publicAnonKey}`
-          }
+          },
+          mode: 'cors',
+          credentials: 'omit',
         });
 
         if (response.ok) {

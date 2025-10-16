@@ -32,6 +32,8 @@ export default function ServerStatusBanner() {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${publicAnonKey}`,
         },
+        mode: 'cors',
+        credentials: 'omit',
       });
 
       clearTimeout(timeoutId);

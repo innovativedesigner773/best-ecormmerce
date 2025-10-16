@@ -37,7 +37,8 @@ export default defineConfig({
         }
       }
     },
-    chunkSizeWarningLimit: 1000
+    chunkSizeWarningLimit: 1000,
+    modulePreload: false
   },
   server: {
     port: 3000,

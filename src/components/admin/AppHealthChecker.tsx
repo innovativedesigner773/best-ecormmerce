@@ -36,7 +36,15 @@ export default function AppHealthChecker() {
 
   const testServerConnection = async () => {
     try {
-      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/health`);
+      const response = await fetch(`https://${projectId}.supabase.co/functions/v1/make-server-8880f2f2/health`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${publicAnonKey}`,
+        },
+        mode: 'cors',
+        credentials: 'omit',
+      });
       
       if (response.ok) {
         const data = await response.json();

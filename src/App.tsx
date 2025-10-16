@@ -22,6 +22,7 @@ import AppRoutes from './routes/AppRoutes';
 import BotpressIframeChat from './components/common/BotpressIframeChat';
 import { useSVGErrorHandler } from './utils/svg-error-handler';
 import { startAutomaticProcessing } from './services/notificationQueueService';
+import { AnalyticsErrorBoundary, setupAnalyticsErrorSuppression } from './components/common/AnalyticsErrorBoundary';
 
 // Config
 import { queryClient } from './config/queryClient';
@@ -29,6 +30,7 @@ import { setupConsoleErrorSuppression } from './config/console';
 
 // Setup console error suppression for development
 setupConsoleErrorSuppression();
+setupAnalyticsErrorSuppression();
 
 function AppContent() {
   const { user, userProfile, loading } = useAuth();
@@ -96,16 +98,18 @@ function AppContent() {
     <SystemThemeProvider>
       <div className="min-h-screen bg-gray-50">
         <OptimizedErrorBoundary>
-          <Navbar />
-          <OfflineIndicator />
-          <ServerStatusBanner />
-          <DatabaseStatusBanner />
-          
-          <main className="min-h-screen">
-            <AppRoutes />
-          </main>
+          <AnalyticsErrorBoundary>
+            <Navbar />
+            <OfflineIndicator />
+            <ServerStatusBanner />
+            <DatabaseStatusBanner />
+            
+            <main className="min-h-screen">
+              <AppRoutes />
+            </main>
 
-          <Footer />
+            <Footer />
+          </AnalyticsErrorBoundary>
         </OptimizedErrorBoundary>
         
         <Toaster 
