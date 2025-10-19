@@ -12,6 +12,8 @@ import { sendOrderConfirmation } from '../../utils/order-email-integration';
 // import { getStripe } from '../../config/stripe';
 // import StripePaymentForm from '../../components/payment/StripePaymentForm';
 import CustomPaymentForm from '../../components/payment/CustomPaymentForm';
+import AddressSelector from '../../components/address/AddressSelector';
+import { Address } from '../../utils/address-service';
 import { toast } from 'sonner';
 
 export default function Checkout() {
@@ -30,6 +32,8 @@ export default function Checkout() {
 
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
+  const [useManualEntry, setUseManualEntry] = useState(false);
   
   const [shippingInfo, setShippingInfo] = useState({
     firstName: userProfile?.first_name || '',
@@ -79,6 +83,39 @@ export default function Checkout() {
     }
   }, [userProfile]);
 
+  // Sync shipping info when selected address changes
+  useEffect(() => {
+    if (selectedAddress && !useManualEntry) {
+      setShippingInfo(prev => ({
+        ...prev,
+        firstName: selectedAddress.firstName,
+        lastName: selectedAddress.lastName,
+        email: selectedAddress.email,
+        phone: selectedAddress.phone,
+        address: selectedAddress.address,
+        city: selectedAddress.city,
+        postalCode: selectedAddress.postalCode,
+        province: selectedAddress.province,
+      }));
+    }
+  }, [selectedAddress, useManualEntry]);
+
+  // Handle address selection
+  const handleAddressSelect = (address: Address) => {
+    console.log('🏠 Address selected:', address);
+    setSelectedAddress(address);
+    setUseManualEntry(false);
+  };
+
+  // Handle manual entry toggle
+  const handleManualEntryToggle = () => {
+    setUseManualEntry(!useManualEntry);
+    if (!useManualEntry) {
+      // Clear selected address when switching to manual entry
+      setSelectedAddress(null);
+    }
+  };
+
   const loadSharedCart = async () => {
     if (!sharedCartToken) return;
     
@@ -114,13 +151,21 @@ export default function Checkout() {
   const handleShippingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate shipping info
-    const required = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode', 'province'];
-    const missing = required.filter(field => !shippingInfo[field as keyof typeof shippingInfo]);
-    
-    if (missing.length > 0) {
-      toast.error(`Please fill in all required fields: ${missing.join(', ')}`);
+    // For logged-in users with selected address, validate that address is selected
+    if (!isSharedCart && user && !useManualEntry && !selectedAddress) {
+      toast.error('Please select a delivery address or enter one manually');
       return;
+    }
+    
+    // For shared carts or manual entry, validate shipping info fields
+    if (isSharedCart || useManualEntry) {
+      const required = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode', 'province'];
+      const missing = required.filter(field => !shippingInfo[field as keyof typeof shippingInfo]);
+      
+      if (missing.length > 0) {
+        toast.error(`Please fill in all required fields: ${missing.join(', ')}`);
+        return;
+      }
     }
 
     setCurrentStep(2);
@@ -413,119 +458,165 @@ export default function Checkout() {
                   <h2 className="text-2xl font-bold text-[#2C3E50]">Shipping Information</h2>
                 </div>
                 
-                <form onSubmit={handleShippingSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        First Name *
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingInfo.firstName}
-                        onChange={(e) => setShippingInfo({...shippingInfo, firstName: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
+                {/* Address Selector for logged-in users */}
+                {!isSharedCart && user && (
+                  <div className="mb-6">
+                    <AddressSelector
+                      onAddressSelect={handleAddressSelect}
+                      selectedAddress={selectedAddress}
+                      showAddNew={true}
+                      className="mb-4"
+                    />
                     
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Last Name *
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingInfo.lastName}
-                        onChange={(e) => setShippingInfo({...shippingInfo, lastName: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
+                    {selectedAddress && (
+                      <div className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                        <div className="flex items-center">
+                          <Check className="h-5 w-5 text-green-600 mr-2" />
+                          <span className="text-[#2C3E50] font-medium">
+                            Using selected address: {selectedAddress.label || 'Default'}
+                          </span>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={handleManualEntryToggle}
+                          className="text-[#4682B4] hover:text-[#2C3E50] font-medium transition-colors duration-300"
+                        >
+                          Enter Different Address
+                        </button>
+                      </div>
+                    )}
                     
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        value={shippingInfo.email}
-                        onChange={(e) => setShippingInfo({...shippingInfo, email: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Phone Number *
-                      </label>
-                      <input
-                        type="tel"
-                        value={shippingInfo.phone}
-                        onChange={(e) => setShippingInfo({...shippingInfo, phone: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        placeholder="+27 12 345 6789"
-                        required
-                      />
-                    </div>
-                    
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Street Address *
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingInfo.address}
-                        onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        placeholder="123 Main Street"
-                        required
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        City *
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingInfo.city}
-                        onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        required
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Postal Code *
-                      </label>
-                      <input
-                        type="text"
-                        value={shippingInfo.postalCode}
-                        onChange={(e) => setShippingInfo({...shippingInfo, postalCode: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        placeholder="8001"
-                        required
-                      />
-                    </div>
-                    
-                    <div className="md:col-span-2">
-                      <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
-                        Province *
-                      </label>
-                      <select
-                        value={shippingInfo.province}
-                        onChange={(e) => setShippingInfo({...shippingInfo, province: e.target.value})}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
-                        required
-                      >
-                        <option value="">Select Province</option>
-                        {provinces.map(province => (
-                          <option key={province} value={province}>{province}</option>
-                        ))}
-                      </select>
-                    </div>
+                    {!selectedAddress && !useManualEntry && (
+                      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
+                        <p className="text-[#2C3E50] font-medium mb-2">No saved addresses found</p>
+                        <button
+                          type="button"
+                          onClick={handleManualEntryToggle}
+                          className="text-[#4682B4] hover:text-[#2C3E50] font-medium transition-colors duration-300"
+                        >
+                          Enter Address Manually
+                        </button>
+                      </div>
+                    )}
                   </div>
+                )}
+                
+                <form onSubmit={handleShippingSubmit} className="space-y-6">
+                  {/* Show manual entry form only for shared carts or when manual entry is enabled */}
+                  {(isSharedCart || useManualEntry) && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          First Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={shippingInfo.firstName}
+                          onChange={(e) => setShippingInfo({...shippingInfo, firstName: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Last Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={shippingInfo.lastName}
+                          onChange={(e) => setShippingInfo({...shippingInfo, lastName: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Email Address *
+                        </label>
+                        <input
+                          type="email"
+                          value={shippingInfo.email}
+                          onChange={(e) => setShippingInfo({...shippingInfo, email: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Phone Number *
+                        </label>
+                        <input
+                          type="tel"
+                          value={shippingInfo.phone}
+                          onChange={(e) => setShippingInfo({...shippingInfo, phone: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          placeholder="+27 12 345 6789"
+                          required
+                        />
+                      </div>
+                      
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Street Address *
+                        </label>
+                        <input
+                          type="text"
+                          value={shippingInfo.address}
+                          onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          placeholder="123 Main Street"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          City *
+                        </label>
+                        <input
+                          type="text"
+                          value={shippingInfo.city}
+                          onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          required
+                        />
+                      </div>
+                      
+                      <div>
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Postal Code *
+                        </label>
+                        <input
+                          type="text"
+                          value={shippingInfo.postalCode}
+                          onChange={(e) => setShippingInfo({...shippingInfo, postalCode: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          placeholder="8001"
+                          required
+                        />
+                      </div>
+                      
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                          Province *
+                        </label>
+                        <select
+                          value={shippingInfo.province}
+                          onChange={(e) => setShippingInfo({...shippingInfo, province: e.target.value})}
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          required
+                        >
+                          <option value="">Select Province</option>
+                          {provinces.map(province => (
+                            <option key={province} value={province}>{province}</option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                  )}
                   
                   <div className="mt-8">
                     <button

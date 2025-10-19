@@ -345,43 +345,63 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           .single();
 
         if (profileError || !profileData) {
-          console.warn('⚠️ Profile not created by trigger, creating manually...');
+          console.warn('⚠️ Profile not created by trigger, checking if it exists...');
           
-          // Fallback: Create profile manually
-          const { data: manualProfile, error: manualError } = await supabase
+          // Check if profile exists with a different query
+          const { data: existingProfile, error: existingError } = await supabase
             .from("user_profiles")
-            .insert({
-              id: user.id,
-              email,
-              first_name: firstName,
-              last_name: lastName,
-              role: mappedRole,
-              loyalty_points: mappedRole === 'customer' ? 100 : 0,
-              is_active: true,
-              email_verified: user.email_confirmed_at !== null,
-              created_at: new Date().toISOString(),
-              updated_at: new Date().toISOString()
-            })
-            .select()
-            .single();
+            .select("*")
+            .eq("id", user.id)
+            .maybeSingle();
 
-          if (manualError) {
-            console.error('❌ Manual profile creation failed:', manualError);
+          if (existingProfile) {
+            console.log('✅ Profile found on second check:', existingProfile);
+            // Profile exists, continue with success
+          } else {
+            console.warn('⚠️ Profile truly missing, creating manually...');
             
-            // Try to clean up auth user
-            try {
-              await supabase.auth.signOut();
-            } catch (cleanupError) {
-              console.warn('⚠️ Could not clean up after profile creation failure');
+            // Fallback: Create profile manually with duplicate key handling
+            const { data: manualProfile, error: manualError } = await supabase
+              .from("user_profiles")
+              .insert({
+                id: user.id,
+                email,
+                first_name: firstName,
+                last_name: lastName,
+                role: mappedRole,
+                loyalty_points: mappedRole === 'customer' ? 100 : 0,
+                is_active: true,
+                email_verified: user.email_confirmed_at !== null,
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString()
+              })
+              .select()
+              .single();
+
+            if (manualError) {
+              console.error('❌ Manual profile creation failed:', manualError);
+              
+              // Handle duplicate key error specifically
+              if (manualError.code === '23505' || manualError.message.includes('duplicate key')) {
+                console.log('🔄 Duplicate key error - profile may have been created by trigger');
+                // Don't fail registration for duplicate key - profile likely exists
+              } else {
+                // Try to clean up auth user for other errors
+                try {
+                  await supabase.auth.signOut();
+                } catch (cleanupError) {
+                  console.warn('⚠️ Could not clean up after profile creation failure');
+                }
+                
+                return { 
+                  success: false, 
+                  error: `Profile creation failed: ${manualError.message}. Please try again.`
+                };
+              }
+            } else {
+              console.log('✅ Manual profile created:', manualProfile);
             }
-            
-            return { 
-              success: false, 
-              error: `Profile creation failed: ${manualError.message}. Please try again.`
-            };
           }
-
-          console.log('✅ Manual profile created:', manualProfile);
         } else {
           console.log('✅ Profile created by trigger:', profileData);
           // Ensure role matches the selected role (if metadata mapping changed)
