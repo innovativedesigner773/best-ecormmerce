@@ -14,13 +14,15 @@ export class StorageSetup {
    */
   static async checkBucketExists(bucketId: string): Promise<boolean> {
     try {
-      const { data, error } = await supabase
-        .from('buckets')
-        .select('id')
-        .eq('id', bucketId)
-        .single();
+      // Use the storage API to list buckets and check if our bucket exists
+      const { data, error } = await supabase.storage.listBuckets();
       
-      return !error && !!data;
+      if (error) {
+        console.error('Error listing buckets:', error);
+        return false;
+      }
+      
+      return data?.some(bucket => bucket.id === bucketId) || false;
     } catch (error) {
       console.error('Error checking bucket existence:', error);
       return false;
@@ -32,20 +34,19 @@ export class StorageSetup {
    */
   static async getBucketInfo(bucketId: string): Promise<StorageBucket | null> {
     try {
-      const { data, error } = await supabase
-        .from('buckets')
-        .select('*')
-        .eq('id', bucketId)
-        .single();
+      const { data, error } = await supabase.storage.listBuckets();
       
       if (error || !data) return null;
       
+      const bucket = data.find(b => b.id === bucketId);
+      if (!bucket) return null;
+      
       return {
-        id: data.id,
-        name: data.name,
-        public: data.public,
-        file_size_limit: data.file_size_limit,
-        allowed_mime_types: data.allowed_mime_types || []
+        id: bucket.id,
+        name: bucket.name,
+        public: bucket.public,
+        file_size_limit: bucket.file_size_limit,
+        allowed_mime_types: bucket.allowed_mime_types || []
       };
     } catch (error) {
       console.error('Error getting bucket info:', error);
@@ -101,9 +102,7 @@ export class StorageSetup {
    */
   static async getAllBuckets(): Promise<StorageBucket[]> {
     try {
-      const { data, error } = await supabase
-        .from('buckets')
-        .select('*');
+      const { data, error } = await supabase.storage.listBuckets();
       
       if (error || !data) return [];
       

@@ -491,12 +491,6 @@ export function ProductManagement() {
     setUploadError(null);
     const urls: string[] = [];
     try {
-      // Check if storage bucket exists before attempting upload
-      const bucketExists = await StorageSetup.checkBucketExists('product-images');
-      if (!bucketExists) {
-        throw new Error('Storage bucket "product-images" not found. Please set up the storage bucket first.');
-      }
-
       for (const file of files) {
         const ext = file.name.split('.').pop()?.toLowerCase() || 'jpg';
         const path = `products/${user?.id || 'anon'}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;

@@ -143,13 +143,6 @@ export default function AdminProductEditor() {
   const handleUploadImages = async (files: FileList | null) => {
     if (!files || !files.length) return;
     try {
-      // Check if storage bucket exists before attempting upload
-      const { StorageSetup } = await import('../../utils/storage-setup');
-      const bucketExists = await StorageSetup.checkBucketExists('product-images');
-      if (!bucketExists) {
-        throw new Error('Storage bucket "product-images" not found. Please set up the storage bucket first.');
-      }
-
       const uploads: string[] = [];
       for (const file of Array.from(files)) {
         const ext = file.name.split('.').pop();
