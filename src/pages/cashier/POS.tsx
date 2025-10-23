@@ -114,12 +114,19 @@ export default function EnhancedPOS() {
     fetchProducts();
   }, []);
 
-  // Initialize / teardown camera scanner
+  // Initialize / teardown camera scanner with optimized settings
   useEffect(() => {
     if (!scanning) {
       // Stop scanner if running
       if (codeReaderRef.current) {
-        codeReaderRef.current.reset();
+        try {
+          // Check if reset method exists before calling it
+          if (typeof codeReaderRef.current.reset === 'function') {
+            codeReaderRef.current.reset();
+          }
+        } catch (error) {
+          console.warn('Error resetting scanner:', error);
+        }
       }
       return;
     }
@@ -130,6 +137,7 @@ export default function EnhancedPOS() {
 
     const start = async () => {
       try {
+        // Start scanning (BrowserMultiFormatReader handles format detection automatically)
         await reader.decodeFromVideoDevice(
           undefined,
           videoRef.current as HTMLVideoElement,
@@ -138,15 +146,19 @@ export default function EnhancedPOS() {
             if (result) {
               const text = result.getText();
               const now = Date.now();
-              // Debounce duplicate frames and very fast repeats
+              // Optimized debouncing for faster response (reduced from 800ms to 300ms)
               if (
                 !lastScanRef.current ||
                 lastScanRef.current.code !== text ||
-                now - lastScanRef.current.at > 800
+                now - lastScanRef.current.at > 300
               ) {
                 lastScanRef.current = { code: text, at: now };
                 handleBarcodeInput(text);
               }
+            }
+            // Reduced error logging for better performance
+            if (err && !err.message?.includes('No MultiFormat Readers')) {
+              console.warn('Scanning error:', err);
             }
           }
         );
@@ -161,8 +173,13 @@ export default function EnhancedPOS() {
     return () => {
       mounted = false;
       try {
-        reader.reset();
-      } catch { }
+        // Check if reset method exists before calling it
+        if (typeof reader.reset === 'function') {
+          reader.reset();
+        }
+      } catch (error) {
+        console.warn('Error resetting scanner:', error);
+      }
     };
   }, [scanning]);
 

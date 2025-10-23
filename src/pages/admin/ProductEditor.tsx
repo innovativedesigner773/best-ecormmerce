@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Loader2, Plus, Trash2, Upload, CheckCircle, AlertTriangle } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { ImageWithFallback } from '../../components/figma/ImageWithFallback';
+import { BarcodeInput } from '../../components/BarcodeInput';
 
 interface Product {
   id: string;
@@ -365,11 +366,11 @@ export default function AdminProductEditor() {
                   placeholder="SKU"
                 />
                 <span>Barcode:</span>
-                <input
-                  className="px-2 py-1 border rounded-md"
+                <BarcodeInput
                   value={form.barcode}
-                  onChange={(e) => setForm({ ...form, barcode: e.target.value })}
+                  onChange={(barcode) => setForm({ ...form, barcode })}
                   placeholder="Barcode"
+                  className="flex-1"
                 />
               </div>
             </div>

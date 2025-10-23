@@ -4,7 +4,8 @@ import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
-import { BarcodeScanner } from './BarcodeScanner';
+import { FastBarcodeScanner } from './FastBarcodeScanner';
+import { BarcodeInput } from './BarcodeInput';
 import { QuickStartGuide } from './QuickStartGuide';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import ProductCard from './common/ProductCard';
@@ -869,7 +870,7 @@ export function ProductManagement() {
 
       {/* Barcode Scanner Modal */}
       {showScanner && (
-        <BarcodeScanner
+        <FastBarcodeScanner
           onProductScanned={handleProductScanned}
           onClose={() => setShowScanner(false)}
         />
@@ -927,10 +928,9 @@ export function ProductManagement() {
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Barcode
                     </label>
-                    <Input
-                      type="text"
+                    <BarcodeInput
                       value={formData.barcode}
-                      onChange={(e) => setFormData({...formData, barcode: e.target.value})}
+                      onChange={(barcode) => setFormData({...formData, barcode})}
                       placeholder="Product barcode"
                     />
                   </div>
