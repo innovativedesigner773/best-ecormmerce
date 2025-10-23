@@ -149,7 +149,7 @@ export default function CustomPaymentForm({
 
   return (
     <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden">
-      <div className="bg-gradient-to-r from-[#2C3E50] to-[#4682B4] p-6 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-[#09215F] to-[#97CF50] p-6 flex items-center justify-between">
         <div className="flex items-center">
           <div className="bg-white/15 text-white p-3 rounded-xl mr-4">
             <CreditCard className="h-6 w-6" />
@@ -167,9 +167,9 @@ export default function CustomPaymentForm({
 
       <div className="px-8 pt-6">
         <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center space-x-2 bg-blue-50 border border-blue-200 rounded-xl px-3 py-2">
-            <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs font-semibold">Demo</span>
-            <span className="text-sm font-medium text-blue-800">No real charges</span>
+          <div className="flex items-center space-x-2 bg-green-50 border border-green-200 rounded-xl px-3 py-2">
+            <span className="px-2 py-0.5 rounded bg-green-100 text-green-700 text-xs font-semibold">Demo</span>
+            <span className="text-sm font-medium text-green-800">No real charges</span>
           </div>
           {/* Brand gallery: show all until detected, then show only detected brand */}
           <div className="flex items-center space-x-2">
@@ -198,14 +198,14 @@ export default function CustomPaymentForm({
 
       <form onSubmit={handleSubmit} className="space-y-6 px-8 pb-8">
         <div>
-          <label className="block text-sm font-semibold text-[#2C3E50] mb-3">Card Number *</label>
+          <label className="block text-sm font-semibold text-[#09215F] mb-3">Card Number *</label>
           <div className="relative">
             <input
               value={cardNumber}
               onChange={(e) => setCardNumber(formatCardNumber(e.target.value))}
               inputMode="numeric"
               placeholder={brand === 'amex' ? '3782 822463 10005' : '4242 4242 4242 4242'}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#4682B4] focus:border-transparent outline-none text-lg tracking-widest"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#97CF50] focus:border-transparent outline-none text-lg tracking-widest"
             />
             {/* Inline badge near the field for small screens */}
             <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center space-x-2 sm:hidden">
@@ -219,23 +219,23 @@ export default function CustomPaymentForm({
 
         <div className="grid grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-semibold text-[#2C3E50] mb-3">Expiry (MM/YY) *</label>
+            <label className="block text-sm font-semibold text-[#09215F] mb-3">Expiry (MM/YY) *</label>
             <input
               value={expiry}
               onChange={(e) => setExpiry(formatExpiry(e.target.value))}
               placeholder="MM/YY"
               inputMode="numeric"
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#4682B4] focus:border-transparent outline-none text-lg"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#97CF50] focus:border-transparent outline-none text-lg"
             />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-[#2C3E50] mb-3">CVC *</label>
+            <label className="block text-sm font-semibold text-[#09215F] mb-3">CVC *</label>
             <input
               value={cvc}
               onChange={(e) => setCvc(e.target.value.replace(/\D/g, '').slice(0, brand === 'amex' ? 4 : 3))}
               inputMode="numeric"
               placeholder={brand === 'amex' ? '1234' : '123'}
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#4682B4] focus:border-transparent outline-none text-lg"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-[#97CF50] focus:border-transparent outline-none text-lg"
             />
           </div>
         </div>
@@ -248,8 +248,8 @@ export default function CustomPaymentForm({
 
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[#2C3E50] font-medium">Total Payment</span>
-            <span className="text-2xl font-bold text-[#2C3E50]">R{amount.toFixed(2)}</span>
+            <span className="text-[#09215F] font-medium">Total Payment</span>
+            <span className="text-2xl font-bold text-[#09215F]">R{amount.toFixed(2)}</span>
           </div>
         </div>
 
@@ -260,14 +260,14 @@ export default function CustomPaymentForm({
             type="button"
             onClick={onBack}
             disabled={loading}
-            className="flex-1 border-2 border-[#4682B4] text-[#4682B4] py-4 px-6 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 text-lg font-semibold disabled:opacity-50"
+            className="flex-1 border-2 border-[#97CF50] text-[#97CF50] py-4 px-6 rounded-xl hover:bg-[#97CF50] hover:text-white transition-all duration-300 text-lg font-semibold disabled:opacity-50"
           >
             Back
           </button>
           <button
             type="submit"
             disabled={loading}
-            className="flex-1 bg-[#4682B4] text-white py-4 px-6 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+            className="flex-1 bg-[#97CF50] text-white py-4 px-6 rounded-xl hover:bg-[#09215F] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
           >
             {loading ? 'Processing...' : 'Review Order'}
           </button>

@@ -240,7 +240,7 @@ export default function RegistrationTester() {
                     </div>
 
                     {testResult.requiresConfirmation && (
-                      <div className="flex items-center gap-2 text-blue-700">
+                      <div className="flex items-center gap-2 text-green-700">
                         <Mail className="h-4 w-4" />
                         <span className="text-sm">Email confirmation required</span>
                       </div>
@@ -265,9 +265,9 @@ export default function RegistrationTester() {
         )}
 
         {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-medium text-blue-900 mb-2">Testing Instructions:</h4>
-          <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h4 className="font-medium text-green-900 mb-2">Testing Instructions:</h4>
+          <ol className="text-sm text-green-800 space-y-1 list-decimal list-inside">
             <li>Make sure you've run the DATABASE_ERROR_FIX.sql script first</li>
             <li>Clear browser cache (run the cache clearing script)</li>
             <li>Click "Test Registration" to create a test user</li>

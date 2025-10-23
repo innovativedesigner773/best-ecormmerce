@@ -83,13 +83,13 @@ export default function EnhancedCashierDashboard() {
 
   return (
     <CashierLayout>
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/50 to-cyan-50/30">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/50 to-cyan-50/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Modern Header with Glassmorphism */}
         <div className="mb-8 backdrop-blur-xl bg-white/80 border border-white/20 rounded-3xl shadow-2xl p-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div className="flex items-center space-x-4">
-              <div className="p-3 rounded-2xl bg-gradient-to-br from-blue-500 to-cyan-500 text-white shadow-lg">
+              <div className="p-3 rounded-2xl bg-gradient-to-br from-green-500 to-cyan-500 text-white shadow-lg">
                 <Activity className="h-8 w-8" />
               </div>
               <div>
@@ -135,8 +135,8 @@ export default function EnhancedCashierDashboard() {
                   onClick={() => setSelectedPeriod(period.key)}
                   className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                     selectedPeriod === period.key
-                      ? 'bg-gradient-to-r from-blue-600 to-cyan-600 text-white shadow-lg transform scale-105'
-                      : 'text-slate-600 hover:text-blue-600 hover:bg-blue-50'
+                      ? 'bg-gradient-to-r from-green-600 to-cyan-600 text-white shadow-lg transform scale-105'
+                      : 'text-slate-600 hover:text-green-600 hover:bg-green-50'
                   }`}
                 >
                   {period.label}
@@ -155,8 +155,8 @@ export default function EnhancedCashierDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-[#2C3E50]/80">Sales Revenue</p>
-                <p className="text-3xl font-bold text-[#2C3E50] mt-1">{currentStats.sales.value}</p>
+                <p className="text-sm font-medium text-[#09215F]/80">Sales Revenue</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.sales.value}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg">
                 <DollarSign className="h-8 w-8" />
@@ -171,10 +171,10 @@ export default function EnhancedCashierDashboard() {
               <span className={`text-sm font-bold ${currentStats.sales.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                 {currentStats.sales.change}
               </span>
-              <span className="text-sm text-[#2C3E50]/80 ml-2">vs last {selectedPeriod}</span>
+              <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
             {activeStats === 'sales' && (
-              <div className="mt-3 text-xs text-[#2C3E50]/70">
+              <div className="mt-3 text-xs text-[#09215F]/70">
                 🎯 Target: {selectedPeriod === 'today' ? 'R1,000' : selectedPeriod === 'week' ? 'R7,000' : 'R30,000'}
               </div>
             )}
@@ -187,10 +187,10 @@ export default function EnhancedCashierDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-[#2C3E50]/80">Orders Processed</p>
-                <p className="text-3xl font-bold text-[#2C3E50] mt-1">{currentStats.orders.value}</p>
+                <p className="text-sm font-medium text-[#09215F]/80">Orders Processed</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.orders.value}</p>
               </div>
-              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#4682B4] to-[#2C3E50] text-white shadow-lg">
+              <div className="p-4 rounded-2xl bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white shadow-lg">
                 <ShoppingCart className="h-8 w-8" />
               </div>
             </div>
@@ -203,10 +203,10 @@ export default function EnhancedCashierDashboard() {
               <span className={`text-sm font-bold ${currentStats.orders.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                 {currentStats.orders.change}
               </span>
-              <span className="text-sm text-[#2C3E50]/80 ml-2">vs last {selectedPeriod}</span>
+              <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
             {activeStats === 'orders' && (
-              <div className="mt-3 text-xs text-[#2C3E50]/70">
+              <div className="mt-3 text-xs text-[#09215F]/70">
                 ⚡ Avg processing time: 2.3 minutes
               </div>
             )}
@@ -219,8 +219,8 @@ export default function EnhancedCashierDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-[#2C3E50]/80">Items Sold</p>
-                <p className="text-3xl font-bold text-[#2C3E50] mt-1">{currentStats.items.value}</p>
+                <p className="text-sm font-medium text-[#09215F]/80">Items Sold</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.items.value}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg">
                 <Package className="h-8 w-8" />
@@ -235,10 +235,10 @@ export default function EnhancedCashierDashboard() {
               <span className={`text-sm font-bold ${currentStats.items.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                 {currentStats.items.change}
               </span>
-              <span className="text-sm text-[#2C3E50]/80 ml-2">vs last {selectedPeriod}</span>
+              <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
             {activeStats === 'items' && (
-              <div className="mt-3 text-xs text-[#2C3E50]/70">
+              <div className="mt-3 text-xs text-[#09215F]/70">
                 📦 Most popular: Coca Cola 500ml
               </div>
             )}
@@ -251,8 +251,8 @@ export default function EnhancedCashierDashboard() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-[#2C3E50]/80">Customers Served</p>
-                <p className="text-3xl font-bold text-[#2C3E50] mt-1">{currentStats.customers.value}</p>
+                <p className="text-sm font-medium text-[#09215F]/80">Customers Served</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.customers.value}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg">
                 <Users className="h-8 w-8" />
@@ -267,10 +267,10 @@ export default function EnhancedCashierDashboard() {
               <span className={`text-sm font-bold ${currentStats.customers.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
                 {currentStats.customers.change}
               </span>
-              <span className="text-sm text-[#2C3E50]/80 ml-2">vs last {selectedPeriod}</span>
+              <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
             {activeStats === 'customers' && (
-              <div className="mt-3 text-xs text-[#2C3E50]/70">
+              <div className="mt-3 text-xs text-[#09215F]/70">
                 ⭐ Customer satisfaction: 4.8/5
               </div>
             )}
@@ -280,60 +280,60 @@ export default function EnhancedCashierDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Quick Actions */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6 flex items-center">
-              <Zap className="h-6 w-6 mr-3 text-[#4682B4]" />
+            <h2 className="text-2xl font-semibold text-[#09215F] mb-6 flex items-center">
+              <Zap className="h-6 w-6 mr-3 text-[#97CF50]" />
               Quick Actions
             </h2>
             <div className="grid grid-cols-1 gap-4">
               <button 
                 onClick={() => navigate('/cashier/pos')}
-                className="flex items-center p-4 rounded-xl border-2 border-[#4682B4]/20 hover:bg-gradient-to-r hover:from-[#87CEEB]/10 hover:to-[#4682B4]/10 transition-all duration-300 group hover:border-[#4682B4]/40 hover:shadow-lg"
+                className="flex items-center p-4 rounded-xl border-2 border-[#97CF50]/20 hover:bg-gradient-to-r hover:from-[#97CF50]/10 hover:to-[#97CF50]/10 transition-all duration-300 group hover:border-[#97CF50]/40 hover:shadow-lg"
               >
-                <div className="p-3 rounded-xl bg-gradient-to-br from-[#4682B4] to-[#2C3E50] text-white mr-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
+                <div className="p-3 rounded-xl bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white mr-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
                   <ShoppingCart className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold text-[#2C3E50] group-hover:text-[#4682B4] transition-colors">Open POS System</p>
-                  <p className="text-sm text-[#2C3E50]/80">Start processing customer sales</p>
+                  <p className="font-bold text-[#09215F] group-hover:text-[#97CF50] transition-colors">Open POS System</p>
+                  <p className="text-sm text-[#09215F]/80">Start processing customer sales</p>
                 </div>
               </button>
 
               <button 
                 onClick={() => navigate('/cashier/reports')}
-                className="flex items-center p-4 rounded-xl border-2 border-[#4682B4]/20 hover:bg-gradient-to-r hover:from-[#87CEEB]/10 hover:to-[#4682B4]/10 transition-all duration-300 group hover:border-[#4682B4]/40 hover:shadow-lg"
+                className="flex items-center p-4 rounded-xl border-2 border-[#97CF50]/20 hover:bg-gradient-to-r hover:from-[#97CF50]/10 hover:to-[#97CF50]/10 transition-all duration-300 group hover:border-[#97CF50]/40 hover:shadow-lg"
               >
                 <div className="p-3 rounded-xl bg-gradient-to-br from-green-500 to-green-600 text-white mr-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
                   <BarChart3 className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold text-[#2C3E50] group-hover:text-[#4682B4] transition-colors">View Performance Reports</p>
-                  <p className="text-sm text-[#2C3E50]/80">Daily and weekly sales analytics</p>
+                  <p className="font-bold text-[#09215F] group-hover:text-[#97CF50] transition-colors">View Performance Reports</p>
+                  <p className="text-sm text-[#09215F]/80">Daily and weekly sales analytics</p>
                 </div>
               </button>
 
               <button 
                 onClick={() => navigate('/admin/products')}
-                className="flex items-center p-4 rounded-xl border-2 border-[#4682B4]/20 hover:bg-gradient-to-r hover:from-[#87CEEB]/10 hover:to-[#4682B4]/10 transition-all duration-300 group hover:border-[#4682B4]/40 hover:shadow-lg"
+                className="flex items-center p-4 rounded-xl border-2 border-[#97CF50]/20 hover:bg-gradient-to-r hover:from-[#97CF50]/10 hover:to-[#97CF50]/10 transition-all duration-300 group hover:border-[#97CF50]/40 hover:shadow-lg"
               >
                 <div className="p-3 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 text-white mr-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
                   <Package className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold text-[#2C3E50] group-hover:text-[#4682B4] transition-colors">Check Inventory Status</p>
-                  <p className="text-sm text-[#2C3E50]/80">Current stock levels and alerts</p>
+                  <p className="font-bold text-[#09215F] group-hover:text-[#97CF50] transition-colors">Check Inventory Status</p>
+                  <p className="text-sm text-[#09215F]/80">Current stock levels and alerts</p>
                 </div>
               </button>
 
               <button 
                 onClick={() => window.print()}
-                className="flex items-center p-4 rounded-xl border-2 border-[#4682B4]/20 hover:bg-gradient-to-r hover:from-[#87CEEB]/10 hover:to-[#4682B4]/10 transition-all duration-300 group hover:border-[#4682B4]/40 hover:shadow-lg"
+                className="flex items-center p-4 rounded-xl border-2 border-[#97CF50]/20 hover:bg-gradient-to-r hover:from-[#97CF50]/10 hover:to-[#97CF50]/10 transition-all duration-300 group hover:border-[#97CF50]/40 hover:shadow-lg"
               >
                 <div className="p-3 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 text-white mr-4 group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
                   <Receipt className="h-6 w-6" />
                 </div>
                 <div className="text-left">
-                  <p className="font-bold text-[#2C3E50] group-hover:text-[#4682B4] transition-colors">Print End-of-Day Report</p>
-                  <p className="text-sm text-[#2C3E50]/80">Generate shift summary</p>
+                  <p className="font-bold text-[#09215F] group-hover:text-[#97CF50] transition-colors">Print End-of-Day Report</p>
+                  <p className="text-sm text-[#09215F]/80">Generate shift summary</p>
                 </div>
               </button>
             </div>
@@ -341,24 +341,24 @@ export default function EnhancedCashierDashboard() {
 
           {/* Recent Transactions */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6 flex items-center">
-              <Clock className="h-6 w-6 mr-3 text-[#4682B4]" />
+            <h2 className="text-2xl font-semibold text-[#09215F] mb-6 flex items-center">
+              <Clock className="h-6 w-6 mr-3 text-[#97CF50]" />
               Recent Transactions
             </h2>
             <div className="space-y-3">
               {recentTransactions.map((transaction) => (
-                <div key={transaction.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#87CEEB]/10 to-transparent rounded-xl border border-[#4682B4]/20 hover:from-[#87CEEB]/20 hover:border-[#4682B4]/30 transition-all duration-300">
+                <div key={transaction.id} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#97CF50]/10 to-transparent rounded-xl border border-[#97CF50]/20 hover:from-[#97CF50]/20 hover:border-[#97CF50]/30 transition-all duration-300">
                   <div className="flex items-center space-x-3">
                     <div className={`p-2 rounded-lg ${transaction.status === 'completed' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
                       {transaction.status === 'completed' ? <CheckCircle className="h-4 w-4" /> : <AlertCircle className="h-4 w-4" />}
                     </div>
                     <div>
-                      <p className="font-semibold text-[#2C3E50]">{transaction.customer}</p>
-                      <p className="text-sm text-[#2C3E50]/80">{transaction.items} items • {transaction.time}</p>
+                      <p className="font-semibold text-[#09215F]">{transaction.customer}</p>
+                      <p className="text-sm text-[#09215F]/80">{transaction.items} items • {transaction.time}</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-[#2C3E50]">{transaction.amount}</p>
+                    <p className="font-bold text-[#09215F]">{transaction.amount}</p>
                     <p className={`text-xs ${transaction.status === 'completed' ? 'text-green-600' : 'text-red-600'}`}>
                       {transaction.status}
                     </p>
@@ -372,24 +372,24 @@ export default function EnhancedCashierDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Top Products */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6 flex items-center">
-              <TrendingUp className="h-6 w-6 mr-3 text-[#4682B4]" />
+            <h2 className="text-2xl font-semibold text-[#09215F] mb-6 flex items-center">
+              <TrendingUp className="h-6 w-6 mr-3 text-[#97CF50]" />
               Top Selling Products
             </h2>
             <div className="space-y-4">
               {topProducts.map((product, index) => (
-                <div key={index} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#87CEEB]/10 to-transparent rounded-xl border border-[#4682B4]/20">
+                <div key={index} className="flex items-center justify-between p-4 bg-gradient-to-r from-[#97CF50]/10 to-transparent rounded-xl border border-[#97CF50]/20">
                   <div className="flex items-center space-x-4">
-                    <div className="bg-[#4682B4] text-white rounded-lg px-3 py-2 font-bold">
+                    <div className="bg-[#97CF50] text-white rounded-lg px-3 py-2 font-bold">
                       #{index + 1}
                     </div>
                     <div>
-                      <p className="font-semibold text-[#2C3E50]">{product.name}</p>
-                      <p className="text-sm text-[#2C3E50]/80">{product.sold} units sold</p>
+                      <p className="font-semibold text-[#09215F]">{product.name}</p>
+                      <p className="text-sm text-[#09215F]/80">{product.sold} units sold</p>
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-[#2C3E50]">{product.revenue}</p>
+                    <p className="font-bold text-[#09215F]">{product.revenue}</p>
                     <p className="text-sm text-green-600 font-semibold">{product.trend}</p>
                   </div>
                 </div>
@@ -399,8 +399,8 @@ export default function EnhancedCashierDashboard() {
 
           {/* Achievements */}
           <div className="bg-white rounded-2xl shadow-xl p-6">
-            <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6 flex items-center">
-              <Award className="h-6 w-6 mr-3 text-[#4682B4]" />
+            <h2 className="text-2xl font-semibold text-[#09215F] mb-6 flex items-center">
+              <Award className="h-6 w-6 mr-3 text-[#97CF50]" />
               Today's Achievements
             </h2>
             <div className="space-y-4">
@@ -440,37 +440,37 @@ export default function EnhancedCashierDashboard() {
         {/* Enhanced Features Info */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center">
-            <div className="bg-gradient-to-br from-[#4682B4] to-[#2C3E50] text-white p-6 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
+            <div className="bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white p-6 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center">
               <Eye className="h-10 w-10" />
             </div>
-            <h3 className="text-2xl font-bold text-[#2C3E50] mb-4">Advanced Cashier Features</h3>
-            <p className="text-[#2C3E50]/80 mb-8 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold text-[#09215F] mb-4">Advanced Cashier Features</h3>
+            <p className="text-[#09215F]/80 mb-8 max-w-2xl mx-auto">
               This comprehensive dashboard provides real-time insights and powerful tools for modern retail operations.
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">🔥 Real-time Analytics</h4>
-                <p className="text-sm text-[#2C3E50]/80">Live performance tracking and instant insights</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">🔥 Real-time Analytics</h4>
+                <p className="text-sm text-[#09215F]/80">Live performance tracking and instant insights</p>
               </div>
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">🎯 Smart Recommendations</h4>
-                <p className="text-sm text-[#2C3E50]/80">AI-powered product suggestions and upselling</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">🎯 Smart Recommendations</h4>
+                <p className="text-sm text-[#09215F]/80">AI-powered product suggestions and upselling</p>
               </div>
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">📱 Mobile Integration</h4>
-                <p className="text-sm text-[#2C3E50]/80">Seamless mobile POS and inventory management</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">📱 Mobile Integration</h4>
+                <p className="text-sm text-[#09215F]/80">Seamless mobile POS and inventory management</p>
               </div>
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">🏆 Gamification</h4>
-                <p className="text-sm text-[#2C3E50]/80">Achievement system and performance rewards</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">🏆 Gamification</h4>
+                <p className="text-sm text-[#09215F]/80">Achievement system and performance rewards</p>
               </div>
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">🔐 Advanced Security</h4>
-                <p className="text-sm text-[#2C3E50]/80">Fraud detection and secure payment processing</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">🔐 Advanced Security</h4>
+                <p className="text-sm text-[#09215F]/80">Fraud detection and secure payment processing</p>
               </div>
-              <div className="bg-gradient-to-br from-[#87CEEB]/20 to-[#4682B4]/10 p-6 rounded-2xl border border-[#4682B4]/20">
-                <h4 className="font-bold text-[#2C3E50] mb-2">📊 Predictive Analytics</h4>
-                <p className="text-sm text-[#2C3E50]/80">Forecasting and trend analysis for better decisions</p>
+              <div className="bg-gradient-to-br from-[#97CF50]/20 to-[#97CF50]/10 p-6 rounded-2xl border border-[#97CF50]/20">
+                <h4 className="font-bold text-[#09215F] mb-2">📊 Predictive Analytics</h4>
+                <p className="text-sm text-[#09215F]/80">Forecasting and trend analysis for better decisions</p>
               </div>
             </div>
           </div>

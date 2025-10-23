@@ -73,9 +73,9 @@ export default function QuickRegistrationTest() {
       </CardHeader>
       
       <CardContent className="space-y-4">
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="text-sm font-medium text-blue-900 mb-2">This test will:</h4>
-          <ul className="text-sm text-blue-800 space-y-1 list-disc list-inside">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h4 className="text-sm font-medium text-green-900 mb-2">This test will:</h4>
+          <ul className="text-sm text-green-800 space-y-1 list-disc list-inside">
             <li>Create a test consumer account</li>
             <li>Verify userType → role field mapping works</li>
             <li>Check if firstName/lastName mapping is correct</li>

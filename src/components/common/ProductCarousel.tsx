@@ -65,7 +65,7 @@ export default function ProductCarousel({
           {showViewAll && (
             <Link
               to={viewAllLink}
-              className="inline-flex items-center text-blue-600 hover:text-blue-800 font-medium mt-4 sm:mt-0 group"
+              className="inline-flex items-center text-green-600 hover:text-green-800 font-medium mt-4 sm:mt-0 group"
             >
               View All Products
               <ArrowRight className="ml-1 h-4 w-4 group-hover:translate-x-1 transition-transform" />

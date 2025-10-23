@@ -85,11 +85,11 @@ export default function Favourites() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg inline-block mb-4">
             <Heart className="h-8 w-8" />
           </div>
           <LoadingSpinner size="large" />
-          <p className="mt-4 text-[#2C3E50] font-medium">Loading your favourites...</p>
+          <p className="mt-4 text-[#09215F] font-medium">Loading your favourites...</p>
         </div>
       </div>
     );
@@ -100,24 +100,24 @@ export default function Favourites() {
       <div className="min-h-screen bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <div className="bg-gradient-to-br from-[#4682B4] to-[#2C3E50] text-white p-6 rounded-2xl shadow-lg inline-block mb-6">
+            <div className="bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white p-6 rounded-2xl shadow-lg inline-block mb-6">
               <Heart className="h-16 w-16" />
             </div>
-            <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">No favourites yet</h2>
-            <p className="text-[#2C3E50]/80 text-lg mb-8">
+            <h2 className="text-4xl font-bold text-[#09215F] mb-4">No favourites yet</h2>
+            <p className="text-[#09215F]/80 text-lg mb-8">
               Start building your wishlist by adding your favourite cleaning supplies!
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/products"
-                className="inline-flex items-center bg-[#4682B4] text-white px-8 py-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-medium"
+                className="inline-flex items-center bg-primary text-primary-foreground px-8 py-4 rounded-xl hover:bg-secondary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-medium"
               >
                 <ShoppingBag className="h-6 w-6 mr-3" />
                 Browse Products
               </Link>
               <Link
                 to="/"
-                className="inline-flex items-center border-2 border-[#4682B4] text-[#4682B4] px-8 py-4 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 text-lg font-medium"
+                className="inline-flex items-center border-2 border-primary text-primary px-8 py-4 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-lg font-medium"
               >
                 <Sparkles className="h-6 w-6 mr-3" />
                 Explore Featured
@@ -134,16 +134,16 @@ export default function Favourites() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
-          <div className="bg-gradient-to-br from-[#4682B4] to-[#2C3E50] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
             <Heart className="h-8 w-8" />
           </div>
-          <h1 className="text-4xl font-bold text-[#2C3E50] mb-2">My Favourites</h1>
-          <p className="text-[#2C3E50]/80 text-lg">
+          <h1 className="text-4xl font-bold text-[#09215F] mb-2">My Favourites</h1>
+          <p className="text-[#09215F]/80 text-lg">
             {items.length} professional cleaning {items.length !== 1 ? 'products' : 'product'} saved
           </p>
           {!user && (
-            <div className="mt-4 bg-blue-50 border border-blue-200 rounded-xl p-4 inline-block">
-              <p className="text-blue-800 text-sm">
+            <div className="mt-4 bg-green-50 border border-green-200 rounded-xl p-4 inline-block">
+              <p className="text-green-800 text-sm">
                 💡 <Link to="/login" className="underline hover:no-underline">Sign in</Link> to sync your favourites across devices
               </p>
             </div>
@@ -156,7 +156,7 @@ export default function Favourites() {
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100">
               <div className="p-8">
                 <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-[#2C3E50]">Saved Products</h2>
+                  <h2 className="text-2xl font-bold text-[#09215F]">Saved Products</h2>
                   <button
                     onClick={handleClearFavourites}
                     className="text-sm text-red-600 hover:text-red-800 flex items-center bg-red-50 px-4 py-2 rounded-xl hover:bg-red-100 transition-all duration-300"
@@ -220,7 +220,7 @@ export default function Favourites() {
 
                           {/* Product name */}
                           <Link to={`/products/${item.product_id}`}>
-                            <h3 className="font-semibold text-[#2C3E50] hover:text-[#4682B4] transition-colors line-clamp-2">
+                            <h3 className="font-semibold text-[#09215F] hover:text-[#97CF50] transition-colors line-clamp-2">
                               {item.name}
                             </h3>
                           </Link>
@@ -256,7 +256,7 @@ export default function Favourites() {
                           {/* Pricing */}
                           <div className="flex items-center justify-between">
                             <div className="flex items-center space-x-2">
-                              <span className="text-xl font-bold text-[#2C3E50]">
+                              <span className="text-xl font-bold text-[#09215F]">
                                 R{item.price.toFixed(2)}
                               </span>
                               {item.original_price && item.original_price > item.price && (
@@ -282,7 +282,7 @@ export default function Favourites() {
                                 ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                                 : stockInfo.urgent
                                 ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600 animate-pulse'
-                                : 'bg-[#4682B4] text-white hover:bg-[#2C3E50]'
+                                : 'bg-primary text-primary-foreground hover:bg-secondary'
                             }`}
                           >
                             {addingToCart === item.id ? (
@@ -316,12 +316,12 @@ export default function Favourites() {
           {/* Quick Actions Sidebar */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 sticky top-4">
-              <h2 className="text-2xl font-bold text-[#2C3E50] mb-6">Quick Actions</h2>
+              <h2 className="text-2xl font-bold text-[#09215F] mb-6">Quick Actions</h2>
               
               <div className="space-y-6">
                 {/* Stock summary */}
-                <div className="bg-gradient-to-r from-[#4682B4]/10 to-[#2C3E50]/10 rounded-xl p-4">
-                  <h3 className="font-semibold text-[#2C3E50] mb-3">Stock Summary</h3>
+                <div className="bg-gradient-to-r from-[#97CF50]/10 to-[#09215F]/10 rounded-xl p-4">
+                  <h3 className="font-semibold text-[#09215F] mb-3">Stock Summary</h3>
                   <div className="space-y-2 text-sm">
                     <div className="flex justify-between">
                       <span className="text-green-600">In Stock:</span>
@@ -340,11 +340,11 @@ export default function Favourites() {
 
                 {/* Category breakdown */}
                 <div className="bg-gray-50 rounded-xl p-4">
-                  <h3 className="font-semibold text-[#2C3E50] mb-3">Categories</h3>
+                  <h3 className="font-semibold text-[#09215F] mb-3">Categories</h3>
                   <div className="space-y-2 text-sm">
                     {Array.from(new Set(items.map(item => item.category))).map(category => (
                       <div key={category} className="flex justify-between">
-                        <span className="text-[#2C3E50]/70">{category}:</span>
+                        <span className="text-[#09215F]/70">{category}:</span>
                         <span className="font-medium">{items.filter(item => item.category === category).length}</span>
                       </div>
                     ))}
@@ -355,7 +355,7 @@ export default function Favourites() {
                 <div className="space-y-4">
                   <Link
                     to="/products"
-                    className="w-full bg-[#4682B4] text-white py-3 px-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 flex items-center justify-center font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="w-full bg-primary text-primary-foreground py-3 px-4 rounded-xl hover:bg-secondary transition-all duration-300 flex items-center justify-center font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     <ShoppingBag className="h-5 w-5 mr-2" />
                     Browse More Products
@@ -363,7 +363,7 @@ export default function Favourites() {
 
                   <Link
                     to="/cart"
-                    className="w-full border-2 border-[#4682B4] text-[#4682B4] py-3 px-4 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 flex items-center justify-center font-medium"
+                    className="w-full border-2 border-primary text-primary py-3 px-4 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center font-medium"
                   >
                     <ShoppingCart className="h-5 w-5 mr-2" />
                     View Cart
@@ -371,9 +371,9 @@ export default function Favourites() {
                 </div>
 
                 {/* Tips */}
-                <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                  <h3 className="font-semibold text-blue-800 mb-2">💡 Pro Tips</h3>
-                  <ul className="text-sm text-blue-700 space-y-1">
+                <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                  <h3 className="font-semibold text-green-800 mb-2">💡 Pro Tips</h3>
+                  <ul className="text-sm text-green-700 space-y-1">
                     <li>• Stock levels update in real-time</li>
                     <li>• Get notified of low stock items</li>
                     <li>• Add multiple items to cart at once</li>

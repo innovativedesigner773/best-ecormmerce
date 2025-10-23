@@ -233,7 +233,7 @@ export default function DatabaseSetupComponent() {
       <EnvironmentSetup />
 
       {/* exec_sql Function Status */}
-      <Card className="border-blue-200">
+      <Card className="border-green-200">
         <CardHeader>
           <CardTitle className="flex items-center gap-2">
             <Settings className="w-5 h-5 text-[#4682B4]" />
@@ -375,12 +375,12 @@ export default function DatabaseSetupComponent() {
                 <Progress value={setupProgress} className="h-3" />
               </div>
               
-              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                 <div className="flex items-center">
-                  <RefreshCw className="w-5 h-5 text-blue-600 animate-spin mr-3" />
+                  <RefreshCw className="w-5 h-5 text-green-600 animate-spin mr-3" />
                   <div>
-                    <p className="text-sm font-medium text-blue-900">Setting up database...</p>
-                    <p className="text-xs text-blue-700 mt-1">This may take a few minutes to complete.</p>
+                    <p className="text-sm font-medium text-green-900">Setting up database...</p>
+                    <p className="text-xs text-green-700 mt-1">This may take a few minutes to complete.</p>
                   </div>
                 </div>
               </div>
@@ -541,9 +541,9 @@ export default function DatabaseSetupComponent() {
               </p>
             </div>
 
-            <Alert className="border-blue-200 bg-blue-50">
-              <AlertTriangle className="h-4 w-4 text-blue-600" />
-              <AlertDescription className="text-blue-800">
+            <Alert className="border-green-200 bg-green-50">
+              <AlertTriangle className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-800">
                 <strong>Important:</strong> Make sure you're using your Service Role Key, not the anon key, 
                 for database setup operations. The Service Role Key can be found in your Supabase project settings.
               </AlertDescription>

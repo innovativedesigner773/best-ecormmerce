@@ -234,11 +234,11 @@ export default function Cart() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg inline-block mb-4">
             <Package className="h-8 w-8" />
           </div>
           <LoadingSpinner size="large" />
-          <p className="mt-4 text-[#2C3E50] font-medium">Loading your cart...</p>
+          <p className="mt-4 text-[#09215F] font-medium">Loading your cart...</p>
         </div>
       </div>
     );
@@ -249,16 +249,16 @@ export default function Cart() {
       <div className="min-h-screen bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
-            <div className="bg-[#4682B4] text-white p-6 rounded-2xl shadow-lg inline-block mb-6">
+            <div className="bg-primary text-primary-foreground p-6 rounded-2xl shadow-lg inline-block mb-6">
               <ShoppingBag className="h-16 w-16" />
             </div>
-            <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">Your cart is empty</h2>
-            <p className="text-[#2C3E50]/80 text-lg mb-8">
+            <h2 className="text-4xl font-bold text-[#09215F] mb-4">Your cart is empty</h2>
+            <p className="text-[#09215F]/80 text-lg mb-8">
               Looks like you haven't added any professional cleaning supplies to your cart yet.
             </p>
             <Link
               to="/products"
-              className="inline-flex items-center bg-[#4682B4] text-white px-8 py-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-medium"
+              className="inline-flex items-center bg-primary text-primary-foreground px-8 py-4 rounded-xl hover:bg-secondary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 text-lg font-medium"
             >
               <ShoppingBag className="h-6 w-6 mr-3" />
               Continue Shopping
@@ -274,11 +274,11 @@ export default function Cart() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header Section */}
         <div className="mb-8 text-center">
-          <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg inline-block mb-4">
             <ShoppingBag className="h-8 w-8" />
           </div>
-          <h1 className="text-4xl font-bold text-[#2C3E50] mb-2">Shopping Cart</h1>
-          <p className="text-[#2C3E50]/80 text-lg">
+          <h1 className="text-4xl font-bold text-[#09215F] mb-2">Shopping Cart</h1>
+          <p className="text-[#09215F]/80 text-lg">
             {items.length} professional cleaning {items.length !== 1 ? 'products' : 'product'} in your cart
           </p>
         </div>
@@ -289,7 +289,7 @@ export default function Cart() {
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100">
               <div className="p-8">
                 <div className="flex justify-between items-center mb-8">
-                  <h2 className="text-2xl font-bold text-[#2C3E50]">Cart Items</h2>
+                  <h2 className="text-2xl font-bold text-[#09215F]">Cart Items</h2>
                   <button
                     onClick={() => clearCart()}
                     className="text-sm text-red-600 hover:text-red-800 flex items-center bg-red-50 px-4 py-2 rounded-xl hover:bg-red-100 transition-all duration-300"
@@ -330,10 +330,10 @@ export default function Cart() {
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <h3 className="text-lg font-semibold text-[#2C3E50] mb-1">
+                          <h3 className="text-lg font-semibold text-[#09215F] mb-1">
                             {item.name}
                           </h3>
-                          <p className="text-[#2C3E50]/60 text-sm mb-2">SKU: {item.sku}</p>
+                          <p className="text-[#09215F]/60 text-sm mb-2">SKU: {item.sku}</p>
                           
                           {/* Stock Status */}
                           <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border ${stockStatus.color} mb-2`}>
@@ -390,9 +390,9 @@ export default function Cart() {
                               className="p-2 hover:bg-gray-100 disabled:opacity-50 rounded-l-xl transition-colors"
                               disabled={item.quantity <= 1}
                             >
-                              <Minus className="h-4 w-4 text-[#2C3E50]" />
+                              <Minus className="h-4 w-4 text-[#09215F]" />
                             </button>
-                            <span className="px-4 py-2 text-lg font-semibold text-[#2C3E50] min-w-[3rem] text-center">
+                            <span className="px-4 py-2 text-lg font-semibold text-[#09215F] min-w-[3rem] text-center">
                               {item.quantity}
                             </span>
                             <button
@@ -400,14 +400,14 @@ export default function Cart() {
                               className="p-2 hover:bg-gray-100 rounded-r-xl transition-colors disabled:opacity-50"
                               disabled={!productStock.in_stock || item.quantity >= Math.min(maxAvailable, 10)}
                             >
-                              <Plus className="h-4 w-4 text-[#2C3E50]" />
+                              <Plus className="h-4 w-4 text-[#09215F]" />
                             </button>
                           </div>
 
                           {/* Price */}
                           <div className="text-right min-w-0">
                             <div className="flex flex-col items-end space-y-1">
-                              <span className="text-xl font-bold text-[#2C3E50]">
+                              <span className="text-xl font-bold text-[#09215F]">
                                 R{(item.price * item.quantity).toFixed(2)}
                               </span>
                               {item.original_price > item.price && (
@@ -440,11 +440,11 @@ export default function Cart() {
 
             {/* Promo Code Section */}
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 mt-6 p-8">
-              <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Promotions & Discounts</h3>
+              <h3 className="text-2xl font-bold text-[#09215F] mb-6">Promotions & Discounts</h3>
               
               {/* Apply Promo Code */}
               <div className="mb-6">
-                <label className="block text-sm font-medium text-[#2C3E50] mb-3">
+                <label className="block text-sm font-medium text-[#09215F] mb-3">
                   Promo Code
                 </label>
                 <div className="flex space-x-3">
@@ -453,12 +453,12 @@ export default function Cart() {
                     value={promoCode}
                     onChange={(e) => setPromoCode(e.target.value)}
                     placeholder="Enter promo code"
-                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                    className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                   />
                   <button
                     onClick={handleApplyPromoCode}
                     disabled={isApplyingPromo}
-                    className="bg-[#4682B4] text-white px-6 py-3 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 disabled:opacity-50 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="bg-primary text-primary-foreground px-6 py-3 rounded-xl hover:bg-secondary transition-all duration-300 disabled:opacity-50 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     {isApplyingPromo ? (
                       <LoadingSpinner size="small" />
@@ -472,7 +472,7 @@ export default function Cart() {
               {/* Applied Promotions */}
               {applied_promotions.length > 0 && (
                 <div className="mb-6">
-                  <h4 className="text-lg font-semibold text-[#2C3E50] mb-3">Applied Promotions</h4>
+                  <h4 className="text-lg font-semibold text-[#09215F] mb-3">Applied Promotions</h4>
                   <div className="space-y-3">
                     {applied_promotions.map((promotion) => (
                       <div key={promotion.id} className="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl p-4">
@@ -499,7 +499,7 @@ export default function Cart() {
               {/* Loyalty Points */}
               {user && (
                 <div>
-                  <label className="block text-lg font-semibold text-[#2C3E50] mb-3">
+                  <label className="block text-lg font-semibold text-[#09215F] mb-3">
                     Loyalty Points (Available: {user.user_metadata?.loyalty_points || 0})
                   </label>
                   <div className="flex space-x-3">
@@ -509,7 +509,7 @@ export default function Cart() {
                       onChange={(e) => setLoyaltyPointsToRedeem(e.target.value)}
                       placeholder="Points to redeem"
                       max={user.user_metadata?.loyalty_points || 0}
-                      className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                      className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                     />
                     <button
                       onClick={handleRedeemPoints}
@@ -519,7 +519,7 @@ export default function Cart() {
                       Redeem
                     </button>
                   </div>
-                  <p className="text-sm text-[#2C3E50]/60 mt-2">
+                  <p className="text-sm text-[#09215F]/60 mt-2">
                     1 point = R0.01 • Minimum 100 points
                   </p>
                 </div>
@@ -530,12 +530,12 @@ export default function Cart() {
           {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 sticky top-4">
-              <h2 className="text-2xl font-bold text-[#2C3E50] mb-6">Order Summary</h2>
+              <h2 className="text-2xl font-bold text-[#09215F] mb-6">Order Summary</h2>
               
               <div className="space-y-4">
                 <div className="flex justify-between text-lg">
-                  <span className="text-[#2C3E50]/80">Subtotal ({items.length} items)</span>
-                  <span className="font-semibold text-[#2C3E50]">R{subtotal.toFixed(2)}</span>
+                  <span className="text-[#09215F]/80">Subtotal ({items.length} items)</span>
+                  <span className="font-semibold text-[#09215F]">R{subtotal.toFixed(2)}</span>
                 </div>
 
                 {promotion_discount > 0 && (
@@ -560,8 +560,8 @@ export default function Cart() {
                 )}
 
                 <div className="flex justify-between text-lg">
-                  <span className="text-[#2C3E50]/80">Shipping</span>
-                  <span className="font-semibold text-[#2C3E50]">
+                  <span className="text-[#09215F]/80">Shipping</span>
+                  <span className="font-semibold text-[#09215F]">
                     {total >= 500 ? (
                       <span className="text-green-600">FREE</span>
                     ) : (
@@ -571,15 +571,15 @@ export default function Cart() {
                 </div>
 
                 <div className="border-t border-gray-200 pt-4">
-                  <div className="flex justify-between text-2xl font-bold text-[#2C3E50]">
+                  <div className="flex justify-between text-2xl font-bold text-[#09215F]">
                     <span>Total</span>
                     <span>R{(total + (total >= 500 ? 0 : 50)).toFixed(2)}</span>
                   </div>
                 </div>
 
                 {total < 500 && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-                    <p className="text-blue-800 font-medium">
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                    <p className="text-green-800 font-medium">
                       Add R{(500 - total).toFixed(2)} more for free shipping!
                     </p>
                   </div>
@@ -589,7 +589,7 @@ export default function Cart() {
               <div className="mt-8 space-y-4">
                 <button
                   onClick={handleProceedToCheckout}
-                  className="w-full bg-[#4682B4] text-white py-4 px-6 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 flex items-center justify-center text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                  className="w-full bg-primary text-primary-foreground py-4 px-6 rounded-xl hover:bg-secondary transition-all duration-300 flex items-center justify-center text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                 >
                   Proceed to Checkout
                   <ArrowRight className="ml-3 h-6 w-6" />
@@ -607,7 +607,7 @@ export default function Cart() {
 
                 <Link
                   to="/products"
-                  className="w-full border-2 border-[#4682B4] text-[#4682B4] py-4 px-6 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 flex items-center justify-center text-lg font-semibold"
+                  className="w-full border-2 border-primary text-primary py-4 px-6 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 flex items-center justify-center text-lg font-semibold"
                 >
                   Continue Shopping
                 </Link>
@@ -615,7 +615,7 @@ export default function Cart() {
 
               {/* Security Badge */}
               <div className="mt-8 text-center">
-                <div className="flex items-center justify-center text-[#2C3E50]/60 bg-gray-50 py-3 px-4 rounded-xl">
+                <div className="flex items-center justify-center text-[#09215F]/60 bg-gray-50 py-3 px-4 rounded-xl">
                   <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>

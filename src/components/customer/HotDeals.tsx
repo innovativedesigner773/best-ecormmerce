@@ -252,7 +252,7 @@ export function HotDeals({ maxPromotions = 6, showViewAll = true }: HotDealsProp
                           </code>
                           <button
                             onClick={() => navigator.clipboard.writeText(promotion.code)}
-                            className="text-blue-600 hover:text-blue-800 text-sm font-medium"
+                            className="text-green-600 hover:text-green-800 text-sm font-medium"
                           >
                             Copy
                           </button>
@@ -323,7 +323,7 @@ export function HotDeals({ maxPromotions = 6, showViewAll = true }: HotDealsProp
                     
                     <div className="p-4">
                       <h4 className="font-semibold text-gray-900 mb-2 line-clamp-2">
-                        <Link to={`/products/${product.id}`} className="hover:text-blue-600">
+                        <Link to={`/products/${product.id}`} className="hover:text-green-600">
                           {product.name}
                         </Link>
                       </h4>

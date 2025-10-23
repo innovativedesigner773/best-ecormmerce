@@ -87,7 +87,7 @@ export function LoadingOverlay({ message, progress, className = '' }: LoadingOve
     <div className={`fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 ${className}`}>
       <div className="bg-white rounded-lg p-6 max-w-sm w-full mx-4 text-center">
         <div className="flex justify-center mb-4">
-          <Loader2 className="h-8 w-8 text-blue-600 animate-spin" />
+          <Loader2 className="h-8 w-8 text-green-600 animate-spin" />
         </div>
         
         {message && (
@@ -97,7 +97,7 @@ export function LoadingOverlay({ message, progress, className = '' }: LoadingOve
         {progress !== undefined && (
           <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
             <div 
-              className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              className="bg-green-600 h-2 rounded-full transition-all duration-300"
               style={{ width: `${progress}%` }}
             />
           </div>

@@ -691,11 +691,11 @@ export function ProductManagement() {
           <p className="text-gray-600">Manage your inventory and add new products</p>
         </div>
         <div className="flex gap-2">
-          <Button onClick={() => setShowScanner(true)} className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Button onClick={() => setShowScanner(true)} className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 shadow-lg hover:shadow-xl">
             <Scan className="h-4 w-4 mr-2" />
             Scan Barcode
           </Button>
-          <Button onClick={() => setShowManualAdd(true)} className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl">
+          <Button onClick={() => setShowManualAdd(true)} className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 shadow-lg hover:shadow-xl">
             <Plus className="h-4 w-4 mr-2" />
             Manual Add
           </Button>
@@ -742,7 +742,7 @@ export function ProductManagement() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="">All Categories</option>
                 {categories.map(category => (
@@ -754,7 +754,7 @@ export function ProductManagement() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="all">All Status</option>
                 <option value="active">Active</option>
@@ -765,7 +765,7 @@ export function ProductManagement() {
               <select
                 value={featuredFilter}
                 onChange={(e) => setFeaturedFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="all">All Products</option>
                 <option value="featured">Featured</option>
@@ -776,7 +776,7 @@ export function ProductManagement() {
               <select
                 value={stockFilter}
                 onChange={(e) => setStockFilter(e.target.value as any)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="all">All Stock</option>
                 <option value="in_stock">In Stock</option>
@@ -860,7 +860,7 @@ export function ProductManagement() {
                 : 'Get started by scanning a barcode or adding products manually.'
               }
             </p>
-            <Button onClick={() => setShowScanner(true)} className="bg-blue-600 hover:bg-blue-700">
+            <Button onClick={() => setShowScanner(true)} className="bg-[#97CF50] hover:bg-[#09215F]">
               <Scan className="h-4 w-4 mr-2" />
               Scan Your First Product
             </Button>
@@ -943,7 +943,7 @@ export function ProductManagement() {
                         <select
                           value={formData.category_id}
                           onChange={(e) => setFormData({...formData, category_id: e.target.value})}
-                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         >
                           <option value="">Select a category</option>
                           {categories.map((category) => (
@@ -955,7 +955,7 @@ export function ProductManagement() {
                         <button
                           type="button"
                           onClick={() => setShowNewCategoryInput(!showNewCategoryInput)}
-                          className="px-3 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition-colors duration-200 text-sm"
+                          className="px-3 py-2 bg-[#97CF50] text-white rounded-md hover:bg-[#09215F] transition-colors duration-200 text-sm"
                           title="Add New Category"
                         >
                           {showNewCategoryInput ? '✕' : '+'}
@@ -1022,7 +1022,7 @@ export function ProductManagement() {
                     value={formData.description}
                     onChange={(e) => setFormData({...formData, description: e.target.value})}
                     placeholder="Detailed product description"
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     rows={3}
                   />
                 </div>
@@ -1106,7 +1106,7 @@ export function ProductManagement() {
                           />
                           <label
                             htmlFor="image-upload"
-                            className="cursor-pointer bg-blue-50 text-blue-600 px-3 py-2 rounded-md text-sm font-medium hover:bg-blue-100 transition-colors"
+                            className="cursor-pointer bg-[#97CF50]/10 text-[#97CF50] px-3 py-2 rounded-md text-sm font-medium hover:bg-[#97CF50]/20 transition-colors"
                           >
                             Choose Files
                           </label>
@@ -1444,7 +1444,7 @@ export function ProductManagement() {
                   Description
                 </label>
                 <textarea
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
                   rows={4}
                   value={editFormData.description}
                   onChange={(e) => setEditFormData({...editFormData, description: e.target.value})}
@@ -1488,7 +1488,7 @@ export function ProductManagement() {
                   type="button"
                   onClick={handleUpdateProduct}
                   disabled={isUpdating || !editFormData.name || editFormData.price <= 0}
-                  className="flex-1 px-4 py-2 rounded-lg text-white bg-gradient-to-r from-[#4682B4] to-[#87CEEB] hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 font-semibold flex items-center justify-center"
+                  className="flex-1 px-4 py-2 rounded-lg text-white bg-gradient-to-r from-[#97CF50] to-[#97CF50] hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50 font-semibold flex items-center justify-center"
                 >
                   {isUpdating ? (
                     <>

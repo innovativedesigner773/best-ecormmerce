@@ -92,7 +92,7 @@ export default function CategoryShowcase({
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h2 className="text-4xl font-bold text-[#2C3E50] mb-4">{title}</h2>
+          <h2 className="text-4xl font-bold text-[#09215F] mb-4">{title}</h2>
           <p className="text-xl text-[#6C757D] max-w-3xl mx-auto">{subtitle}</p>
         </motion.div>
 
@@ -105,8 +105,8 @@ export default function CategoryShowcase({
             onClick={() => setSelectedCategory(null)}
             className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
               selectedCategory === null
-                ? 'bg-[#4682B4] text-white shadow-lg hover:bg-[#2C3E50]'
-                : 'bg-white text-[#2C3E50] hover:bg-[#F8F9FA] shadow-md border border-gray-200'
+                ? 'bg-[#97CF50] text-white shadow-lg hover:bg-[#09215F]'
+                : 'bg-white text-[#09215F] hover:bg-[#F8F9FA] shadow-md border border-gray-200'
             }`}
           >
             All Categories
@@ -120,8 +120,8 @@ export default function CategoryShowcase({
               onClick={() => setSelectedCategory(category.name)}
               className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
                 selectedCategory === category.name
-                  ? 'bg-[#4682B4] text-white shadow-lg hover:bg-[#2C3E50]'
-                  : 'bg-white text-[#2C3E50] hover:bg-[#F8F9FA] shadow-md border border-gray-200'
+                  ? 'bg-[#97CF50] text-white shadow-lg hover:bg-[#09215F]'
+                  : 'bg-white text-[#09215F] hover:bg-[#F8F9FA] shadow-md border border-gray-200'
               }`}
             >
               {category.name}
@@ -180,13 +180,13 @@ export default function CategoryShowcase({
               {categoryProducts[category.name] && categoryProducts[category.name].length > 0 && (
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-4">
-                    <h4 className="font-semibold text-[#2C3E50] flex items-center">
-                      <TrendingUp className="h-4 w-4 mr-2 text-[#4682B4]" />
+                    <h4 className="font-semibold text-[#09215F] flex items-center">
+                      <TrendingUp className="h-4 w-4 mr-2 text-[#97CF50]" />
                       Popular in {category.name}
                     </h4>
                     <Link
                       to={`/products?category=${encodeURIComponent(category.slug || category.name)}`}
-                      className="text-[#4682B4] hover:text-[#2C3E50] text-sm font-medium"
+                      className="text-[#97CF50] hover:text-[#09215F] text-sm font-medium"
                     >
                       View All
                     </Link>
@@ -211,12 +211,12 @@ export default function CategoryShowcase({
                         <div className="flex-1 min-w-0">
                           <Link
                             to={`/products/${product.id}`}
-                            className="text-sm font-medium text-[#2C3E50] hover:text-[#4682B4] line-clamp-1"
+                            className="text-sm font-medium text-[#09215F] hover:text-[#97CF50] line-clamp-1"
                           >
                             {product.name}
                           </Link>
                           <div className="flex items-center space-x-2 mt-1">
-                            <span className="text-sm font-bold text-[#2C3E50]">
+                            <span className="text-sm font-bold text-[#09215F]">
                               R{product.price.toFixed(2)}
                             </span>
                             {product.original_price && product.original_price > product.price && (
@@ -252,7 +252,7 @@ export default function CategoryShowcase({
         >
           <Link
             to="/products"
-            className="inline-flex items-center bg-[#4682B4] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            className="inline-flex items-center bg-[#97CF50] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#09215F] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
           >
             <Package className="h-5 w-5 mr-2" />
             Browse All Categories

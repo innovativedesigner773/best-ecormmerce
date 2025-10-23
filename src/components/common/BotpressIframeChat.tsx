@@ -98,7 +98,7 @@ export default function BotpressIframeChat() {
               </p>
               <button
                 onClick={() => setIframeError(false)}
-                className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors text-sm"
+                className="px-4 py-2 bg-[#97CF50] text-white rounded-lg hover:bg-[#09215F] transition-colors text-sm"
               >
                 Retry
               </button>

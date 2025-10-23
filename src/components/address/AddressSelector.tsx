@@ -203,7 +203,7 @@ export default function AddressSelector({
 
         {/* Selected Address Display */}
         {selectedAddress && !expanded && (
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center mb-2">
@@ -243,7 +243,7 @@ export default function AddressSelector({
                 key={address.id}
                 className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 ${
                   selectedAddress?.id === address.id
-                    ? 'border-[#4682B4] bg-blue-50'
+                    ? 'border-[#4682B4] bg-green-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => {
@@ -309,7 +309,7 @@ export default function AddressSelector({
             {!showAddForm ? (
               <button
                 onClick={() => setShowAddForm(true)}
-                className="w-full flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-[#4682B4] hover:border-[#4682B4] hover:bg-blue-50 transition-all duration-300"
+                className="w-full flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-[#4682B4] hover:border-[#4682B4] hover:bg-green-50 transition-all duration-300"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Address

@@ -177,7 +177,7 @@ export default function OrderHistory() {
       case 'pending':
         return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'processing':
-        return 'bg-blue-100 text-blue-800 border-blue-200';
+        return 'bg-green-100 text-green-800 border-green-200';
       case 'shipped':
         return 'bg-purple-100 text-purple-800 border-purple-200';
       case 'delivered':
@@ -259,12 +259,12 @@ export default function OrderHistory() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="bg-[#4682B4] text-white p-3 rounded-2xl shadow-lg">
+            <div className="bg-[#97CF50] text-white p-3 rounded-2xl shadow-lg">
               <ShoppingBag className="h-8 w-8" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-[#2C3E50]">Order History</h1>
-              <p className="text-[#2C3E50]/70 mt-1">Track and manage your orders</p>
+              <h1 className="text-4xl font-bold text-[#09215F]">Order History</h1>
+              <p className="text-[#09215F]/70 mt-1">Track and manage your orders</p>
             </div>
           </div>
         </div>
@@ -273,10 +273,10 @@ export default function OrderHistory() {
         {loading && (
           <div className="flex items-center justify-center py-12">
             <div className="text-center">
-              <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+              <div className="bg-[#97CF50] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
                 <Package className="h-8 w-8" />
               </div>
-              <p className="text-[#2C3E50] font-medium">Loading your orders...</p>
+              <p className="text-[#09215F] font-medium">Loading your orders...</p>
             </div>
           </div>
         )}
@@ -307,8 +307,8 @@ export default function OrderHistory() {
                     onClick={() => setFilterStatus(tab.key)}
                     className={`flex items-center space-x-2 px-4 py-3 rounded-xl font-semibold text-sm transition-all duration-300 ${
                       filterStatus === tab.key
-                        ? 'bg-gradient-to-r from-[#4682B4] to-[#2C3E50] text-white shadow-lg transform scale-105'
-                        : 'text-[#2C3E50]/70 hover:text-[#2C3E50] hover:bg-gray-50'
+                        ? 'bg-gradient-to-r from-[#97CF50] to-[#09215F] text-white shadow-lg transform scale-105'
+                        : 'text-[#09215F]/70 hover:text-[#09215F] hover:bg-gray-50'
                     }`}
                   >
                     <IconComponent className="h-4 w-4" />
@@ -316,7 +316,7 @@ export default function OrderHistory() {
                     <span className={`px-2 py-1 text-xs rounded-full font-bold ${
                       filterStatus === tab.key 
                         ? 'bg-white/20 text-white' 
-                        : 'bg-gray-100 text-[#2C3E50]/60'
+                        : 'bg-gray-100 text-[#09215F]/60'
                     }`}>
                       {count}
                     </span>
@@ -336,8 +336,8 @@ export default function OrderHistory() {
                   <div className="bg-gray-100 rounded-2xl p-6 w-24 h-24 mx-auto mb-6 flex items-center justify-center">
                     <Package className="h-12 w-12 text-gray-400" />
                   </div>
-                  <h3 className="text-2xl font-bold text-[#2C3E50] mb-3">No orders found</h3>
-                  <p className="text-[#2C3E50]/70 text-lg">
+                  <h3 className="text-2xl font-bold text-[#09215F] mb-3">No orders found</h3>
+                  <p className="text-[#09215F]/70 text-lg">
                     {filterStatus === 'all' 
                       ? "You haven't placed any orders yet." 
                       : `No ${filterStatus} orders found.`
@@ -350,10 +350,10 @@ export default function OrderHistory() {
                     {/* Order Header */}
                     <div className="flex items-center justify-between mb-6">
                       <div>
-                        <h3 className="text-xl font-bold text-[#2C3E50] group-hover:text-[#4682B4] transition-colors">
+                        <h3 className="text-xl font-bold text-[#09215F] group-hover:text-[#97CF50] transition-colors">
                           {order.order_number}
                         </h3>
-                        <p className="text-[#2C3E50]/60 font-medium mt-1">
+                        <p className="text-[#09215F]/60 font-medium mt-1">
                           Placed on {new Date(order.created_at).toLocaleDateString('en-ZA', {
                             year: 'numeric',
                             month: 'long',
@@ -366,14 +366,14 @@ export default function OrderHistory() {
                           {getStatusIcon(order.status)}
                           <span className="ml-2 capitalize">{order.status}</span>
                         </div>
-                        <p className="text-2xl font-bold text-[#2C3E50] mt-2">R{order.total_amount.toFixed(2)}</p>
+                        <p className="text-2xl font-bold text-[#09215F] mt-2">R{order.total_amount.toFixed(2)}</p>
                       </div>
                     </div>
 
                     {/* Order Items Preview */}
                     <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
                       <div className="flex items-center justify-between mb-3">
-                        <p className="text-sm font-bold text-[#2C3E50]">
+                        <p className="text-sm font-bold text-[#09215F]">
                           {order.items_count} item{order.items_count !== 1 ? 's' : ''}
                         </p>
                       </div>
@@ -386,16 +386,16 @@ export default function OrderHistory() {
                               className="w-12 h-12 object-cover rounded-lg"
                             />
                             <div className="min-w-0">
-                              <p className="text-sm font-semibold text-[#2C3E50] truncate max-w-32">
+                              <p className="text-sm font-semibold text-[#09215F] truncate max-w-32">
                                 {item.product_snapshot?.name || 'Product'}
                               </p>
-                              <p className="text-xs text-[#2C3E50]/60 font-medium">Qty: {item.quantity}</p>
+                              <p className="text-xs text-[#09215F]/60 font-medium">Qty: {item.quantity}</p>
                             </div>
                           </div>
                         ))}
                         {(order.order_items || order.items || []).length > 3 && (
-                          <div className="flex-shrink-0 flex items-center justify-center bg-[#4682B4]/10 rounded-xl p-3 border border-[#4682B4]/20">
-                            <span className="text-sm font-bold text-[#4682B4]">
+                          <div className="flex-shrink-0 flex items-center justify-center bg-[#97CF50]/10 rounded-xl p-3 border border-[#97CF50]/20">
+                            <span className="text-sm font-bold text-[#97CF50]">
                               +{(order.order_items || order.items || []).length - 3} more
                             </span>
                           </div>
@@ -408,7 +408,7 @@ export default function OrderHistory() {
                       <div className="flex space-x-3">
                         <button
                           onClick={() => setSelectedOrder(order)}
-                          className="flex items-center bg-[#4682B4] text-white px-4 py-2 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold"
+                          className="flex items-center bg-[#97CF50] text-white px-4 py-2 rounded-xl hover:bg-[#09215F] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold"
                         >
                           <Eye className="h-4 w-4 mr-2" />
                           View Details
@@ -423,7 +423,7 @@ export default function OrderHistory() {
                           </button>
                         )}
                       </div>
-                      <div className="text-sm text-[#2C3E50]/60 font-medium">
+                      <div className="text-sm text-[#09215F]/60 font-medium">
                         Order #{order.id.split('-')[1]}
                       </div>
                     </div>
@@ -438,10 +438,10 @@ export default function OrderHistory() {
             {selectedOrder ? (
               <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6 sticky top-4">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-[#2C3E50]">Order Details</h2>
+                  <h2 className="text-xl font-bold text-[#09215F]">Order Details</h2>
                   <button
                     onClick={() => setSelectedOrder(null)}
-                    className="text-[#2C3E50]/40 hover:text-[#2C3E50] hover:bg-gray-100 p-2 rounded-xl transition-all duration-300"
+                    className="text-[#09215F]/40 hover:text-[#09215F] hover:bg-gray-100 p-2 rounded-xl transition-all duration-300"
                   >
                     <XCircle className="h-5 w-5" />
                   </button>
@@ -449,9 +449,9 @@ export default function OrderHistory() {
 
                 <div className="space-y-6">
                   {/* Order Info */}
-                  <div className="p-4 bg-gradient-to-r from-[#4682B4]/10 to-[#2C3E50]/10 rounded-xl border border-[#4682B4]/20">
-                    <h3 className="font-bold text-[#2C3E50] text-lg">{selectedOrder.order_number}</h3>
-                    <p className="text-sm text-[#2C3E50]/70 font-medium mt-1">
+                  <div className="p-4 bg-gradient-to-r from-[#97CF50]/10 to-[#09215F]/10 rounded-xl border border-[#97CF50]/20">
+                    <h3 className="font-bold text-[#09215F] text-lg">{selectedOrder.order_number}</h3>
+                    <p className="text-sm text-[#09215F]/70 font-medium mt-1">
                       {new Date(selectedOrder.created_at).toLocaleDateString('en-ZA', {
                         year: 'numeric',
                         month: 'long',
@@ -464,7 +464,7 @@ export default function OrderHistory() {
 
                   {/* Status */}
                   <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-200">
-                    <span className="text-sm font-bold text-[#2C3E50]">Status</span>
+                    <span className="text-sm font-bold text-[#09215F]">Status</span>
                     <div className={`inline-flex items-center px-3 py-2 rounded-xl text-sm font-bold border ${getStatusColor(selectedOrder.status)}`}>
                       {getStatusIcon(selectedOrder.status)}
                       <span className="ml-2 capitalize">{selectedOrder.status}</span>
@@ -473,7 +473,7 @@ export default function OrderHistory() {
 
                   {/* Items */}
                   <div>
-                    <h4 className="font-bold text-[#2C3E50] mb-4 text-lg">Items Ordered</h4>
+                    <h4 className="font-bold text-[#09215F] mb-4 text-lg">Items Ordered</h4>
                     <div className="space-y-3 max-h-64 overflow-y-auto">
                       {(selectedOrder.order_items || selectedOrder.items || []).map((item) => (
                         <div key={item.id} className="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl border border-gray-200">
@@ -483,14 +483,14 @@ export default function OrderHistory() {
                             className="w-14 h-14 object-cover rounded-lg"
                           />
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-semibold text-[#2C3E50] leading-tight">
+                            <p className="text-sm font-semibold text-[#09215F] leading-tight">
                               {item.product_snapshot?.name || 'Product'}
                             </p>
-                            <p className="text-sm text-[#2C3E50]/70 font-medium">
+                            <p className="text-sm text-[#09215F]/70 font-medium">
                               Qty: {item.quantity} × R{item.unit_price.toFixed(2)}
                             </p>
                           </div>
-                          <p className="text-sm font-bold text-[#2C3E50]">
+                          <p className="text-sm font-bold text-[#09215F]">
                             R{item.total_price.toFixed(2)}
                           </p>
                         </div>
@@ -499,22 +499,22 @@ export default function OrderHistory() {
                   </div>
 
                   {/* Total */}
-                  <div className="p-4 bg-gradient-to-r from-[#4682B4]/10 to-[#2C3E50]/10 rounded-xl border border-[#4682B4]/20">
+                  <div className="p-4 bg-gradient-to-r from-[#97CF50]/10 to-[#09215F]/10 rounded-xl border border-[#97CF50]/20">
                     <div className="flex justify-between items-center">
-                      <span className="text-lg font-bold text-[#2C3E50]">Total Amount</span>
-                      <span className="text-2xl font-bold text-[#2C3E50]">R{selectedOrder.total_amount.toFixed(2)}</span>
+                      <span className="text-lg font-bold text-[#09215F]">Total Amount</span>
+                      <span className="text-2xl font-bold text-[#09215F]">R{selectedOrder.total_amount.toFixed(2)}</span>
                     </div>
                   </div>
 
                   {/* Action Buttons */}
                   <div className="flex flex-col space-y-3">
-                    <button className="w-full bg-[#4682B4] text-white py-3 px-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 text-sm font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+                    <button className="w-full bg-[#97CF50] text-white py-3 px-4 rounded-xl hover:bg-[#09215F] transition-all duration-300 text-sm font-bold shadow-lg hover:shadow-xl transform hover:-translate-y-1">
                       Track Order
                     </button>
                     {selectedOrder.status === 'delivered' && (
                       <button 
                         onClick={() => handleReorder(selectedOrder)}
-                        className="w-full border-2 border-[#4682B4] text-[#4682B4] py-3 px-4 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 text-sm font-bold"
+                        className="w-full border-2 border-[#97CF50] text-[#97CF50] py-3 px-4 rounded-xl hover:bg-[#97CF50] hover:text-white transition-all duration-300 text-sm font-bold"
                       >
                         Reorder Items
                       </button>
@@ -527,8 +527,8 @@ export default function OrderHistory() {
                 <div className="bg-gray-100 rounded-2xl p-6 w-20 h-20 mx-auto mb-6 flex items-center justify-center">
                   <Package className="h-10 w-10 text-gray-400" />
                 </div>
-                <h3 className="text-xl font-bold text-[#2C3E50] mb-3">Select an Order</h3>
-                <p className="text-[#2C3E50]/70">
+                <h3 className="text-xl font-bold text-[#09215F] mb-3">Select an Order</h3>
+                <p className="text-[#09215F]/70">
                   Click on an order to view its details and track progress
                 </p>
               </div>

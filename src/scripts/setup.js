@@ -68,7 +68,7 @@ const publicAssets = [
       "start_url": "/",
       "display": "standalone",
       "background_color": "#ffffff",
-      "theme_color": "#4682B4",
+      "theme_color": "#97CF50",
       "icons": [
         {
           "src": "/icon-192.png",

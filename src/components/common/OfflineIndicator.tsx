@@ -32,9 +32,9 @@ export default function OfflineIndicator() {
       case 'syncing':
         return {
           icon: RefreshCw,
-          color: 'text-blue-600',
-          bgColor: 'bg-blue-50',
-          borderColor: 'border-blue-200',
+          color: 'text-green-600',
+          bgColor: 'bg-green-50',
+          borderColor: 'border-green-200',
           message: 'Syncing offline changes...'
         };
       case 'error':

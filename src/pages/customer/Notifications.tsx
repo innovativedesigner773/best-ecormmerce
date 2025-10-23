@@ -98,8 +98,8 @@ export default function Notifications() {
           
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-lg">
-                <Package className="h-6 w-6 text-blue-600" />
+              <div className="p-3 bg-green-100 rounded-lg">
+                <Package className="h-6 w-6 text-green-600" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600">Total</p>

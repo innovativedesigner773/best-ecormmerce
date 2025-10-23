@@ -220,8 +220,8 @@ export default function SafeRoleSelector({ selectedRole, onRoleChange, error }: 
 
             {/* Development Helper - Shows auth codes for testing */}
             {process.env.NODE_ENV === 'development' && (
-              <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                <p className="text-xs font-medium text-blue-800 mb-2">Development Helper - Auth Codes:</p>
+              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                <p className="text-xs font-medium text-green-800 mb-2">Development Helper - Auth Codes:</p>
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div className="bg-white p-2 rounded border">
                     <strong>Cashier:</strong> CASHIER2024
@@ -286,11 +286,11 @@ export default function SafeRoleSelector({ selectedRole, onRoleChange, error }: 
               </p>
             )}
             
-            <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-              <h5 className="text-sm font-medium text-blue-800 mb-1">
+            <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+              <h5 className="text-sm font-medium text-green-800 mb-1">
                 Don't have an authorization code?
               </h5>
-              <p className="text-sm text-blue-700">
+              <p className="text-sm text-green-700">
                 Contact your system administrator or manager to obtain the required
                 authorization code for {selectedOption?.label} access.
               </p>
@@ -313,7 +313,7 @@ export default function SafeRoleSelector({ selectedRole, onRoleChange, error }: 
     {selectedRole && (
         <div className={`p-4 rounded-xl border-2 ${
       selectedOption?.value === 'customer'
-            ? 'bg-gradient-to-r from-[#87CEEB]/10 to-[#4682B4]/10 border-[#4682B4]/20'
+            ? 'bg-gradient-to-r from-[#97CF50]/10 to-[#4682B4]/10 border-[#4682B4]/20'
             : selectedOption?.value === 'admin'
             ? 'bg-gradient-to-r from-[#FF6B35]/10 to-[#FF6B35]/20 border-[#FF6B35]/30'
             : 'bg-gradient-to-r from-[#28A745]/10 to-[#28A745]/20 border-[#28A745]/30'

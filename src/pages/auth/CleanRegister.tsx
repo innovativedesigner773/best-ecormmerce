@@ -194,16 +194,16 @@ export default function CleanRegister() {
               Check Your Email
             </h2>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
               <div className="flex items-start space-x-3">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                <div className="bg-green-100 p-2 rounded-full">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="text-sm text-blue-800 mb-2">
+                  <h3 className="text-sm text-green-800 mb-2">
                     {getRoleDisplayName(formData.role)} Account Created!
                   </h3>
-                  <p className="text-sm text-blue-700 leading-relaxed">
+                  <p className="text-sm text-green-700 leading-relaxed">
                     We've sent a confirmation email to <strong>{formData.email}</strong>. 
                     Please click the link in the email to activate your account.
                   </p>
@@ -338,14 +338,14 @@ export default function CleanRegister() {
         </div>
 
         {/* Email Verification Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
           <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-full">
-              <Mail className="h-4 w-4 text-blue-600" />
+            <div className="bg-green-100 p-2 rounded-full">
+              <Mail className="h-4 w-4 text-green-600" />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm text-blue-800 mb-1">Email Verification Required</h3>
-              <p className="text-xs text-blue-700">
+              <h3 className="text-sm text-green-800 mb-1">Email Verification Required</h3>
+              <p className="text-xs text-green-700">
                 After registration, you'll receive an email to confirm your account before you can log in.
               </p>
             </div>
@@ -386,7 +386,7 @@ export default function CleanRegister() {
 
         {/* Loyalty Program Highlight for Customer */}
         {formData.role === 'customer' && (
-          <div className="bg-gradient-to-r from-[#87CEEB]/20 to-[#4682B4]/20 border border-[#4682B4]/30 rounded-2xl p-6 shadow-lg">
+          <div className="bg-gradient-to-r from-[#97CF50]/20 to-[#4682B4]/20 border border-[#4682B4]/30 rounded-2xl p-6 shadow-lg">
             <div className="flex items-center space-x-3 mb-3">
               <div className="bg-[#4682B4] text-white p-2 rounded-xl">
                 <Gift className="h-5 w-5" />
@@ -627,7 +627,7 @@ export default function CleanRegister() {
           <div className="mt-6 border-t border-gray-200 pt-6">
             <p className="text-center text-sm text-[#2C3E50]/80 mb-4">Why create an account?</p>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
                 <div className="bg-[#4682B4]/10 p-2 rounded-lg">
                   <Gift className="h-4 w-4 text-[#4682B4]" />
                 </div>
@@ -637,7 +637,7 @@ export default function CleanRegister() {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
                 <div className="bg-[#4682B4]/10 p-2 rounded-lg">
                   <Package className="h-4 w-4 text-[#4682B4]" />
                 </div>
@@ -647,7 +647,7 @@ export default function CleanRegister() {
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
                 <div className="bg-[#4682B4]/10 p-2 rounded-lg">
                   <User className="h-4 w-4 text-[#4682B4]" />
                 </div>

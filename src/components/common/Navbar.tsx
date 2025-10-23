@@ -71,14 +71,14 @@ export default function Navbar() {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0">
-              <div className="bg-gradient-to-br from-[#87CEEB] to-[#4682B4] text-white p-1.5 sm:p-2 rounded-xl group-hover:scale-105 transition-transform duration-300 shadow-lg">
+              <div className="bg-gradient-to-br from-[#97CF50] to-[#97CF50] text-white p-1.5 sm:p-2 rounded-xl group-hover:scale-105 transition-transform duration-300 shadow-lg">
                 <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
               </div>
               <div className="min-w-0">
-                <span className="text-base sm:text-xl font-bold text-[#2C3E50] dark:text-white group-hover:text-[#4682B4] transition-colors block truncate">
+                <span className="text-base sm:text-xl font-bold text-[#09215F] dark:text-white group-hover:text-[#97CF50] transition-colors block truncate">
                   Best Brightness
                 </span>
-                <div className="text-xs text-[#87CEEB] font-medium hidden sm:block">
+                <div className="text-xs text-[#97CF50] font-medium hidden sm:block">
                   Professional Cleaning
                 </div>
               </div>
@@ -89,7 +89,7 @@ export default function Navbar() {
               {/* Favourites */}
               <Link
                 to="/favourites"
-                className="relative p-1.5 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-all"
+                className="relative p-1.5 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-all"
                 title="Favourites"
               >
                 <Heart className="h-5 w-5" />
@@ -104,7 +104,7 @@ export default function Navbar() {
               {user && (
                 <Link
                   to="/notifications"
-                  className="relative p-1.5 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-all"
+                  className="relative p-1.5 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-all"
                   title="Notifications"
                 >
                   <Bell className="h-5 w-5" />
@@ -126,9 +126,9 @@ export default function Navbar() {
               {user ? (
                 <button
                   onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  className="flex items-center p-1.5 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-colors"
+                  className="flex items-center p-1.5 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-colors"
                 >
-                  <div className="bg-gradient-to-br from-[#87CEEB] to-[#4682B4] rounded-full p-1">
+                  <div className="bg-gradient-to-br from-[#97CF50] to-[#97CF50] rounded-full p-1">
                     <User className="h-4 w-4 text-white" />
                   </div>
                 </button>
@@ -137,7 +137,7 @@ export default function Navbar() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="p-1.5 text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-colors ml-1"
+                className="p-1.5 text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-lg transition-colors ml-1"
               >
                 {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
@@ -149,13 +149,13 @@ export default function Navbar() {
             <div className="flex md:hidden items-center justify-center gap-2 pb-3 pt-1">
               <Link
                 to="/login"
-                className="text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] px-4 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800 text-sm"
+                className="text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] px-4 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800 text-sm"
               >
                 Sign In
               </Link>
               <Link
                 to="/register"
-                className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white px-4 py-2 rounded-lg hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 font-medium shadow-lg text-sm"
+                className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white px-4 py-2 rounded-lg hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 font-medium shadow-lg text-sm"
               >
                 Sign Up
               </Link>
@@ -168,7 +168,7 @@ export default function Navbar() {
               <Link
                 key={link.to}
                 to={link.to}
-                className="text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] px-3 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800"
+                className="text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] px-3 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800"
               >
                 {link.label}
               </Link>
@@ -177,7 +177,7 @@ export default function Navbar() {
             {/* Admin/Cashier Links */}
             {isAtLeastRole('cashier') && (
               <div className="relative group">
-                <button className="text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] px-3 py-2 rounded-lg transition-colors flex items-center font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800">
+                <button className="text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] px-3 py-2 rounded-lg transition-colors flex items-center font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800">
                   Dashboard
                   <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -188,9 +188,9 @@ export default function Navbar() {
                     <Link
                       key={link.to}
                       to={link.to}
-                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors first:rounded-t-xl last:rounded-b-xl"
+                      className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors first:rounded-t-xl last:rounded-b-xl"
                     >
-                      <link.icon className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                      <link.icon className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                       {link.label}
                     </Link>
                   ))}
@@ -198,9 +198,9 @@ export default function Navbar() {
                     <Link
                       key={link.to}
                       to={link.to}
-                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors first:rounded-t-xl last:rounded-b-xl"
+                      className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors first:rounded-t-xl last:rounded-b-xl"
                     >
-                      <link.icon className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                      <link.icon className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                       {link.label}
                     </Link>
                   ))}
@@ -215,9 +215,9 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search cleaning products..."
-                className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#87CEEB] focus:border-transparent bg-[#F8F9FA]/50 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 transition-colors text-[#2C3E50] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+                className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent bg-[#F8F9FA]/50 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 transition-colors text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
               />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#87CEEB] dark:text-blue-400" />
+              <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#97CF50] dark:text-green-400" />
             </div>
           </div>
 
@@ -226,7 +226,7 @@ export default function Navbar() {
             {/* Favourites Icon */}
             <Link
               to="/favourites"
-              className="relative p-2 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl transition-all duration-300 group"
+              className="relative p-2 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl transition-all duration-300 group"
               title="Favourites"
             >
               <Heart className="h-6 w-6 group-hover:scale-110 transition-transform" />
@@ -241,7 +241,7 @@ export default function Navbar() {
             {user && (
               <Link
                 to="/notifications"
-                className="relative p-2 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl transition-all duration-300 group"
+                className="relative p-2 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl transition-all duration-300 group"
                 title="Stock Notifications"
               >
                 <Bell className="h-6 w-6 group-hover:scale-110 transition-transform" />
@@ -265,9 +265,9 @@ export default function Navbar() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileOpen(!isProfileOpen)}
-                    className="flex items-center space-x-1 sm:space-x-2 p-2 text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] transition-colors hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl"
+                    className="flex items-center space-x-1 sm:space-x-2 p-2 text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] transition-colors hover:bg-[#F8F9FA] dark:hover:bg-gray-800 rounded-xl"
                   >
-                    <div className="bg-gradient-to-br from-[#87CEEB] to-[#4682B4] rounded-full p-1">
+                    <div className="bg-gradient-to-br from-[#97CF50] to-[#97CF50] rounded-full p-1">
                       <User className="h-5 w-5 text-white" />
                     </div>
                     <span className="hidden md:block font-medium">
@@ -279,47 +279,47 @@ export default function Navbar() {
                     <div className="absolute right-0 mt-2 w-64 bg-white dark:bg-gray-800 rounded-xl shadow-xl border border-[#B0E0E6]/30 dark:border-gray-700 z-50">
                       <div className="py-2">
                         <div className="px-4 py-3 border-b border-[#B0E0E6]/30 dark:border-gray-700 bg-gradient-to-r from-[#F8F9FA] to-white dark:from-gray-700 dark:to-gray-800">
-                          <p className="font-semibold text-[#2C3E50] dark:text-white">
+                          <p className="font-semibold text-[#09215F] dark:text-white">
                             {getFullUserName()}
                           </p>
                           <p className="text-sm text-gray-600 dark:text-gray-400">{user?.email}</p>
                           <div className="flex items-center mt-2">
-                            <Sparkles className="h-3 w-3 text-[#87CEEB] dark:text-blue-400 mr-1" />
-                            <span className="text-sm text-[#4682B4] dark:text-blue-400 font-medium">
+                            <Sparkles className="h-3 w-3 text-[#97CF50] dark:text-green-400 mr-1" />
+                            <span className="text-sm text-[#97CF50] dark:text-green-400 font-medium">
                               {getLoyaltyPoints()} points
                             </span>
                           </div>
                         </div>
                         <Link
                           to="/profile"
-                          className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors"
+                          className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors"
                           onClick={() => setIsProfileOpen(false)}
                         >
-                          <User className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                          <User className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                           Profile Settings
                         </Link>
                         <Link
                           to="/favourites"
-                          className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors"
+                          className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors"
                           onClick={() => setIsProfileOpen(false)}
                         >
-                          <Heart className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                          <Heart className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                           My Favourites ({favouriteItems.length})
                         </Link>
                         <Link
                           to="/notifications"
-                          className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors"
+                          className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors"
                           onClick={() => setIsProfileOpen(false)}
                         >
-                          <Bell className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                          <Bell className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                           Stock Notifications ({notifications.filter(n => !n.is_notified).length})
                         </Link>
                         <Link
                           to="/orders"
-                          className="flex items-center px-4 py-3 text-sm text-[#2C3E50] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#4682B4] transition-colors"
+                          className="flex items-center px-4 py-3 text-sm text-[#09215F] dark:text-gray-300 hover:bg-[#F8F9FA] dark:hover:bg-gray-700 hover:text-[#97CF50] transition-colors"
                           onClick={() => setIsProfileOpen(false)}
                         >
-                          <Package className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                          <Package className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                           Order History
                         </Link>
                         <button
@@ -338,13 +338,13 @@ export default function Navbar() {
               <div className="flex items-center space-x-2 md:space-x-3">
                 <Link
                   to="/login"
-                  className="text-[#2C3E50] dark:text-gray-300 hover:text-[#4682B4] px-3 md:px-4 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800"
+                  className="text-[#09215F] dark:text-gray-300 hover:text-[#97CF50] px-3 md:px-4 py-2 rounded-lg transition-colors font-medium hover:bg-[#F8F9FA] dark:hover:bg-gray-800"
                 >
                   Sign In
                 </Link>
                 <Link
                   to="/register"
-                  className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white px-4 md:px-6 py-2 rounded-lg hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                  className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white px-4 md:px-6 py-2 rounded-lg hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 font-medium shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
                 >
                   Sign Up
                 </Link>
@@ -363,9 +363,9 @@ export default function Navbar() {
                   <input
                     type="text"
                     placeholder="Search cleaning products..."
-                    className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#87CEEB] bg-[#F8F9FA]/50 dark:bg-gray-800 text-[#2C3E50] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+                    className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] bg-[#F8F9FA]/50 dark:bg-gray-800 text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
                   />
-                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#87CEEB] dark:text-blue-400" />
+                  <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#97CF50] dark:text-green-400" />
                 </div>
               </div>
 
@@ -377,8 +377,8 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <div className="flex items-center">
-                    <Heart className="h-5 w-5 text-[#4682B4] dark:text-blue-400 mr-3" />
-                    <span className="font-medium text-[#2C3E50] dark:text-gray-200">My Favourites</span>
+                    <Heart className="h-5 w-5 text-[#97CF50] dark:text-green-400 mr-3" />
+                    <span className="font-medium text-[#09215F] dark:text-gray-200">My Favourites</span>
                   </div>
                   {favouriteItems.length > 0 && (
                     <span className="bg-gradient-to-r from-red-500 to-pink-500 text-white text-xs px-2 py-1 rounded-full font-bold">
@@ -397,8 +397,8 @@ export default function Navbar() {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <div className="flex items-center">
-                      <Bell className="h-5 w-5 text-[#4682B4] dark:text-blue-400 mr-3" />
-                      <span className="font-medium text-[#2C3E50] dark:text-gray-200">Stock Notifications</span>
+                      <Bell className="h-5 w-5 text-[#97CF50] dark:text-green-400 mr-3" />
+                      <span className="font-medium text-[#09215F] dark:text-gray-200">Stock Notifications</span>
                     </div>
                     {notifications.filter(n => !n.is_notified).length > 0 && (
                       <span className="bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs px-2 py-1 rounded-full font-bold">
@@ -419,7 +419,7 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="block px-4 py-3 text-[#2C3E50] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#4682B4] transition-colors font-medium"
+                  className="block px-4 py-3 text-[#09215F] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#97CF50] transition-colors font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {link.label}
@@ -431,10 +431,10 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="flex items-center px-4 py-3 text-[#2C3E50] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#4682B4] transition-colors"
+                  className="flex items-center px-4 py-3 text-[#09215F] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#97CF50] transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <link.icon className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                  <link.icon className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                   {link.label}
                 </Link>
               ))}
@@ -442,10 +442,10 @@ export default function Navbar() {
                 <Link
                   key={link.to}
                   to={link.to}
-                  className="flex items-center px-4 py-3 text-[#2C3E50] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#4682B4] transition-colors"
+                  className="flex items-center px-4 py-3 text-[#09215F] dark:text-gray-200 hover:bg-[#F8F9FA] dark:hover:bg-gray-800 hover:text-[#97CF50] transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  <link.icon className="h-4 w-4 mr-3 text-[#87CEEB] dark:text-blue-400" />
+                  <link.icon className="h-4 w-4 mr-3 text-[#97CF50] dark:text-green-400" />
                   {link.label}
                 </Link>
               ))}

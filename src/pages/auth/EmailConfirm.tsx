@@ -165,7 +165,7 @@ export default function EmailConfirm() {
                   ? 'bg-green-100 text-green-600'
                   : confirmationState.status === 'error'
                   ? 'bg-red-100 text-red-600' 
-                  : 'bg-blue-100 text-blue-600'
+                  : 'bg-green-100 text-green-600'
               }`}>
                 {confirmationState.status === 'loading' && (
                   <Loader2 className="h-8 w-8 animate-spin" />
@@ -192,14 +192,14 @@ export default function EmailConfirm() {
                 ? 'bg-green-50 border-green-200'
                 : confirmationState.status === 'error'
                 ? 'bg-red-50 border-red-200'
-                : 'bg-blue-50 border-blue-200'
+                : 'bg-green-50 border-green-200'
             }`}>
               <p className={`text-sm leading-relaxed ${
                 confirmationState.status === 'success'
                   ? 'text-green-700'
                   : confirmationState.status === 'error'
                   ? 'text-red-700'
-                  : 'text-blue-700'
+                  : 'text-green-700'
               }`}>
                 {confirmationState.message}
               </p>

@@ -209,7 +209,7 @@ export default function AdvancedAnalytics() {
             <>
               {/* Funnel Overview */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-white/90">Total Users</CardTitle>
                   </CardHeader>
@@ -256,19 +256,19 @@ export default function AdvancedAnalytics() {
                 <CardContent>
                   <div className="space-y-4">
                     {/* Registration to Customer */}
-                    <div className="flex items-center justify-between p-4 bg-blue-50 rounded-lg">
+                    <div className="flex items-center justify-between p-4 bg-green-50 rounded-lg">
                       <div className="flex items-center gap-3">
-                        <div className="bg-blue-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
+                        <div className="bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center text-sm font-bold">1</div>
                         <div>
                           <h4 className="font-medium text-[#2C3E50]">Registration to Customer</h4>
                           <p className="text-sm text-[#6C757D]">{conversionData.totalUsers} → {conversionData.customers} customers</p>
                         </div>
                       </div>
                       <div className="text-right">
-                        <div className="text-2xl font-bold text-blue-600">{formatPercentage(conversionData.registrationToCustomerRate)}</div>
-                        <div className="w-32 bg-blue-200 rounded-full h-2 mt-1">
+                        <div className="text-2xl font-bold text-green-600">{formatPercentage(conversionData.registrationToCustomerRate)}</div>
+                        <div className="w-32 bg-green-200 rounded-full h-2 mt-1">
                           <div 
-                            className="bg-blue-500 h-2 rounded-full transition-all duration-500"
+                            className="bg-green-500 h-2 rounded-full transition-all duration-500"
                             style={{ width: `${Math.min(conversionData.registrationToCustomerRate, 100)}%` }}
                           ></div>
                         </div>
@@ -354,7 +354,7 @@ export default function AdvancedAnalytics() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-white/90">Total CLV</CardTitle>
                   </CardHeader>
@@ -487,7 +487,7 @@ export default function AdvancedAnalytics() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
                   <CardHeader className="pb-2">
                     <CardTitle className="text-sm font-medium text-white/90">Total Revenue</CardTitle>
                   </CardHeader>
@@ -771,14 +771,14 @@ function SeasonalTrendsComponent({ range }: { range: TimeRange }) {
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-7 gap-4">
               {trendsData.forecast.map((forecast: any, index: number) => (
-                <div key={index} className="p-3 bg-blue-50 rounded-lg text-center">
+                <div key={index} className="p-3 bg-green-50 rounded-lg text-center">
                   <div className="text-xs text-[#6C757D] mb-1">
                     {new Date(forecast.date).toLocaleDateString('en-US', { weekday: 'short' })}
                   </div>
                   <div className="text-sm font-medium text-[#2C3E50] mb-1">
                     {new Date(forecast.date).getDate()}
                   </div>
-                  <div className="text-lg font-bold text-blue-600">
+                  <div className="text-lg font-bold text-green-600">
                     R{Math.round(forecast.revenue).toLocaleString()}
                   </div>
                   <div className="text-xs text-[#6C757D]">

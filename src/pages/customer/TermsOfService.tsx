@@ -8,8 +8,8 @@ const TermsOfService: React.FC = () => {
       <div className="container mx-auto px-4 max-w-4xl">
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Scale className="h-8 w-8 text-blue-600" />
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <Scale className="h-8 w-8 text-green-600" />
           </div>
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Terms of Service</h1>
           <p className="text-xl text-gray-600">
@@ -25,7 +25,7 @@ const TermsOfService: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <FileText className="h-5 w-5 text-blue-600" />
+                <FileText className="h-5 w-5 text-green-600" />
                 Agreement to Terms
               </CardTitle>
             </CardHeader>
@@ -188,7 +188,7 @@ const TermsOfService: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Truck className="h-5 w-5 text-blue-600" />
+                <Truck className="h-5 w-5 text-green-600" />
                 Shipping and Delivery
               </CardTitle>
             </CardHeader>
@@ -384,7 +384,7 @@ const TermsOfService: React.FC = () => {
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
-                <Phone className="h-5 w-5 text-blue-600" />
+                <Phone className="h-5 w-5 text-green-600" />
                 Contact Information
               </CardTitle>
             </CardHeader>

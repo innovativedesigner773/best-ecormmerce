@@ -429,16 +429,16 @@ export default function Products() {
 
         {/* Active Filters Display */}
         {(selectedCategory || onlyOnSale || promotionIds.length > 0) && (
-          <div className="mb-6 bg-blue-50 border border-blue-200 rounded-2xl p-4">
+          <div className="mb-6 bg-[#97CF50]/10 border border-[#97CF50]/30 rounded-2xl p-4">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-medium text-blue-800 mr-2">Active Filters:</span>
+              <span className="text-sm font-medium text-green-800 mr-2">Active Filters:</span>
               
               {selectedCategory && (
-                <div className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">
+                <div className="flex items-center bg-[#97CF50]/20 text-[#09215F] px-3 py-1 rounded-full text-sm">
                   <span>Category: {selectedCategory}</span>
                   <button
                     onClick={() => setSelectedCategory('')}
-                    className="ml-2 hover:text-blue-600"
+                    className="ml-2 hover:text-green-600"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -467,7 +467,7 @@ export default function Products() {
 
               <button
                 onClick={clearAllFilters}
-                className="ml-auto text-sm text-blue-600 hover:text-blue-800 font-medium"
+                className="ml-auto text-sm text-green-600 hover:text-green-800 font-medium"
               >
                 Clear All
               </button>
@@ -484,7 +484,7 @@ export default function Products() {
               <input
                 type="text"
                 placeholder="Search cleaning supplies..."
-                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+                className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
@@ -492,7 +492,7 @@ export default function Products() {
 
             {/* Category Filter */}
             <select
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
             >
@@ -504,7 +504,7 @@ export default function Products() {
 
             {/* Sort */}
             <select
-              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white"
+              className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white"
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value)}
             >
@@ -520,13 +520,13 @@ export default function Products() {
             <div className="flex bg-white border border-gray-300 rounded-xl p-1">
               <button
                 onClick={() => setViewMode('grid')}
-                className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-blue-500 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-[#97CF50] text-white' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 <Grid className="h-5 w-5" />
               </button>
               <button
                 onClick={() => setViewMode('list')}
-                className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-blue-500 text-white' : 'text-gray-500 hover:text-gray-700'}`}
+                className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-[#97CF50] text-white' : 'text-gray-500 hover:text-gray-700'}`}
               >
                 <List className="h-5 w-5" />
               </button>
@@ -568,7 +568,7 @@ export default function Products() {
                     id="in-stock"
                     checked={onlyInStock}
                     onChange={(e) => setOnlyInStock(e.target.checked)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label htmlFor="in-stock" className="ml-2 text-sm text-gray-700">
                     Only show in stock
@@ -582,7 +582,7 @@ export default function Products() {
                     id="on-sale"
                     checked={onlyOnSale}
                     onChange={(e) => setOnlyOnSale(e.target.checked)}
-                    className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                    className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                   />
                   <label htmlFor="on-sale" className="ml-2 text-sm text-gray-700">
                     On sale only
@@ -645,7 +645,7 @@ export default function Products() {
                       <div className="flex flex-col h-full">
                         <div className="flex-1">
                           <div className="flex items-start justify-between mb-2">
-                            <h3 className="text-lg font-semibold text-gray-900 hover:text-blue-600">
+                            <h3 className="text-lg font-semibold text-gray-900 hover:text-green-600">
                               <Link to={`/products/${product.id}`}>
                                 {product.name}
                               </Link>
@@ -689,7 +689,7 @@ export default function Products() {
                           <button
                             onClick={() => handleAddToCart(product)}
                             disabled={!product.in_stock}
-                            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
+                            className="flex items-center gap-2 px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-secondary transition-colors disabled:bg-gray-300 disabled:cursor-not-allowed"
                           >
                             <ShoppingCart className="h-4 w-4" />
                             {product.in_stock ? 'Add to Cart' : 'Out of Stock'}

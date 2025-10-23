@@ -171,8 +171,8 @@ export default function CashierReportsRealData() {
         <div className="min-h-screen bg-gradient-to-br from-[#F8F9FA] to-[#B0E0E6]/20 p-8">
           <div className="flex items-center justify-center min-h-[400px]">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#4682B4] mx-auto mb-4"></div>
-              <p className="text-[#2C3E50] font-medium">Loading report data...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#97CF50] mx-auto mb-4"></div>
+              <p className="text-[#09215F] font-medium">Loading report data...</p>
             </div>
           </div>
         </div>
@@ -213,22 +213,22 @@ export default function CashierReportsRealData() {
                 onClick={() => navigate('/cashier')}
                 className="p-3 rounded-2xl bg-white/80 border border-white/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
               >
-                <ArrowLeft className="h-6 w-6 text-[#2C3E50]" />
+                <ArrowLeft className="h-6 w-6 text-[#09215F]" />
               </button>
               <div>
-                <h1 className="text-4xl font-bold text-[#2C3E50] mb-2">Reports & Analytics</h1>
-                <p className="text-[#2C3E50]/70 text-lg">Real-time business insights and performance metrics</p>
+                <h1 className="text-4xl font-bold text-[#09215F] mb-2">Reports & Analytics</h1>
+                <p className="text-[#09215F]/70 text-lg">Real-time business insights and performance metrics</p>
               </div>
             </div>
             
             <div className="flex items-center space-x-3">
-              <button className="px-4 py-2 text-[#2C3E50] hover:text-[#4682B4] border border-[rgba(44,62,80,0.1)] hover:border-[#4682B4]/30 rounded-xl transition-all duration-300 hover:bg-[#B0E0E6]/20 flex items-center">
+              <button className="px-4 py-2 text-[#09215F] hover:text-[#97CF50] border border-[rgba(44,62,80,0.1)] hover:border-[#97CF50]/30 rounded-xl transition-all duration-300 hover:bg-[#B0E0E6]/20 flex items-center">
                 <Share2 className="h-4 w-4 mr-2" />
                 Share
               </button>
               <button
                 onClick={handleExportReport}
-                className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white px-6 py-3 rounded-xl hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium"
+                className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white px-6 py-3 rounded-xl hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-medium"
               >
                 <Download className="h-5 w-5 mr-2" />
                 Export Report
@@ -246,8 +246,8 @@ export default function CashierReportsRealData() {
                     onClick={() => setSelectedDateRange(range.key as DateRange)}
                     className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 ${
                       selectedDateRange === range.key
-                        ? 'bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white shadow-lg transform scale-105'
-                        : 'text-[#2C3E50] hover:text-[#4682B4] hover:bg-[#B0E0E6]/20'
+                        ? 'bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white shadow-lg transform scale-105'
+                        : 'text-[#09215F] hover:text-[#97CF50] hover:bg-[#B0E0E6]/20'
                     }`}
                   >
                     {range.label}
@@ -258,7 +258,7 @@ export default function CashierReportsRealData() {
             
             <div className="flex items-center space-x-2 backdrop-blur-xl bg-white/80 border border-white/20 rounded-2xl px-4 py-2 shadow-lg">
               <div className="h-2 w-2 bg-green-500 rounded-full animate-pulse"></div>
-              <span className="text-sm font-medium text-[#2C3E50]/80">Live Data</span>
+              <span className="text-sm font-medium text-[#09215F]/80">Live Data</span>
             </div>
           </div>
 
@@ -266,11 +266,11 @@ export default function CashierReportsRealData() {
           <div className="mb-8">
             <div className="backdrop-blur-xl bg-white/80 border border-white/20 rounded-3xl shadow-xl p-8">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-[#2C3E50] flex items-center">
-                  <Eye className="h-6 w-6 mr-3 text-[#4682B4]" />
+                <h2 className="text-2xl font-bold text-[#09215F] flex items-center">
+                  <Eye className="h-6 w-6 mr-3 text-[#97CF50]" />
                   Report Analytics
                 </h2>
-                <div className="text-sm text-[#2C3E50]/70 bg-[#F8F9FA] px-3 py-1 rounded-lg">
+                <div className="text-sm text-[#09215F]/70 bg-[#F8F9FA] px-3 py-1 rounded-lg">
                   {selectedDateRange.charAt(0).toUpperCase() + selectedDateRange.slice(1)} View
                 </div>
               </div>
@@ -281,21 +281,21 @@ export default function CashierReportsRealData() {
                     onClick={() => setSelectedReport(report.key)}
                     className={`group p-6 rounded-2xl border-2 transition-all duration-300 ${
                       selectedReport === report.key
-                        ? 'border-[#4682B4] bg-gradient-to-br from-[#F8F9FA] to-[#B0E0E6]/20 text-[#2C3E50] shadow-xl scale-105'
-                        : 'border-[rgba(44,62,80,0.1)] hover:border-[#4682B4]/40 hover:bg-[#B0E0E6]/20 hover:scale-102'
+                        ? 'border-[#97CF50] bg-gradient-to-br from-[#F8F9FA] to-[#B0E0E6]/20 text-[#09215F] shadow-xl scale-105'
+                        : 'border-[rgba(44,62,80,0.1)] hover:border-[#97CF50]/40 hover:bg-[#B0E0E6]/20 hover:scale-102'
                     }`}
                   >
                     <div className={`p-3 rounded-xl mx-auto mb-4 w-fit ${
                       selectedReport === report.key 
-                        ? 'bg-gradient-to-br from-[#4682B4] to-[#87CEEB] text-white shadow-lg' 
-                        : 'bg-[#F8F9FA] group-hover:bg-[#B0E0E6]/30 text-[#2C3E50] group-hover:text-[#4682B4]'
+                        ? 'bg-gradient-to-br from-[#97CF50] to-[#97CF50] text-white shadow-lg' 
+                        : 'bg-[#F8F9FA] group-hover:bg-[#B0E0E6]/30 text-[#09215F] group-hover:text-[#97CF50]'
                     }`}>
                       <report.icon className="h-8 w-8 group-hover:scale-110 transition-transform" />
                     </div>
                     <p className="font-semibold text-center">{report.label}</p>
                     {selectedReport === report.key && (
                       <div className="mt-2 flex justify-center">
-                        <div className="h-1 w-8 bg-gradient-to-r from-[#4682B4] to-[#87CEEB] rounded-full"></div>
+                        <div className="h-1 w-8 bg-gradient-to-r from-[#97CF50] to-[#97CF50] rounded-full"></div>
                       </div>
                     )}
                   </button>
@@ -308,15 +308,15 @@ export default function CashierReportsRealData() {
           <div className="backdrop-blur-xl bg-white/80 border border-white/20 rounded-3xl shadow-xl p-8">
             {selectedReport === 'sales' && salesData && (
               <div>
-                <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Sales Report</h3>
+                <h3 className="text-2xl font-bold text-[#09215F] mb-6">Sales Report</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                   <div className="bg-gradient-to-br from-emerald-50 to-green-100 p-6 rounded-2xl">
                     <div className="text-3xl font-bold text-emerald-600">{formatCurrency(salesData.total)}</div>
                     <div className="text-sm text-emerald-700 font-medium">Total Sales</div>
                   </div>
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
-                    <div className="text-3xl font-bold text-blue-600">{salesData.transactions}</div>
-                    <div className="text-sm text-blue-700 font-medium">Transactions</div>
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
+                    <div className="text-3xl font-bold text-green-600">{salesData.transactions}</div>
+                    <div className="text-sm text-green-700 font-medium">Transactions</div>
                   </div>
                   <div className="bg-gradient-to-br from-purple-50 to-purple-100 p-6 rounded-2xl">
                     <div className="text-3xl font-bold text-purple-600">{formatCurrency(salesData.avgTransaction)}</div>
@@ -332,18 +332,18 @@ export default function CashierReportsRealData() {
 
             {selectedReport === 'products' && productData.length > 0 && (
               <div>
-                <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Product Performance</h3>
+                <h3 className="text-2xl font-bold text-[#09215F] mb-6">Product Performance</h3>
                 <div className="space-y-4">
                   {productData.slice(0, 10).map((product, index) => (
                     <div key={index} className="bg-gradient-to-r from-[#F8F9FA] to-[#B0E0E6]/20 p-4 rounded-2xl border border-[rgba(44,62,80,0.1)]">
                       <div className="flex items-center justify-between">
                         <div>
-                          <div className="font-semibold text-[#2C3E50]">{product.name}</div>
-                          <div className="text-sm text-[#2C3E50]/70">{product.category}</div>
+                          <div className="font-semibold text-[#09215F]">{product.name}</div>
+                          <div className="text-sm text-[#09215F]/70">{product.category}</div>
                         </div>
                         <div className="text-right">
-                          <div className="font-bold text-[#2C3E50]">{product.sold} sold</div>
-                          <div className="text-sm text-[#2C3E50]/70">{formatCurrency(product.revenue)}</div>
+                          <div className="font-bold text-[#09215F]">{product.sold} sold</div>
+                          <div className="text-sm text-[#09215F]/70">{formatCurrency(product.revenue)}</div>
                         </div>
                       </div>
                     </div>
@@ -354,11 +354,11 @@ export default function CashierReportsRealData() {
 
             {selectedReport === 'customers' && customerData && (
               <div>
-                <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Customer Report</h3>
+                <h3 className="text-2xl font-bold text-[#09215F] mb-6">Customer Report</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
-                    <div className="text-3xl font-bold text-blue-600">{customerData.totalCustomers}</div>
-                    <div className="text-sm text-blue-700 font-medium">Total Customers</div>
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
+                    <div className="text-3xl font-bold text-green-600">{customerData.totalCustomers}</div>
+                    <div className="text-sm text-green-700 font-medium">Total Customers</div>
                   </div>
                   <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
                     <div className="text-3xl font-bold text-green-600">{customerData.newCustomers}</div>
@@ -378,11 +378,11 @@ export default function CashierReportsRealData() {
 
             {selectedReport === 'transactions' && transactionData && (
               <div>
-                <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Transaction Report</h3>
+                <h3 className="text-2xl font-bold text-[#09215F] mb-6">Transaction Report</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                  <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-2xl">
-                    <div className="text-3xl font-bold text-blue-600">{transactionData.totalTransactions}</div>
-                    <div className="text-sm text-blue-700 font-medium">Total Transactions</div>
+                  <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
+                    <div className="text-3xl font-bold text-green-600">{transactionData.totalTransactions}</div>
+                    <div className="text-sm text-green-700 font-medium">Total Transactions</div>
                   </div>
                   <div className="bg-gradient-to-br from-green-50 to-green-100 p-6 rounded-2xl">
                     <div className="text-3xl font-bold text-green-600">{transactionData.successfulTransactions}</div>
@@ -406,8 +406,8 @@ export default function CashierReportsRealData() {
              (!transactionData && selectedReport === 'transactions') && (
               <div className="text-center py-12">
                 <div className="text-6xl mb-4">📊</div>
-                <h3 className="text-xl font-bold text-[#2C3E50] mb-2">No Data Available</h3>
-                <p className="text-[#2C3E50]/70">No data found for the selected time period.</p>
+                <h3 className="text-xl font-bold text-[#09215F] mb-2">No Data Available</h3>
+                <p className="text-[#09215F]/70">No data found for the selected time period.</p>
               </div>
             )}
           </div>

@@ -88,7 +88,7 @@ export function DemoBarcodes({ onBarcodeSelect }: DemoBarcodesProps) {
               <Button
                 size="sm"
                 onClick={() => onBarcodeSelect(item.barcode)}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-[#97CF50] hover:bg-[#09215F]"
               >
                 Use
               </Button>

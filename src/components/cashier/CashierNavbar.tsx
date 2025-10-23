@@ -57,7 +57,7 @@ export default function CashierNavbar() {
   };
 
   return (
-    <nav className="bg-gradient-to-r from-[#2C3E50] to-[#4682B4] shadow-lg sticky top-0 z-50">
+    <nav className="bg-gradient-to-r from-[#09215F] to-[#97CF50] shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
@@ -67,10 +67,10 @@ export default function CashierNavbar() {
                 <DollarSign className="h-5 w-5 sm:h-6 sm:w-6" />
               </div>
               <div className="min-w-0">
-                <span className="text-base sm:text-xl font-bold text-white group-hover:text-[#87CEEB] transition-colors block truncate">
+                <span className="text-base sm:text-xl font-bold text-white group-hover:text-[#97CF50] transition-colors block truncate">
                   Cashier Portal
                 </span>
-                <div className="text-xs text-[#87CEEB] font-medium hidden sm:block">
+                <div className="text-xs text-[#97CF50] font-medium hidden sm:block">
                   Best Brightness POS
                 </div>
               </div>
@@ -135,7 +135,7 @@ export default function CashierNavbar() {
                       className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      <User className="h-4 w-4 mr-3 text-[#87CEEB]" />
+                      <User className="h-4 w-4 mr-3 text-[#97CF50]" />
                       Profile Settings
                     </Link>
                     <Link
@@ -143,7 +143,7 @@ export default function CashierNavbar() {
                       className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      <Receipt className="h-4 w-4 mr-3 text-[#87CEEB]" />
+                      <Receipt className="h-4 w-4 mr-3 text-[#97CF50]" />
                       My Sales Report
                     </Link>
                     <Link
@@ -151,7 +151,7 @@ export default function CashierNavbar() {
                       className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
-                      <Home className="h-4 w-4 mr-3 text-[#87CEEB]" />
+                      <Home className="h-4 w-4 mr-3 text-[#97CF50]" />
                       Customer View
                     </Link>
                     <button

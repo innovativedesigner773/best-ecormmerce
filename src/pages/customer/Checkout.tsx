@@ -367,11 +367,11 @@ export default function Checkout() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="text-center">
-          <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg inline-block mb-4">
             <Package className="h-8 w-8" />
           </div>
           <LoadingSpinner size="large" />
-          <p className="mt-4 text-[#2C3E50] font-medium">Loading shared cart...</p>
+          <p className="mt-4 text-[#09215F] font-medium">Loading shared cart...</p>
         </div>
       </div>
     );
@@ -394,25 +394,25 @@ export default function Checkout() {
         <div className="mb-8 text-center">
           <button
             onClick={() => isSharedCart ? navigate('/') : navigate('/cart')}
-            className="inline-flex items-center text-[#4682B4] hover:text-[#2C3E50] mb-6 transition-colors duration-300"
+            className="inline-flex items-center text-[#97CF50] hover:text-[#09215F] mb-6 transition-colors duration-300"
           >
             <ArrowLeft className="h-5 w-5 mr-2" />
             {isSharedCart ? 'Back to Home' : 'Back to Cart'}
           </button>
-          <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg inline-block mb-4">
+          <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg inline-block mb-4">
             <Package className="h-8 w-8" />
           </div>
-          <h1 className="text-4xl font-bold text-[#2C3E50] mb-2">
+          <h1 className="text-4xl font-bold text-[#09215F] mb-2">
             {isSharedCart ? 'Shared Cart Checkout' : 'Secure Checkout'}
           </h1>
-          <p className="text-[#2C3E50]/80 text-lg">
+          <p className="text-[#09215F]/80 text-lg">
             {isSharedCart 
               ? `Complete the purchase for ${sharedCart?.cart_metadata?.original_user_name || 'this shared cart'}`
               : 'Complete your order for professional cleaning supplies'
             }
           </p>
           {isSharedCart && sharedCart?.cart_metadata?.message && (
-            <p className="text-[#4682B4] text-sm italic mt-2">
+            <p className="text-[#97CF50] text-sm italic mt-2">
               "{sharedCart.cart_metadata.message}"
             </p>
           )}
@@ -425,19 +425,19 @@ export default function Checkout() {
               <div key={step.id} className="flex items-center">
                 <div className={`flex items-center justify-center w-12 h-12 rounded-2xl transition-all duration-300 ${
                   currentStep >= step.id 
-                    ? 'bg-[#4682B4] text-white shadow-lg' 
+                    ? 'bg-primary text-primary-foreground shadow-lg' 
                     : 'bg-gray-100 text-gray-400'
                 }`}>
                   <step.icon className="h-6 w-6" />
                 </div>
                 <span className={`ml-3 font-semibold text-lg transition-colors duration-300 ${
-                  currentStep >= step.id ? 'text-[#4682B4]' : 'text-gray-400'
+                  currentStep >= step.id ? 'text-[#97CF50]' : 'text-gray-400'
                 }`}>
                   {step.name}
                 </span>
                 {index < steps.length - 1 && (
                   <div className={`w-20 h-2 ml-6 rounded-full transition-all duration-300 ${
-                    currentStep > step.id ? 'bg-[#4682B4]' : 'bg-gray-200'
+                    currentStep > step.id ? 'bg-[#97CF50]' : 'bg-gray-200'
                   }`} />
                 )}
               </div>
@@ -452,10 +452,10 @@ export default function Checkout() {
             {currentStep === 1 && (
               <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
                 <div className="flex items-center mb-6">
-                  <div className="bg-[#4682B4] text-white p-3 rounded-xl mr-4">
+                  <div className="bg-primary text-primary-foreground p-3 rounded-xl mr-4">
                     <Truck className="h-6 w-6" />
                   </div>
-                  <h2 className="text-2xl font-bold text-[#2C3E50]">Shipping Information</h2>
+                  <h2 className="text-2xl font-bold text-[#09215F]">Shipping Information</h2>
                 </div>
                 
                 {/* Address Selector for logged-in users */}
@@ -469,17 +469,17 @@ export default function Checkout() {
                     />
                     
                     {selectedAddress && (
-                      <div className="flex items-center justify-between bg-blue-50 border border-blue-200 rounded-xl p-4 mb-4">
+                      <div className="flex items-center justify-between bg-green-50 border border-green-200 rounded-xl p-4 mb-4">
                         <div className="flex items-center">
                           <Check className="h-5 w-5 text-green-600 mr-2" />
-                          <span className="text-[#2C3E50] font-medium">
+                          <span className="text-[#09215F] font-medium">
                             Using selected address: {selectedAddress.label || 'Default'}
                           </span>
                         </div>
                         <button
                           type="button"
                           onClick={handleManualEntryToggle}
-                          className="text-[#4682B4] hover:text-[#2C3E50] font-medium transition-colors duration-300"
+                          className="text-[#97CF50] hover:text-[#09215F] font-medium transition-colors duration-300"
                         >
                           Enter Different Address
                         </button>
@@ -488,11 +488,11 @@ export default function Checkout() {
                     
                     {!selectedAddress && !useManualEntry && (
                       <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-4">
-                        <p className="text-[#2C3E50] font-medium mb-2">No saved addresses found</p>
+                        <p className="text-[#09215F] font-medium mb-2">No saved addresses found</p>
                         <button
                           type="button"
                           onClick={handleManualEntryToggle}
-                          className="text-[#4682B4] hover:text-[#2C3E50] font-medium transition-colors duration-300"
+                          className="text-[#97CF50] hover:text-[#09215F] font-medium transition-colors duration-300"
                         >
                           Enter Address Manually
                         </button>
@@ -506,107 +506,107 @@ export default function Checkout() {
                   {(isSharedCart || useManualEntry) && (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           First Name *
                         </label>
                         <input
                           type="text"
                           value={shippingInfo.firstName}
                           onChange={(e) => setShippingInfo({...shippingInfo, firstName: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Last Name *
                         </label>
                         <input
                           type="text"
                           value={shippingInfo.lastName}
                           onChange={(e) => setShippingInfo({...shippingInfo, lastName: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Email Address *
                         </label>
                         <input
                           type="email"
                           value={shippingInfo.email}
                           onChange={(e) => setShippingInfo({...shippingInfo, email: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Phone Number *
                         </label>
                         <input
                           type="tel"
                           value={shippingInfo.phone}
                           onChange={(e) => setShippingInfo({...shippingInfo, phone: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           placeholder="+27 12 345 6789"
                           required
                         />
                       </div>
                       
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Street Address *
                         </label>
                         <input
                           type="text"
                           value={shippingInfo.address}
                           onChange={(e) => setShippingInfo({...shippingInfo, address: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           placeholder="123 Main Street"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           City *
                         </label>
                         <input
                           type="text"
                           value={shippingInfo.city}
                           onChange={(e) => setShippingInfo({...shippingInfo, city: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           required
                         />
                       </div>
                       
                       <div>
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Postal Code *
                         </label>
                         <input
                           type="text"
                           value={shippingInfo.postalCode}
                           onChange={(e) => setShippingInfo({...shippingInfo, postalCode: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           placeholder="8001"
                           required
                         />
                       </div>
                       
                       <div className="md:col-span-2">
-                        <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                        <label className="block text-sm font-semibold text-[#09215F] mb-3">
                           Province *
                         </label>
                         <select
                           value={shippingInfo.province}
                           onChange={(e) => setShippingInfo({...shippingInfo, province: e.target.value})}
-                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                          className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                           required
                         >
                           <option value="">Select Province</option>
@@ -621,7 +621,7 @@ export default function Checkout() {
                   <div className="mt-8">
                     <button
                       type="submit"
-                      className="w-full bg-[#4682B4] text-white py-4 px-6 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                      className="w-full bg-primary text-primary-foreground py-4 px-6 rounded-xl hover:bg-secondary transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                     >
                       Continue to Payment
                     </button>
@@ -649,27 +649,27 @@ export default function Checkout() {
             {currentStep === 3 && (
               <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
                 <div className="flex items-center mb-6">
-                  <div className="bg-[#4682B4] text-white p-3 rounded-xl mr-4">
+                  <div className="bg-primary text-primary-foreground p-3 rounded-xl mr-4">
                     <Check className="h-6 w-6" />
                   </div>
-                  <h2 className="text-2xl font-bold text-[#2C3E50]">Review Your Order</h2>
+                  <h2 className="text-2xl font-bold text-[#09215F]">Review Your Order</h2>
                 </div>
                 
                 {/* Shipping Info Review */}
                 <div className="mb-8">
-                  <h3 className="text-lg font-semibold text-[#2C3E50] mb-4 flex items-center">
-                    <MapPin className="h-5 w-5 mr-2 text-[#4682B4]" />
+                  <h3 className="text-lg font-semibold text-[#09215F] mb-4 flex items-center">
+                    <MapPin className="h-5 w-5 mr-2 text-[#97CF50]" />
                     Shipping Address
                   </h3>
                   <div className="bg-gray-50 border border-gray-200 p-6 rounded-xl">
-                    <p className="font-semibold text-[#2C3E50] text-lg">{shippingInfo.firstName} {shippingInfo.lastName}</p>
-                    <p className="text-[#2C3E50]/80 mt-1">{shippingInfo.address}</p>
-                    <p className="text-[#2C3E50]/80">{shippingInfo.city}, {shippingInfo.province} {shippingInfo.postalCode}</p>
-                    <p className="text-[#2C3E50]/80">{shippingInfo.phone}</p>
+                    <p className="font-semibold text-[#09215F] text-lg">{shippingInfo.firstName} {shippingInfo.lastName}</p>
+                    <p className="text-[#09215F]/80 mt-1">{shippingInfo.address}</p>
+                    <p className="text-[#09215F]/80">{shippingInfo.city}, {shippingInfo.province} {shippingInfo.postalCode}</p>
+                    <p className="text-[#09215F]/80">{shippingInfo.phone}</p>
                   </div>
                   <button
                     onClick={() => setCurrentStep(1)}
-                    className="text-[#4682B4] hover:text-[#2C3E50] font-medium mt-3 transition-colors duration-300"
+                    className="text-[#97CF50] hover:text-[#09215F] font-medium mt-3 transition-colors duration-300"
                   >
                     Edit Shipping Information
                   </button>
@@ -677,20 +677,20 @@ export default function Checkout() {
 
                 {/* Payment Info Review */}
                 <div className="mb-8">
-                  <h3 className="text-lg font-semibold text-[#2C3E50] mb-4 flex items-center">
-                    <CreditCard className="h-5 w-5 mr-2 text-[#4682B4]" />
+                  <h3 className="text-lg font-semibold text-[#09215F] mb-4 flex items-center">
+                    <CreditCard className="h-5 w-5 mr-2 text-[#97CF50]" />
                     Payment Method
                   </h3>
                   <div className="bg-gray-50 border border-gray-200 p-6 rounded-xl">
-                    <p className="font-semibold text-[#2C3E50] text-lg">Card Payment via Stripe</p>
-                    <p className="text-[#2C3E50]/80 mt-1">Payment method verified ✓</p>
+                    <p className="font-semibold text-[#09215F] text-lg">Card Payment via Stripe</p>
+                    <p className="text-[#09215F]/80 mt-1">Payment method verified ✓</p>
                     {stripePaymentMethodId && (
                       <p className="text-xs text-gray-500 mt-2">Payment ID: {stripePaymentMethodId.substring(0, 20)}...</p>
                     )}
                   </div>
                   <button
                     onClick={() => setCurrentStep(2)}
-                    className="text-[#4682B4] hover:text-[#2C3E50] font-medium mt-3 transition-colors duration-300"
+                    className="text-[#97CF50] hover:text-[#09215F] font-medium mt-3 transition-colors duration-300"
                   >
                     Edit Payment Information
                   </button>
@@ -699,7 +699,7 @@ export default function Checkout() {
                 <div className="flex space-x-4">
                   <button
                     onClick={() => setCurrentStep(2)}
-                    className="flex-1 border-2 border-[#4682B4] text-[#4682B4] py-4 px-6 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 text-lg font-semibold"
+                    className="flex-1 border-2 border-primary text-primary py-4 px-6 rounded-xl hover:bg-primary hover:text-primary-foreground transition-all duration-300 text-lg font-semibold"
                   >
                     Back
                   </button>
@@ -723,10 +723,10 @@ export default function Checkout() {
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8 sticky top-4">
               <div className="flex items-center mb-6">
-                <div className="bg-[#4682B4] text-white p-3 rounded-xl mr-4">
+                <div className="bg-primary text-primary-foreground p-3 rounded-xl mr-4">
                   <ShoppingBag className="h-6 w-6" />
                 </div>
-                <h2 className="text-2xl font-bold text-[#2C3E50]">Order Summary</h2>
+                <h2 className="text-2xl font-bold text-[#09215F]">Order Summary</h2>
               </div>
               
               {/* Items */}
@@ -739,10 +739,10 @@ export default function Checkout() {
                       className="w-16 h-16 object-cover rounded-xl shadow-md"
                     />
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-semibold text-[#2C3E50] truncate">{item.name}</p>
-                      <p className="text-sm text-[#2C3E50]/60">Qty: {item.quantity}</p>
+                      <p className="text-sm font-semibold text-[#09215F] truncate">{item.name}</p>
+                      <p className="text-sm text-[#09215F]/60">Qty: {item.quantity}</p>
                     </div>
-                    <p className="text-lg font-bold text-[#2C3E50]">R{(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="text-lg font-bold text-[#09215F]">R{(item.price * item.quantity).toFixed(2)}</p>
                   </div>
                 ))}
               </div>
@@ -750,8 +750,8 @@ export default function Checkout() {
               {/* Totals */}
               <div className="border-t border-gray-200 pt-6 space-y-4">
                 <div className="flex justify-between text-lg">
-                  <span className="text-[#2C3E50]/80">Subtotal</span>
-                  <span className="font-semibold text-[#2C3E50]">R{cartSubtotal.toFixed(2)}</span>
+                  <span className="text-[#09215F]/80">Subtotal</span>
+                  <span className="font-semibold text-[#09215F]">R{cartSubtotal.toFixed(2)}</span>
                 </div>
                 
                 {cartDiscount > 0 && (
@@ -762,8 +762,8 @@ export default function Checkout() {
                 )}
                 
                 <div className="flex justify-between text-lg">
-                  <span className="text-[#2C3E50]/80">Shipping</span>
-                  <span className="font-semibold text-[#2C3E50]">
+                  <span className="text-[#09215F]/80">Shipping</span>
+                  <span className="font-semibold text-[#09215F]">
                     {shippingCost === 0 ? (
                       <span className="text-green-600">FREE</span>
                     ) : (
@@ -772,7 +772,7 @@ export default function Checkout() {
                   </span>
                 </div>
                 
-                <div className="flex justify-between text-2xl font-bold pt-4 border-t border-gray-200 text-[#2C3E50]">
+                <div className="flex justify-between text-2xl font-bold pt-4 border-t border-gray-200 text-[#09215F]">
                   <span>Total</span>
                   <span>R{finalTotal.toFixed(2)}</span>
                 </div>
@@ -780,7 +780,7 @@ export default function Checkout() {
 
               {/* Security Badge */}
               <div className="mt-8 text-center">
-                <div className="flex items-center justify-center text-[#2C3E50]/60 bg-gray-50 py-3 px-4 rounded-xl border border-gray-200">
+                <div className="flex items-center justify-center text-[#09215F]/60 bg-gray-50 py-3 px-4 rounded-xl border border-gray-200">
                   <svg className="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" />
                   </svg>

@@ -57,13 +57,13 @@ const formatDiscount = (type: string, value: number) => {
 const getPromotionTheme = (promotion: any) => {
   // Default theme for when no promotion is provided
   const defaultTheme = {
-    primary: '#4682B4',
-    secondary: '#2C3E50',
-    accent: '#87CEEB',
-    background: 'from-[#87CEEB] via-[#B0E0E6] to-[#87CEEB]',
-    text: '#2C3E50',
-    button: '#4682B4',
-    buttonHover: '#2C3E50',
+    primary: '#97CF50',
+    secondary: '#09215F',
+    accent: '#97CF50',
+    background: 'from-[#97CF50] via-[#B0E0E6] to-[#97CF50]',
+    text: '#09215F',
+    button: '#97CF50',
+    buttonHover: '#09215F',
     icon: 'Sparkles'
   };
 
@@ -91,8 +91,8 @@ const getPromotionTheme = (promotion: any) => {
       secondary: '#FFC107',
       accent: '#FFEB3B',
       background: 'from-[#FFD700] via-[#FFEB3B] to-[#FFC107]',
-      text: '#2C3E50',
-      button: '#2C3E50',
+      text: '#09215F',
+      button: '#09215F',
       buttonHover: '#34495E',
       icon: 'Star'
     },
@@ -168,24 +168,24 @@ const HeroSlide: React.FC<{ promotion?: any; buildPromotionUrl: (promotion: any)
             <IconComponent className="h-8 w-8 text-white mr-3" />
             <span className="text-white/90 font-medium">Professional Grade Quality</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-[#2C3E50] dark:text-white leading-tight">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 text-[#09215F] dark:text-white leading-tight">
             Premium Cleaning Supplies for Every Need
           </h1>
-          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-[#2C3E50]/80 dark:text-gray-300 max-w-xl">
+          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 text-[#09215F]/80 dark:text-gray-300 max-w-xl">
             Discover our comprehensive range of professional-grade cleaning equipment, 
             industrial detergents, and essential supplies. Quality guaranteed, competitive prices, fast delivery across Durban.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <Link
               to="/products"
-              className="bg-[#4682B4] text-white px-8 py-4 rounded-xl font-semibold hover:bg-[#2C3E50] transition-all duration-300 inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="bg-primary text-primary-foreground px-8 py-4 rounded-xl font-semibold hover:bg-secondary transition-all duration-300 inline-flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               Shop Now
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
             <Link
               to="/products"
-              className="border-2 border-[#4682B4] text-[#4682B4] px-8 py-4 rounded-xl font-semibold hover:bg-[#4682B4] hover:text-white transition-all duration-300 inline-flex items-center justify-center"
+              className="border-2 border-primary text-primary px-8 py-4 rounded-xl font-semibold hover:bg-primary hover:text-primary-foreground transition-all duration-300 inline-flex items-center justify-center"
             >
               View Catalog
             </Link>
@@ -213,7 +213,7 @@ const HeroSlide: React.FC<{ promotion?: any; buildPromotionUrl: (promotion: any)
           >
             <div className="flex items-center space-x-2">
               <Star className="h-5 w-5 text-yellow-400 fill-current" />
-              <span className="font-semibold text-[#2C3E50]">4.9/5</span>
+              <span className="font-semibold text-[#09215F]">4.9/5</span>
               <span className="text-gray-600 text-sm">2,500+ reviews</span>
             </div>
           </motion.div>
@@ -618,7 +618,7 @@ export default function Home() {
       {serverStatus !== 'online' && (
         <div className={`w-full p-4 text-center text-sm ${
           serverStatus === 'checking' 
-            ? 'bg-blue-50 text-blue-800 border-b border-blue-200' 
+            ? 'bg-green-50 text-green-800 border-b border-green-200' 
             : 'bg-red-50 text-red-800 border-b border-red-200'
         }`}>
           <div className="max-w-4xl mx-auto flex items-center justify-center space-x-2">
@@ -648,7 +648,7 @@ export default function Home() {
         style={{
           background: (() => {
             if (currentSlideIndex === 0) {
-              return 'linear-gradient(135deg, #87CEEB 0%, #B0E0E6 50%, #87CEEB 100%)';
+              return 'linear-gradient(135deg, #97CF50 0%, #B0E0E6 50%, #97CF50 100%)';
             }
             
             const currentPromotion = activePromotions[currentSlideIndex - 1];
@@ -657,7 +657,7 @@ export default function Home() {
               return `linear-gradient(135deg, ${theme.primary} 0%, ${theme.accent} 50%, ${theme.secondary} 100%)`;
             }
             
-            return 'linear-gradient(135deg, #87CEEB 0%, #B0E0E6 50%, #87CEEB 100%)';
+            return 'linear-gradient(135deg, #97CF50 0%, #B0E0E6 50%, #97CF50 100%)';
           })()
         }}
       >
@@ -713,7 +713,7 @@ export default function Home() {
                   currentSlideIndex === 0 ? 'w-6' : 'bg-white/50 hover:bg-white/80'
                 }`}
                 style={{
-                  backgroundColor: currentSlideIndex === 0 ? '#4682B4' : undefined
+                  backgroundColor: currentSlideIndex === 0 ? '#97CF50' : undefined
                 }}
               />
               {activePromotions.map((promotion, index) => {
@@ -743,9 +743,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
             {[
-              { icon: Truck, title: 'Free Delivery', desc: 'On orders over R500', color: 'from-[#87CEEB] to-[#B0E0E6]' },
+              { icon: Truck, title: 'Free Delivery', desc: 'On orders over R500', color: 'from-[#97CF50] to-[#B0E0E6]' },
               { icon: CheckCircle, title: 'Quality Guarantee', desc: '100% satisfaction guaranteed', color: 'from-[#28A745] to-[#20c997]' },
-              { icon: Headphones, title: '24/7 Support', desc: 'Expert help when you need it', color: 'from-[#4682B4] to-[#2C3E50]' },
+              { icon: Headphones, title: '24/7 Support', desc: 'Expert help when you need it', color: 'from-[#97CF50] to-[#09215F]' },
               { icon: Gift, title: 'Loyalty Rewards', desc: 'Earn points on every purchase', color: 'from-[#FF6B35] to-[#fd7e14]' }
             ].map((item, index) => (
               <motion.div
@@ -758,7 +758,7 @@ export default function Home() {
                 <div className={`bg-gradient-to-br ${item.color} rounded-2xl p-4 sm:p-6 w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-3 sm:mb-4 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
                   <item.icon className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
                 </div>
-                <h3 className="font-semibold mb-1 sm:mb-2 text-[#2C3E50] dark:text-white">{item.title}</h3>
+                <h3 className="font-semibold mb-1 sm:mb-2 text-[#09215F] dark:text-white">{item.title}</h3>
                 <p className="text-gray-600 dark:text-gray-400 text-sm">{item.desc}</p>
               </motion.div>
             ))}
@@ -842,7 +842,7 @@ export default function Home() {
       />
 
       {/* Enhanced Final CTA Section */}
-      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-[#87CEEB] via-[#B0E0E6] to-[#4682B4] dark:from-blue-900 dark:via-blue-800 dark:to-blue-900 relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 bg-gradient-to-br from-[#97CF50] via-[#B0E0E6] to-[#97CF50] dark:from-green-900 dark:via-green-800 dark:to-green-900 relative overflow-hidden">
         {/* Background pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-1/4 left-1/4 w-32 h-32 border border-white rounded-full"></div>
@@ -870,14 +870,14 @@ export default function Home() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link
                 to="/register"
-                className="bg-white text-[#4682B4] dark:text-blue-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                className="bg-white text-[#97CF50] dark:text-green-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
               >
                 Create Account
                 <Gift className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
               </Link>
               <Link
                 to="/products"
-                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-white hover:text-[#4682B4] dark:hover:text-blue-600 transition-all duration-300 inline-flex items-center justify-center"
+                className="border-2 border-white text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-semibold hover:bg-white hover:text-[#97CF50] dark:hover:text-green-600 transition-all duration-300 inline-flex items-center justify-center"
               >
                 Browse Products
                 <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />

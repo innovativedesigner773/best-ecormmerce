@@ -76,7 +76,7 @@ const Contact: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 text-blue-600" />
+                  <MapPin className="h-5 w-5 text-green-600" />
                   Visit Our Store
                 </CardTitle>
               </CardHeader>
@@ -101,11 +101,11 @@ const Contact: React.FC = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-semibold">Customer Service</p>
-                    <p className="text-blue-600">+27 11 123 4567</p>
+                    <p className="text-green-600">+27 11 123 4567</p>
                   </div>
                   <div>
                     <p className="font-semibold">Sales Department</p>
-                    <p className="text-blue-600">+27 11 123 4568</p>
+                    <p className="text-green-600">+27 11 123 4568</p>
                   </div>
                 </div>
               </CardContent>
@@ -122,15 +122,15 @@ const Contact: React.FC = () => {
                 <div className="space-y-3">
                   <div>
                     <p className="font-semibold">General Inquiries</p>
-                    <p className="text-blue-600">info@bestbrightness.co.za</p>
+                    <p className="text-green-600">info@bestbrightness.co.za</p>
                   </div>
                   <div>
                     <p className="font-semibold">Customer Support</p>
-                    <p className="text-blue-600">support@bestbrightness.co.za</p>
+                    <p className="text-green-600">support@bestbrightness.co.za</p>
                   </div>
                   <div>
                     <p className="font-semibold">Sales</p>
-                    <p className="text-blue-600">sales@bestbrightness.co.za</p>
+                    <p className="text-green-600">sales@bestbrightness.co.za</p>
                   </div>
                 </div>
               </CardContent>
@@ -167,7 +167,7 @@ const Contact: React.FC = () => {
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
-                  <MessageSquare className="h-5 w-5 text-blue-600" />
+                  <MessageSquare className="h-5 w-5 text-green-600" />
                   Send us a Message
                 </CardTitle>
               </CardHeader>

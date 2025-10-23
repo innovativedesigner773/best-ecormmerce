@@ -191,7 +191,7 @@ export function SimpleBarcodeScanner({ onBarcodeScanned, onClose }: SimpleBarcod
             <div className="flex items-center justify-between text-sm text-gray-600">
               <span>Point camera at barcode</span>
               {scanCount > 0 && (
-                <span className="text-blue-600 font-medium">
+                <span className="text-green-600 font-medium">
                   {scanCount} scan{scanCount !== 1 ? 's' : ''}
                 </span>
               )}

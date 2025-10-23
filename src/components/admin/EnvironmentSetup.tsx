@@ -198,7 +198,7 @@ VITE_SUPABASE_SERVICE_ROLE_KEY=your_service_role_key_here
             <div>
               <h5 className="font-medium text-gray-900">1. Get your Supabase credentials</h5>
               <ul className="list-disc list-inside ml-4 space-y-1 mt-2">
-                <li>Go to your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">Supabase Dashboard</a></li>
+                <li>Go to your <a href="https://supabase.com/dashboard" target="_blank" rel="noopener noreferrer" className="text-green-600 hover:underline">Supabase Dashboard</a></li>
                 <li>Select your project</li>
                 <li>Go to Settings → API</li>
                 <li>Copy the Project URL, anon key, and service_role key</li>

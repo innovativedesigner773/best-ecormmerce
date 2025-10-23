@@ -126,12 +126,12 @@ export default function ProtectedRoute({
           <p className="text-gray-600 mb-4">
             You don't have permission to access this area. This section is restricted to specific roles.
           </p>
-          <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-6">
+          <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
             <div className="flex items-center space-x-3">
-              <Shield className="h-5 w-5 text-blue-600" />
+              <Shield className="h-5 w-5 text-green-600" />
               <div className="text-left">
-                <p className="text-sm font-medium text-blue-800">Your Role</p>
-                <p className="text-sm text-blue-700">{getRoleDisplayName(profile.role)}</p>
+                <p className="text-sm font-medium text-green-800">Your Role</p>
+                <p className="text-sm text-green-700">{getRoleDisplayName(profile.role)}</p>
               </div>
             </div>
           </div>

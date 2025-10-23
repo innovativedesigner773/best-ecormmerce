@@ -346,7 +346,7 @@ export function PromotionsManagement() {
     const endDate = new Date(promotion.end_date);
 
     if (!promotion.is_active) return 'bg-gray-100 text-gray-800';
-    if (startDate > now) return 'bg-blue-100 text-blue-800';
+    if (startDate > now) return 'bg-green-100 text-green-800';
     if (endDate < now) return 'bg-red-100 text-red-800';
     return 'bg-green-100 text-green-800';
   };
@@ -365,7 +365,7 @@ export function PromotionsManagement() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600"></div>
       </div>
     );
   }
@@ -384,7 +384,7 @@ export function PromotionsManagement() {
             setEditingPromotion(null);
             setShowCreateForm(true);
           }}
-          className="flex items-center gap-2 bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl"
+          className="flex items-center gap-2 bg-gradient-to-r from-[#4682B4] to-[#97CF50] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl"
         >
           <Plus className="h-4 w-4" />
           Create Promotion
@@ -403,7 +403,7 @@ export function PromotionsManagement() {
         <Card>
           <CardContent className="p-4">
             <div className="flex items-center">
-              <Tag className="h-8 w-8 text-blue-600" />
+              <Tag className="h-8 w-8 text-green-600" />
               <div className="ml-3">
                 <p className="text-sm font-medium text-gray-500">Total Promotions</p>
                 <p className="text-2xl font-bold text-gray-900">{promotions.length}</p>
@@ -511,7 +511,7 @@ export function PromotionsManagement() {
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   placeholder="Describe your promotion..."
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   rows={3}
                 />
               </div>
@@ -525,7 +525,7 @@ export function PromotionsManagement() {
                   <select
                     value={formData.discount_type}
                     onChange={(e) => setFormData({ ...formData, discount_type: e.target.value as any })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     required
                   >
                     <option value="percentage">Percentage Off</option>
@@ -777,7 +777,7 @@ export function PromotionsManagement() {
                 >
                   Cancel
                 </Button>
-                <Button type="submit" className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl">
+                <Button type="submit" className="bg-gradient-to-r from-[#4682B4] to-[#97CF50] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl">
                   {editingPromotion ? 'Update Promotion' : 'Create Promotion'}
                 </Button>
               </div>
@@ -810,8 +810,8 @@ export function PromotionsManagement() {
             
             <CardContent className="space-y-4">
               {/* Discount Display */}
-              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
-                <div className="text-2xl font-bold text-blue-600">
+              <div className="bg-gradient-to-r from-green-50 to-purple-50 rounded-lg p-4">
+                <div className="text-2xl font-bold text-green-600">
                   {getDiscountText(promotion)}
                 </div>
                 {promotion.minimum_order_amount > 0 && (
@@ -899,7 +899,7 @@ export function PromotionsManagement() {
                 resetForm();
                 setShowCreateForm(true);
               }}
-              className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl"
+              className="bg-gradient-to-r from-[#4682B4] to-[#97CF50] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl"
             >
               Create Your First Promotion
             </Button>

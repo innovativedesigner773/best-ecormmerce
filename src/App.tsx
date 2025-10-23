@@ -95,31 +95,29 @@ function AppContent() {
   }
 
   return (
-    <SystemThemeProvider>
-      <div className="min-h-screen bg-gray-50">
-        <OptimizedErrorBoundary>
-          <AnalyticsErrorBoundary>
-            <Navbar />
-            <OfflineIndicator />
-            <ServerStatusBanner />
-            <DatabaseStatusBanner />
-            
-            <main className="min-h-screen">
-              <AppRoutes />
-            </main>
+    <div className="min-h-screen bg-gray-50">
+      <OptimizedErrorBoundary>
+        <AnalyticsErrorBoundary>
+          <Navbar />
+          <OfflineIndicator />
+          <ServerStatusBanner />
+          <DatabaseStatusBanner />
+          
+          <main className="min-h-screen">
+            <AppRoutes />
+          </main>
 
-            <Footer />
-          </AnalyticsErrorBoundary>
-        </OptimizedErrorBoundary>
-        
-        <Toaster 
-          position="top-right" 
-          richColors 
-          closeButton
-          duration={4000}
-        />
-      </div>
-    </SystemThemeProvider>
+          <Footer />
+        </AnalyticsErrorBoundary>
+      </OptimizedErrorBoundary>
+      
+      <Toaster 
+        position="top-right" 
+        richColors 
+        closeButton
+        duration={4000}
+      />
+    </div>
   );
 }
 
@@ -129,21 +127,23 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <Router>
-        <OfflineProvider>
-          <AuthProvider>
-            <ErrorBoundary>
-              <CartProvider>
-                <FavouritesProvider>
-                  <StockNotificationsProvider>
-                    <AppContent />
-                    {/* Fallback iframe-based chat to avoid CDN script issues */}
-                    <BotpressIframeChat />
-                  </StockNotificationsProvider>
-                </FavouritesProvider>
-              </CartProvider>
-            </ErrorBoundary>
-          </AuthProvider>
-        </OfflineProvider>
+        <SystemThemeProvider>
+          <OfflineProvider>
+            <AuthProvider>
+              <ErrorBoundary>
+                <CartProvider>
+                  <FavouritesProvider>
+                    <StockNotificationsProvider>
+                      <AppContent />
+                      {/* Fallback iframe-based chat to avoid CDN script issues */}
+                      <BotpressIframeChat />
+                    </StockNotificationsProvider>
+                  </FavouritesProvider>
+                </CartProvider>
+              </ErrorBoundary>
+            </AuthProvider>
+          </OfflineProvider>
+        </SystemThemeProvider>
       </Router>
     </QueryClientProvider>
   );

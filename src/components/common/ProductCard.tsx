@@ -286,7 +286,7 @@ export default function ProductCard({ product, featured = false, className = '',
           )}
 
           {/* Product Name - Fixed height */}
-          <h3 className="font-semibold text-gray-800 mb-3 group-hover:text-[#4682B4] transition-colors duration-300 flex-shrink-0 min-h-[3rem] line-clamp-2">
+          <h3 className="font-semibold text-gray-800 mb-3 group-hover:text-[#97CF50] transition-colors duration-300 flex-shrink-0 min-h-[3rem] line-clamp-2">
             {product.name}
           </h3>
 
@@ -335,7 +335,7 @@ export default function ProductCard({ product, featured = false, className = '',
                     e.stopPropagation();
                     onEdit?.(product);
                   }}
-                  className="flex-1 inline-flex items-center justify-center px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  className="flex-1 inline-flex items-center justify-center px-4 py-3 rounded-xl text-sm font-medium bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                 >
                   <Edit className="h-4 w-4 mr-2" />
                   Edit
@@ -387,7 +387,7 @@ export default function ProductCard({ product, featured = false, className = '',
                     ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                     : stockInfo.urgent
                     ? 'bg-gradient-to-r from-red-500 to-orange-500 text-white hover:from-red-600 hover:to-orange-600 animate-pulse'
-                    : 'bg-[#4682B4] text-white hover:bg-[#2C3E50]'
+                    : 'bg-primary text-primary-foreground hover:bg-secondary'
                 }`}
               >
                 {isLoading ? (
@@ -466,7 +466,7 @@ export default function ProductCard({ product, featured = false, className = '',
                 id="remind-email"
                 value={remindMeEmail}
                 onChange={(e) => setRemindMeEmail(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
                 placeholder="Enter your email address"
                 disabled={isRemindMeLoading}
               />

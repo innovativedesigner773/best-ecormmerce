@@ -192,7 +192,7 @@ export default function RealTimeRegistrationTest() {
       case 'error':
         return <AlertCircle className="h-4 w-4 text-red-600" />;
       case 'running':
-        return <Loader2 className="h-4 w-4 text-blue-600 animate-spin" />;
+        return <Loader2 className="h-4 w-4 text-green-600 animate-spin" />;
       default:
         return <div className="h-4 w-4 rounded-full bg-gray-300" />;
     }
@@ -205,7 +205,7 @@ export default function RealTimeRegistrationTest() {
       case 'error':
         return 'bg-red-50 border-red-200';
       case 'running':
-        return 'bg-blue-50 border-blue-200';
+        return 'bg-green-50 border-green-200';
       default:
         return 'bg-gray-50 border-gray-200';
     }
@@ -232,7 +232,7 @@ export default function RealTimeRegistrationTest() {
         <div className={`p-4 rounded-lg border ${
           overallStatus === 'success' ? 'bg-green-50 border-green-200' :
           overallStatus === 'error' ? 'bg-red-50 border-red-200' :
-          overallStatus === 'running' ? 'bg-blue-50 border-blue-200' :
+          overallStatus === 'running' ? 'bg-green-50 border-green-200' :
           'bg-gray-50 border-gray-200'
         }`}>
           <div className="flex items-center justify-between">
@@ -247,7 +247,7 @@ export default function RealTimeRegistrationTest() {
               </div>
               {runningCount > 0 && (
                 <div className="flex items-center gap-2">
-                  <Loader2 className="h-4 w-4 text-blue-600 animate-spin" />
+                  <Loader2 className="h-4 w-4 text-green-600 animate-spin" />
                   <span className="text-sm">Running: {runningCount}</span>
                 </div>
               )}
@@ -353,9 +353,9 @@ export default function RealTimeRegistrationTest() {
         </div>
 
         {/* Instructions */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-medium text-blue-900 mb-2">How to Use This Test:</h4>
-          <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h4 className="font-medium text-green-900 mb-2">How to Use This Test:</h4>
+          <ol className="text-sm text-green-800 space-y-1 list-decimal list-inside">
             <li>First, run COMPREHENSIVE_DATABASE_FIX.sql in Supabase SQL Editor</li>
             <li>Wait for all success messages in the SQL editor</li>
             <li>Click "Run Live Test" button above</li>

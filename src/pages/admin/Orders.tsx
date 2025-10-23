@@ -460,7 +460,7 @@ export default function AdminOrders() {
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
               >
                 <option value="all">All Status</option>
                 <option value="pending">Pending</option>
@@ -490,11 +490,11 @@ export default function AdminOrders() {
                   : 'Try adjusting your search terms or filters.'}
               </p>
               {orders.length === 0 && (
-                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 max-w-md mx-auto">
-                  <p className="text-sm text-blue-800 mb-2">
+                <div className="bg-[#97CF50]/10 border border-[#97CF50]/30 rounded-lg p-4 max-w-md mx-auto">
+                  <p className="text-sm text-green-800 mb-2">
                     <strong>Need to set up your database?</strong>
                   </p>
-                  <p className="text-xs text-blue-600">
+                  <p className="text-xs text-green-600">
                     Make sure you've run the database setup scripts in your Supabase SQL editor.
                     Check the DATABASE_SETUP.md file for instructions.
                   </p>
@@ -547,7 +547,7 @@ export default function AdminOrders() {
                           {order.order_items && order.order_items.length > 0 && (
                             <div className="group relative">
                               <button 
-                                className="text-xs text-blue-600 hover:text-blue-800 underline"
+                                className="text-xs text-green-600 hover:text-green-800 underline"
                                 onClick={() => { setSelectedOrder(order); setIsDetailsOpen(true); }}
                               >
                                 View all items
@@ -562,7 +562,7 @@ export default function AdminOrders() {
                           className={
                             `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ` +
                             (order.status === 'delivered' ? 'bg-green-100 text-green-800' :
-                             order.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                             order.status === 'shipped' ? 'bg-[#97CF50]/20 text-[#09215F]' :
                              order.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
                              order.status === 'pending' ? 'bg-gray-100 text-gray-800' :
                              'bg-red-100 text-red-800')
@@ -632,22 +632,22 @@ export default function AdminOrders() {
               <div className="px-6 py-5">
                 {/* Order Items Summary */}
                 {selectedOrder.order_items && selectedOrder.order_items.length > 0 && (
-                  <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-                    <h4 className="text-sm font-semibold text-blue-900 mb-2">Order Summary</h4>
+                  <div className="mb-6 p-4 bg-[#97CF50]/10 border border-[#97CF50]/30 rounded-lg">
+                    <h4 className="text-sm font-semibold text-green-900 mb-2">Order Summary</h4>
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
                       <div>
-                        <span className="text-blue-700 font-medium">Total Items:</span>
-                        <span className="ml-2 text-blue-900">{selectedOrder.order_items.length}</span>
+                        <span className="text-green-700 font-medium">Total Items:</span>
+                        <span className="ml-2 text-green-900">{selectedOrder.order_items.length}</span>
                       </div>
                       <div>
-                        <span className="text-blue-700 font-medium">Total Quantity:</span>
-                        <span className="ml-2 text-blue-900">
+                        <span className="text-green-700 font-medium">Total Quantity:</span>
+                        <span className="ml-2 text-green-900">
                           {selectedOrder.order_items.reduce((sum, item) => sum + item.quantity, 0)}
                         </span>
                       </div>
                       <div>
-                        <span className="text-blue-700 font-medium">Order Total:</span>
-                        <span className="ml-2 text-blue-900 font-semibold">{formatZAR(selectedOrder.total)}</span>
+                        <span className="text-green-700 font-medium">Order Total:</span>
+                        <span className="ml-2 text-green-900 font-semibold">{formatZAR(selectedOrder.total)}</span>
                       </div>
                     </div>
                   </div>
@@ -684,7 +684,7 @@ export default function AdminOrders() {
                           className={
                             `inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ` +
                             (selectedOrder.status === 'delivered' ? 'bg-green-100 text-green-800' :
-                             selectedOrder.status === 'shipped' ? 'bg-blue-100 text-blue-800' :
+                             selectedOrder.status === 'shipped' ? 'bg-[#97CF50]/20 text-[#09215F]' :
                              selectedOrder.status === 'processing' ? 'bg-yellow-100 text-yellow-800' :
                              selectedOrder.status === 'pending' ? 'bg-gray-100 text-gray-800' :
                              'bg-red-100 text-red-800')
@@ -785,7 +785,7 @@ export default function AdminOrders() {
                   <select
                     value={selectedOrder.status}
                     onChange={(e) => updateOrderStatus(selectedOrder.id, e.target.value as OrderStatus)}
-                    className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
                   >
                     <option value="pending">Pending</option>
                     <option value="processing">Processing</option>
@@ -803,7 +803,7 @@ export default function AdminOrders() {
                   </button>
                   <button
                     onClick={() => selectedOrder && handlePrintInvoice(selectedOrder)}
-                    className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700"
+                    className="px-4 py-2 rounded-lg bg-[#97CF50] text-white hover:bg-[#09215F]"
                   >
                     Print Invoice
                   </button>

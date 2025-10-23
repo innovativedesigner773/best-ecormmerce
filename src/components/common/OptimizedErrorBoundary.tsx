@@ -112,7 +112,7 @@ export class OptimizedErrorBoundary extends Component<Props, State> {
             <div className="flex flex-col sm:flex-row gap-3">
               <button
                 onClick={this.handleRetry}
-                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                className="flex-1 inline-flex items-center justify-center px-4 py-2 bg-[#97CF50] text-white rounded-lg hover:bg-[#09215F] transition-colors"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Try Again

@@ -86,7 +86,7 @@ export function BarcodeInput({ value, onChange, placeholder = "Product barcode",
             size="sm"
             onClick={handleScanClick}
             disabled={disabled}
-            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-blue-50 hover:border-blue-300"
+            className="absolute right-1 top-1/2 -translate-y-1/2 h-8 w-8 p-0 hover:bg-green-50 hover:border-green-300"
             title="Scan barcode with camera"
           >
             <Camera className="h-4 w-4" />
@@ -95,8 +95,8 @@ export function BarcodeInput({ value, onChange, placeholder = "Product barcode",
 
         {/* Status Indicators */}
         {scanningStatus === 'scanning' && (
-          <div className="flex items-center gap-2 text-sm text-blue-600">
-            <div className="w-2 h-2 bg-blue-600 rounded-full animate-pulse"></div>
+          <div className="flex items-center gap-2 text-sm text-green-600">
+            <div className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></div>
             <span>Ready to scan...</span>
           </div>
         )}

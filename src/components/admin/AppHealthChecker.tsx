@@ -309,9 +309,9 @@ export default function AppHealthChecker() {
               </AlertDescription>
             </Alert>
           ) : (
-            <Alert className="border-blue-500 bg-blue-50">
-              <RefreshCw className="h-4 w-4 text-blue-600" />
-              <AlertDescription className="text-blue-800">
+            <Alert className="border-green-500 bg-green-50">
+              <RefreshCw className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-800">
                 <strong>Ready to test:</strong> Click "Run Health Check" to verify all systems.
               </AlertDescription>
             </Alert>

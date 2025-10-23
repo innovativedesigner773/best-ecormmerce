@@ -328,9 +328,9 @@ export default function DatabaseFixVerification() {
         </div>
 
         {/* Next Steps */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <h4 className="font-medium text-blue-900 mb-2">Database Fix Checklist:</h4>
-          <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+        <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+          <h4 className="font-medium text-green-900 mb-2">Database Fix Checklist:</h4>
+          <ol className="text-sm text-green-800 space-y-1 list-decimal list-inside">
             <li>Run FINAL_DATABASE_FIX.sql in Supabase SQL Editor</li>
             <li>Clear browser cache completely</li>
             <li>Hard refresh the application (Ctrl+Shift+R)</li>

@@ -47,13 +47,13 @@ export default function StorageDiagnostic() {
     <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center space-x-2">
-          <Database className="w-6 h-6 text-blue-600" />
+          <Database className="w-6 h-6 text-green-600" />
           <h2 className="text-xl font-semibold text-gray-900">Storage Diagnostic</h2>
         </div>
         <button
           onClick={runHealthCheck}
           disabled={loading}
-          className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          className="flex items-center space-x-2 px-4 py-2 bg-[#97CF50] text-white rounded-lg hover:bg-[#09215F] disabled:opacity-50"
         >
           <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
           <span>{loading ? 'Checking...' : 'Refresh'}</span>
@@ -87,7 +87,7 @@ export default function StorageDiagnostic() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="p-4 bg-gray-50 rounded-lg">
                 <div className="flex items-center space-x-2 mb-2">
-                  <Upload className="w-4 h-4 text-blue-600" />
+                  <Upload className="w-4 h-4 text-green-600" />
                   <span className="font-medium text-gray-900">Public Access</span>
                 </div>
                 <div className="flex items-center space-x-2">

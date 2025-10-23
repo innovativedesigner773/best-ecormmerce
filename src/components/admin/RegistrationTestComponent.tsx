@@ -297,9 +297,9 @@ export default function RegistrationTestComponent() {
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-        <h4 className="font-medium text-blue-900 mb-2">Instructions:</h4>
-        <ol className="text-sm text-blue-800 space-y-1 list-decimal list-inside">
+      <div className="bg-green-50 border border-green-200 rounded-lg p-4">
+        <h4 className="font-medium text-green-900 mb-2">Instructions:</h4>
+        <ol className="text-sm text-green-800 space-y-1 list-decimal list-inside">
           <li>First, run the SQL script in your Supabase SQL Editor</li>
           <li>Test the server connection to ensure the Edge Function is working</li>
           <li>Test the database connection to verify the schema is correct</li>

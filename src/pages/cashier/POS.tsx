@@ -367,7 +367,7 @@ export default function EnhancedPOS() {
       <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
         <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full mx-4">
           <div className="flex justify-between items-center mb-6">
-            <h3 className="text-xl font-bold text-[#2C3E50]">
+            <h3 className="text-xl font-bold text-[#09215F]">
               {target === 'barcode' ? 'Enter Barcode' : target === 'customer' ? 'Customer Search' : 'Manual Entry'}
             </h3>
             <button
@@ -395,7 +395,7 @@ export default function EnhancedPOS() {
                   <button
                     key={key}
                     onClick={() => onKeyPress(key)}
-                    className="bg-[#4682B4] text-white p-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-[48px] font-semibold"
+                    className="bg-[#97CF50] text-white p-4 rounded-xl hover:bg-[#09215F] transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1 min-w-[48px] font-semibold"
                   >
                     {key}
                   </button>
@@ -407,7 +407,7 @@ export default function EnhancedPOS() {
           <div className="flex justify-center space-x-4 mt-6">
             <button
               onClick={() => onKeyPress('SPACE')}
-              className="bg-gray-200 text-[#2C3E50] px-8 py-4 rounded-xl hover:bg-gray-300 transition-all duration-200 font-semibold"
+              className="bg-gray-200 text-[#09215F] px-8 py-4 rounded-xl hover:bg-gray-300 transition-all duration-200 font-semibold"
             >
               Space
             </button>
@@ -469,17 +469,17 @@ export default function EnhancedPOS() {
 
   return (
     <CashierLayout>
-      <div className="min-h-screen bg-gradient-to-br from-[#87CEEB]/20 to-white">
+      <div className="min-h-screen bg-gradient-to-br from-[#97CF50]/20 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8 bg-white rounded-2xl shadow-xl p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-[#2C3E50]">Point of Sale</h1>
-              <p className="text-[#2C3E50]/80 mt-2">Process in-store sales and transactions</p>
+              <h1 className="text-4xl font-bold text-[#09215F]">Point of Sale</h1>
+              <p className="text-[#09215F]/80 mt-2">Process in-store sales and transactions</p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg">
+              <div className="bg-[#97CF50] text-white p-4 rounded-2xl shadow-lg">
                 <Scan className="h-8 w-8" />
               </div>
             </div>
@@ -491,11 +491,11 @@ export default function EnhancedPOS() {
           <div className="lg:col-span-2 space-y-6">
             {/* Barcode Scanner */}
             <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6">Barcode Scanner</h2>
-              <div className="border-2 border-dashed border-[#4682B4]/30 rounded-xl p-8 text-center bg-gradient-to-br from-[#87CEEB]/10 to-transparent">
-                <Scan className="h-16 w-16 text-[#4682B4] mx-auto mb-4" />
-                <p className="text-xl font-medium text-[#2C3E50] mb-2">Ready to Scan</p>
-                <p className="text-[#2C3E50]/80 mb-6">Use barcode scanner or enter product code manually</p>
+              <h2 className="text-2xl font-semibold text-[#09215F] mb-6">Barcode Scanner</h2>
+              <div className="border-2 border-dashed border-[#97CF50]/30 rounded-xl p-8 text-center bg-gradient-to-br from-[#97CF50]/10 to-transparent">
+                <Scan className="h-16 w-16 text-[#97CF50] mx-auto mb-4" />
+                <p className="text-xl font-medium text-[#09215F] mb-2">Ready to Scan</p>
+                <p className="text-[#09215F]/80 mb-6">Use barcode scanner or enter product code manually</p>
                 <div className="flex space-x-4">
                   <input
                     type="text"
@@ -503,11 +503,11 @@ export default function EnhancedPOS() {
                     onChange={(e) => setBarcodeInput(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleBarcodeInput(barcodeInput)}
                     placeholder="Enter barcode or product code..."
-                    className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-center font-mono"
+                    className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent text-center font-mono"
                   />
                   <button
                     onClick={() => openKeyboard('barcode')}
-                    className="bg-[#4682B4] text-white px-6 py-3 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="bg-[#97CF50] text-white px-6 py-3 rounded-xl hover:bg-[#09215F] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     <Calculator className="h-6 w-6" />
                   </button>
@@ -517,7 +517,7 @@ export default function EnhancedPOS() {
                     <div className="relative w-full">
                       <video ref={videoRef} className="w-full h-48 bg-gray-100 rounded-xl" muted playsInline />
                       {!scanning && (
-                        <div className="absolute inset-0 flex items-center justify-center text-sm text-[#2C3E50]/70">Camera idle</div>
+                        <div className="absolute inset-0 flex items-center justify-center text-sm text-[#09215F]/70">Camera idle</div>
                       )}
                     </div>
                   </div>
@@ -543,7 +543,7 @@ export default function EnhancedPOS() {
               {/* Quick Product Buttons */}
               <div className="mt-6 grid grid-cols-2 md:grid-cols-5 gap-3">
                 {productsLoading && (
-                  <div className="col-span-5 text-center text-[#2C3E50]/70">Loading products…</div>
+                  <div className="col-span-5 text-center text-[#09215F]/70">Loading products…</div>
                 )}
                 {!productsLoading && productsError && (
                   <div className="col-span-5 text-center text-red-600">{productsError}</div>
@@ -553,10 +553,10 @@ export default function EnhancedPOS() {
                     <button
                       key={barcode}
                       onClick={() => handleBarcodeInput(barcode)}
-                      className="p-4 bg-gradient-to-br from-[#4682B4]/10 to-[#87CEEB]/20 rounded-xl hover:from-[#4682B4]/20 hover:to-[#87CEEB]/30 transition-all duration-300 border border-[#4682B4]/20 hover:border-[#4682B4]/40"
+                      className="p-4 bg-gradient-to-br from-[#97CF50]/10 to-[#97CF50]/20 rounded-xl hover:from-[#97CF50]/20 hover:to-[#97CF50]/30 transition-all duration-300 border border-[#97CF50]/20 hover:border-[#97CF50]/40"
                     >
-                      <div className="text-sm font-semibold text-[#2C3E50]">{product.name}</div>
-                      <div className="text-[#4682B4] font-bold">R{product.price}</div>
+                      <div className="text-sm font-semibold text-[#09215F]">{product.name}</div>
+                      <div className="text-[#97CF50] font-bold">R{product.price}</div>
                     </button>
                   ))}
               </div>
@@ -564,7 +564,7 @@ export default function EnhancedPOS() {
 
             {/* Customer Search */}
             <div className="bg-white rounded-2xl shadow-xl p-6">
-              <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6">Customer Lookup</h2>
+              <h2 className="text-2xl font-semibold text-[#09215F] mb-6">Customer Lookup</h2>
               <div className="flex items-center space-x-4 mb-4">
                 <div className="flex-1">
                   <input
@@ -573,18 +573,18 @@ export default function EnhancedPOS() {
                     onChange={(e) => setCustomerSearch(e.target.value)}
                     onKeyPress={(e) => e.key === 'Enter' && handleCustomerSearch(customerSearch)}
                     placeholder="Search by phone, email, or name..."
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
                   />
                 </div>
                 <button
                   onClick={() => openKeyboard('customer')}
-                  className="bg-[#4682B4] text-white px-4 py-3 rounded-xl hover:bg-[#2C3E50] transition-all duration-300"
+                  className="bg-[#97CF50] text-white px-4 py-3 rounded-xl hover:bg-[#09215F] transition-all duration-300"
                 >
                   <Calculator className="h-6 w-6" />
                 </button>
                 <button
                   onClick={() => handleCustomerSearch(customerSearch)}
-                  className="bg-[#4682B4] text-white px-6 py-3 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center"
+                  className="bg-[#97CF50] text-white px-6 py-3 rounded-xl hover:bg-[#09215F] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center"
                 >
                   <Users className="h-5 w-5 mr-2" />
                   Search
@@ -592,17 +592,17 @@ export default function EnhancedPOS() {
               </div>
 
               {customer && (
-                <div className="bg-gradient-to-r from-[#4682B4]/10 to-[#87CEEB]/20 rounded-xl p-4 border border-[#4682B4]/20">
+                <div className="bg-gradient-to-r from-[#97CF50]/10 to-[#97CF50]/20 rounded-xl p-4 border border-[#97CF50]/20">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <UserCheck className="h-8 w-8 text-[#4682B4]" />
+                      <UserCheck className="h-8 w-8 text-[#97CF50]" />
                       <div>
-                        <h3 className="font-bold text-[#2C3E50]">{customer.name}</h3>
-                        <p className="text-[#2C3E50]/80">{customer.email}</p>
+                        <h3 className="font-bold text-[#09215F]">{customer.name}</h3>
+                        <p className="text-[#09215F]/80">{customer.email}</p>
                       </div>
                     </div>
                     <div className="text-right">
-                      <div className="bg-[#4682B4] text-white px-4 py-2 rounded-xl">
+                      <div className="bg-[#97CF50] text-white px-4 py-2 rounded-xl">
                         <Gift className="h-5 w-5 inline mr-2" />
                         {customer.points} points
                       </div>
@@ -616,23 +616,23 @@ export default function EnhancedPOS() {
           {/* Right Section - Cart & Checkout */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-4">
-              <h2 className="text-2xl font-semibold text-[#2C3E50] mb-6">Transaction</h2>
+              <h2 className="text-2xl font-semibold text-[#09215F] mb-6">Transaction</h2>
 
               {cartItems.length === 0 ? (
-                <div className="text-center py-8 border-2 border-dashed border-[#4682B4]/30 rounded-xl mb-6 bg-gradient-to-br from-[#87CEEB]/10 to-transparent">
-                  <ShoppingCart className="h-12 w-12 text-[#4682B4] mx-auto mb-3" />
-                  <p className="text-[#2C3E50]">No items scanned</p>
-                  <p className="text-sm text-[#2C3E50]/80 mt-1">Scan products to add to cart</p>
+                <div className="text-center py-8 border-2 border-dashed border-[#97CF50]/30 rounded-xl mb-6 bg-gradient-to-br from-[#97CF50]/10 to-transparent">
+                  <ShoppingCart className="h-12 w-12 text-[#97CF50] mx-auto mb-3" />
+                  <p className="text-[#09215F]">No items scanned</p>
+                  <p className="text-sm text-[#09215F]/80 mt-1">Scan products to add to cart</p>
                 </div>
               ) : (
                 <div className="space-y-3 mb-6 max-h-96 overflow-y-auto">
                   {cartItems.map((item) => (
-                    <div key={item.id} className="bg-gradient-to-r from-[#87CEEB]/10 to-transparent rounded-xl p-4 border border-[#4682B4]/20">
+                    <div key={item.id} className="bg-gradient-to-r from-[#97CF50]/10 to-transparent rounded-xl p-4 border border-[#97CF50]/20">
                       <div className="flex justify-between items-start mb-2">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-[#2C3E50]">{item.name}</h4>
-                          <p className="text-sm text-[#2C3E50]/80">{item.category}</p>
-                          <p className="text-[#4682B4] font-bold">R{item.price} each</p>
+                          <h4 className="font-semibold text-[#09215F]">{item.name}</h4>
+                          <p className="text-sm text-[#09215F]/80">{item.category}</p>
+                          <p className="text-[#97CF50] font-bold">R{item.price} each</p>
                         </div>
                         <button
                           onClick={() => removeItem(item.id)}
@@ -649,7 +649,7 @@ export default function EnhancedPOS() {
                           >
                             <Minus className="h-4 w-4" />
                           </button>
-                          <span className="font-bold text-[#2C3E50] min-w-[2rem] text-center">{item.quantity}</span>
+                          <span className="font-bold text-[#09215F] min-w-[2rem] text-center">{item.quantity}</span>
                           <button
                             onClick={() => updateQuantity(item.id, 1)}
                             className="bg-green-500 text-white p-1 rounded-lg hover:bg-green-600"
@@ -657,7 +657,7 @@ export default function EnhancedPOS() {
                             <Plus className="h-4 w-4" />
                           </button>
                         </div>
-                        <span className="font-bold text-[#2C3E50]">R{(item.price * item.quantity).toFixed(2)}</span>
+                        <span className="font-bold text-[#09215F]">R{(item.price * item.quantity).toFixed(2)}</span>
                       </div>
                     </div>
                   ))}
@@ -668,14 +668,14 @@ export default function EnhancedPOS() {
               <div className="space-y-3 mb-6">
                 <button
                   onClick={() => setShowDiscountModal(true)}
-                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#4682B4]/30 rounded-xl hover:bg-[#87CEEB]/10 transition-all duration-300 text-[#2C3E50] font-semibold"
+                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#97CF50]/30 rounded-xl hover:bg-[#97CF50]/10 transition-all duration-300 text-[#09215F] font-semibold"
                 >
                   <Percent className="h-5 w-5 mr-2" />
                   Apply Discount ({discountPercent}%)
                 </button>
                 <button
                   onClick={() => openKeyboard('manual')}
-                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#4682B4]/30 rounded-xl hover:bg-[#87CEEB]/10 transition-all duration-300 text-[#2C3E50] font-semibold"
+                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#97CF50]/30 rounded-xl hover:bg-[#97CF50]/10 transition-all duration-300 text-[#09215F] font-semibold"
                 >
                   <Calculator className="h-5 w-5 mr-2" />
                   Manual Entry
@@ -683,8 +683,8 @@ export default function EnhancedPOS() {
               </div>
 
               {/* Total Display */}
-              <div className="border-t-2 border-[#4682B4]/20 pt-4 mb-6 space-y-2">
-                <div className="flex justify-between text-[#2C3E50]">
+              <div className="border-t-2 border-[#97CF50]/20 pt-4 mb-6 space-y-2">
+                <div className="flex justify-between text-[#09215F]">
                   <span>Subtotal:</span>
                   <span>R{subtotal.toFixed(2)}</span>
                 </div>
@@ -694,7 +694,7 @@ export default function EnhancedPOS() {
                     <span>-R{discountAmount.toFixed(2)}</span>
                   </div>
                 )}
-                <div className="flex justify-between text-2xl font-bold text-[#2C3E50] border-t border-gray-200 pt-2">
+                <div className="flex justify-between text-2xl font-bold text-[#09215F] border-t border-gray-200 pt-2">
                   <span>Total:</span>
                   <span>R{total.toFixed(2)}</span>
                 </div>
@@ -713,7 +713,7 @@ export default function EnhancedPOS() {
                 <button
                   disabled={cartItems.length === 0}
                   onClick={() => { setPaymentMethod('card'); setShowPaymentModal(true); }}
-                  className="w-full bg-gradient-to-r from-[#4682B4] to-[#2C3E50] text-white py-4 px-4 rounded-xl hover:from-[#2C3E50] hover:to-[#1a252f] transition-all duration-300 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold flex items-center justify-center"
+                  className="w-full bg-gradient-to-r from-[#97CF50] to-[#09215F] text-white py-4 px-4 rounded-xl hover:from-[#09215F] hover:to-[#1a252f] transition-all duration-300 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold flex items-center justify-center"
                 >
                   <CreditCard className="h-5 w-5 mr-2" />
                   Card Payment
@@ -722,11 +722,11 @@ export default function EnhancedPOS() {
 
               {/* Additional Actions */}
               <div className="mt-6 grid grid-cols-2 gap-3">
-                <button className="bg-[#87CEEB]/20 text-[#2C3E50] py-3 px-4 rounded-xl hover:bg-[#87CEEB]/30 transition-all duration-300 font-semibold flex items-center justify-center" onClick={handlePrintReceipt}>
+                <button className="bg-[#97CF50]/20 text-[#09215F] py-3 px-4 rounded-xl hover:bg-[#97CF50]/30 transition-all duration-300 font-semibold flex items-center justify-center" onClick={handlePrintReceipt}>
                   <Receipt className="h-5 w-5 mr-2" />
                   Print
                 </button>
-                <button className="bg-[#87CEEB]/20 text-[#2C3E50] py-3 px-4 rounded-xl hover:bg-[#87CEEB]/30 transition-all duration-300 font-semibold flex items-center justify-center">
+                <button className="bg-[#97CF50]/20 text-[#09215F] py-3 px-4 rounded-xl hover:bg-[#97CF50]/30 transition-all duration-300 font-semibold flex items-center justify-center">
                   <Mail className="h-5 w-5 mr-2" />
                   Email
                 </button>
@@ -739,14 +739,14 @@ export default function EnhancedPOS() {
         {showDiscountModal && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
-              <h3 className="text-2xl font-bold text-[#2C3E50] mb-6">Apply Discount</h3>
+              <h3 className="text-2xl font-bold text-[#09215F] mb-6">Apply Discount</h3>
               <div className="mb-6">
-                <label className="block text-sm font-medium text-[#2C3E50] mb-2">Discount Percentage</label>
+                <label className="block text-sm font-medium text-[#09215F] mb-2">Discount Percentage</label>
                 <input
                   type="number"
                   value={discountPercent}
                   onChange={(e) => setDiscountPercent(Number(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
+                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
                   placeholder="Enter discount percentage..."
                   min="0"
                   max="100"
@@ -755,13 +755,13 @@ export default function EnhancedPOS() {
               <div className="flex space-x-4">
                 <button
                   onClick={() => setShowDiscountModal(false)}
-                  className="flex-1 bg-gray-200 text-[#2C3E50] py-3 px-4 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold"
+                  className="flex-1 bg-gray-200 text-[#09215F] py-3 px-4 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   onClick={() => setShowDiscountModal(false)}
-                  className="flex-1 bg-[#4682B4] text-white py-3 px-4 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 font-semibold"
+                  className="flex-1 bg-[#97CF50] text-white py-3 px-4 rounded-xl hover:bg-[#09215F] transition-all duration-300 font-semibold"
                 >
                   Apply
                 </button>
@@ -787,7 +787,7 @@ export default function EnhancedPOS() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-[#2C3E50]">Enter Payment</h3>
+                <h3 className="text-2xl font-bold text-[#09215F]">Enter Payment</h3>
                 <button onClick={() => setShowPaymentModal(false)} className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100">
                   <X className="h-6 w-6" />
                 </button>
@@ -795,29 +795,29 @@ export default function EnhancedPOS() {
 
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-[#2C3E50]">Total Due</span>
-                  <span className="text-2xl font-bold text-[#2C3E50]">R{total.toFixed(2)}</span>
+                  <span className="text-[#09215F]">Total Due</span>
+                  <span className="text-2xl font-bold text-[#09215F]">R{total.toFixed(2)}</span>
                 </div>
 
                 <div className="flex items-center space-x-2">
-                  <button onClick={() => setPaymentMethod('cash')} className={`flex-1 px-4 py-3 rounded-xl border-2 ${paymentMethod === 'cash' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 text-[#2C3E50]'} font-semibold`}>Cash</button>
-                  <button onClick={() => setPaymentMethod('card')} className={`flex-1 px-4 py-3 rounded-xl border-2 ${paymentMethod === 'card' ? 'border-[#4682B4] bg-[#87CEEB]/20 text-[#2C3E50]' : 'border-gray-200 text-[#2C3E50]'} font-semibold`}>Card</button>
+                  <button onClick={() => setPaymentMethod('cash')} className={`flex-1 px-4 py-3 rounded-xl border-2 ${paymentMethod === 'cash' ? 'border-green-500 bg-green-50 text-green-700' : 'border-gray-200 text-[#09215F]'} font-semibold`}>Cash</button>
+                  <button onClick={() => setPaymentMethod('card')} className={`flex-1 px-4 py-3 rounded-xl border-2 ${paymentMethod === 'card' ? 'border-[#97CF50] bg-[#97CF50]/20 text-[#09215F]' : 'border-gray-200 text-[#09215F]'} font-semibold`}>Card</button>
                 </div>
 
                 {paymentMethod === 'cash' && (
                   <div>
-                    <label className="block text-sm font-medium text-[#2C3E50] mb-2">Amount Tendered</label>
+                    <label className="block text-sm font-medium text-[#09215F] mb-2">Amount Tendered</label>
                     <div className="flex space-x-2">
                       <input
                         type="number"
                         value={paymentAmount}
                         onChange={(e) => setPaymentAmount(e.target.value)}
                         placeholder="Enter cash received"
-                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
+                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
                         min="0"
                         step="0.01"
                       />
-                      <button onClick={() => openKeyboard('payment')} className="bg-[#4682B4] text-white px-4 py-3 rounded-xl hover:bg-[#2C3E50] transition-all duration-300">
+                      <button onClick={() => openKeyboard('payment')} className="bg-[#97CF50] text-white px-4 py-3 rounded-xl hover:bg-[#09215F] transition-all duration-300">
                         <Calculator className="h-5 w-5" />
                       </button>
                     </div>
@@ -825,7 +825,7 @@ export default function EnhancedPOS() {
                 )}
 
                 {paymentMethod === 'cash' && paymentAmount && Number(paymentAmount) >= 0 && (
-                  <div className="flex items-center justify-between text-[#2C3E50]">
+                  <div className="flex items-center justify-between text-[#09215F]">
                     <span>Change (if any)</span>
                     <span className="font-bold">R{Math.max(Number(paymentAmount || '0') - total, 0).toFixed(2)}</span>
                   </div>
@@ -835,7 +835,7 @@ export default function EnhancedPOS() {
                   <button 
                     onClick={() => setShowPaymentModal(false)} 
                     disabled={isProcessingPayment}
-                    className="flex-1 bg-gray-200 text-[#2C3E50] py-3 px-4 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="flex-1 bg-gray-200 text-[#09215F] py-3 px-4 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -854,7 +854,7 @@ export default function EnhancedPOS() {
                     )}
                   </button>
                 </div>
-                <p className="text-xs text-[#2C3E50]/70">Note: This is a demo payment. No data will be saved.</p>
+                <p className="text-xs text-[#09215F]/70">Note: This is a demo payment. No data will be saved.</p>
               </div>
             </div>
           </div>
@@ -865,17 +865,17 @@ export default function EnhancedPOS() {
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
             <div className="bg-white rounded-2xl shadow-2xl p-6 w-full max-w-sm mx-4">
               <div className="flex items-center justify-between mb-4">
-                <h3 className="text-xl font-bold text-[#2C3E50]">Receipt</h3>
+                <h3 className="text-xl font-bold text-[#09215F]">Receipt</h3>
                 <button onClick={() => setShowReceipt(false)} className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100">
                   <X className="h-6 w-6" />
                 </button>
               </div>
 
-              <div ref={receiptRef} className="text-sm text-[#2C3E50]">
+              <div ref={receiptRef} className="text-sm text-[#09215F]">
                 <div className="text-center mb-2">
-                  <div className="font-extrabold text-[#4682B4]">BEST BRIGHTNESS</div>
-                  <div className="small text-[#2C3E50]/80">Point of Sale Receipt</div>
-                  <div className="small text-[#4682B4]">Your Bright Shopping Experience</div>
+                  <div className="font-extrabold text-[#97CF50]">BEST BRIGHTNESS</div>
+                  <div className="small text-[#09215F]/80">Point of Sale Receipt</div>
+                  <div className="small text-[#97CF50]">Your Bright Shopping Experience</div>
                 </div>
                 <div className="hr" />
                 <div className="flex justify-between text-xs"><span>Order #</span><span>{orderRecord?.order_number || transactionId}</span></div>
@@ -888,7 +888,7 @@ export default function EnhancedPOS() {
                 {cartItems.map((item) => (
                   <div key={item.id}>
                     <div className="flex justify-between"><span>{item.name} x{item.quantity}</span><span>R{(item.price * item.quantity).toFixed(2)}</span></div>
-                    <div className="text-xs text-[#2C3E50]/70 ml-2">R{item.price.toFixed(2)} each</div>
+                    <div className="text-xs text-[#09215F]/70 ml-2">R{item.price.toFixed(2)} each</div>
                   </div>
                 ))}
                 <div className="hr" />
@@ -896,7 +896,7 @@ export default function EnhancedPOS() {
                 {discountPercent > 0 && (
                   <div className="flex justify-between text-xs text-green-600"><span>Discount {discountPercent}%</span><span>-R{discountAmount.toFixed(2)}</span></div>
                 )}
-                <div className="flex justify-between font-bold text-[#4682B4]"><span>Total</span><span>R{total.toFixed(2)}</span></div>
+                <div className="flex justify-between font-bold text-[#97CF50]"><span>Total</span><span>R{total.toFixed(2)}</span></div>
                 <div className="flex justify-between text-xs"><span>Payment Method</span><span>{paymentMethod.toUpperCase()}</span></div>
                 {paymentMethod === 'cash' && (
                   <>
@@ -905,10 +905,10 @@ export default function EnhancedPOS() {
                   </>
                 )}
                 <div className="hr" />
-                <div className="text-center text-xs text-[#4682B4]">Thank you for shopping with us!</div>
-                <div className="text-center text-xs text-[#2C3E50]/70">Visit us again soon</div>
+                <div className="text-center text-xs text-[#97CF50]">Thank you for shopping with us!</div>
+                <div className="text-center text-xs text-[#09215F]/70">Visit us again soon</div>
                 {orderRecord && (
-                  <div className="text-center text-xs text-[#2C3E50]/50 mt-2">Order ID: {orderRecord.id}</div>
+                  <div className="text-center text-xs text-[#09215F]/50 mt-2">Order ID: {orderRecord.id}</div>
                 )}
               </div>
 
@@ -938,7 +938,7 @@ export default function EnhancedPOS() {
                 <button onClick={() => { const el = document.activeElement as HTMLElement | null; el?.blur(); setTimeout(() => { }, 0); }} className="hidden" />
                 <button onClick={() => { const el = document.activeElement as HTMLElement | null; el?.blur(); setTimeout(() => { }, 0); }} className="hidden" />
                 <button onClick={() => { const el = document.activeElement as HTMLElement | null; el?.blur(); setTimeout(() => { }, 0); }} className="hidden" />
-                <button onClick={handlePrintReceipt} className="flex-1 bg-[#4682B4] text-white py-2 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 font-semibold flex items-center justify-center">
+                <button onClick={handlePrintReceipt} className="flex-1 bg-[#97CF50] text-white py-2 rounded-xl hover:bg-[#09215F] transition-all duration-300 font-semibold flex items-center justify-center">
                   <Printer className="h-5 w-5 mr-2" />
                   Print
                 </button>
@@ -955,12 +955,12 @@ export default function EnhancedPOS() {
                     setTransactionDate(null);
                     setChangeDue(0);
                   }} 
-                  className="flex-1 bg-gray-200 text-[#2C3E50] py-2 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold"
+                  className="flex-1 bg-gray-200 text-[#09215F] py-2 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold"
                 >
                   New Sale
                 </button>
               </div>
-              <p className="mt-2 text-xs text-[#2C3E50]/70">Sale recorded successfully in the system.</p>
+              <p className="mt-2 text-xs text-[#09215F]/70">Sale recorded successfully in the system.</p>
             </div>
           </div>
         )}

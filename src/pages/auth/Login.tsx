@@ -154,7 +154,7 @@ export default function Login() {
               </div>
             </div>
             
-            <h2 className="text-3xl text-[#2C3E50] mb-4">
+            <h2 className="text-3xl text-[#09215F] mb-4">
               Welcome Back!
             </h2>
             
@@ -167,7 +167,7 @@ export default function Login() {
             </div>
 
             {userProfile && (
-              <div className="bg-gradient-to-r from-[#4682B4] to-[#2C3E50] rounded-xl p-4 text-white mb-6">
+              <div className="bg-gradient-to-r from-[#97CF50] to-[#09215F] rounded-xl p-4 text-white mb-6">
                 <div className="flex items-center justify-center space-x-2 mb-2">
                   <ArrowRight className="h-4 w-4" />
                   <span className="text-sm">Redirecting to your dashboard...</span>
@@ -193,18 +193,18 @@ export default function Login() {
       <div className="max-w-md w-full space-y-8 bg-white rounded-2xl shadow-2xl p-8">
         <div>
           <div className="flex justify-center">
-            <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg">
+            <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg">
               <Package className="h-8 w-8" />
             </div>
           </div>
-          <h2 className="mt-6 text-center text-4xl text-[#2C3E50]">
+          <h2 className="mt-6 text-center text-4xl text-[#09215F]">
             Welcome back
           </h2>
-          <p className="mt-2 text-center text-sm text-[#2C3E50]/80">
+          <p className="mt-2 text-center text-sm text-[#09215F]/80">
             Or{' '}
             <Link
               to="/register"
-              className="text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+              className="text-[#97CF50] hover:text-[#09215F] transition-colors"
             >
               create a new account
             </Link>
@@ -217,7 +217,7 @@ export default function Login() {
             locationMessage.includes('successful') || locationMessage.includes('created')
               ? 'bg-green-50 border-green-200'
               : locationMessage.includes('confirm') || locationMessage.includes('email')
-              ? 'bg-blue-50 border-blue-200'
+              ? 'bg-green-50 border-green-200'
               : 'bg-amber-50 border-amber-200'
           }`}>
             <div className="flex items-start space-x-3">
@@ -225,7 +225,7 @@ export default function Login() {
                 locationMessage.includes('successful') || locationMessage.includes('created')
                   ? 'bg-green-100 text-green-600'
                   : locationMessage.includes('confirm') || locationMessage.includes('email')
-                  ? 'bg-blue-100 text-blue-600'
+                  ? 'bg-green-100 text-green-600'
                   : 'bg-amber-100 text-amber-600'
               }`}>
                 {locationMessage.includes('successful') || locationMessage.includes('created') ? (
@@ -241,7 +241,7 @@ export default function Login() {
                   locationMessage.includes('successful') || locationMessage.includes('created')
                     ? 'text-green-700'
                     : locationMessage.includes('confirm') || locationMessage.includes('email')
-                    ? 'text-blue-700'
+                    ? 'text-green-700'
                     : 'text-amber-700'
                 }`}>
                   {locationMessage}
@@ -291,7 +291,7 @@ export default function Login() {
           <div className="space-y-5">
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="email" className="block text-sm text-[#09215F]">
                 Email address *
               </label>
               <input
@@ -304,7 +304,7 @@ export default function Login() {
                 onChange={handleInputChange}
                 className={`mt-1 appearance-none relative block w-full px-3 py-3 border ${
                   errors.email ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                 placeholder="Enter your email"
               />
               {errors.email && (
@@ -314,7 +314,7 @@ export default function Login() {
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="password" className="block text-sm text-[#09215F]">
                 Password *
               </label>
               <div className="mt-1 relative">
@@ -328,7 +328,7 @@ export default function Login() {
                   onChange={handleInputChange}
                   className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                   placeholder="Enter your password"
                 />
                 <button
@@ -358,9 +358,9 @@ export default function Login() {
                 type="checkbox"
                 checked={formData.rememberMe}
                 onChange={handleInputChange}
-                className="h-4 w-4 text-[#4682B4] focus:ring-[#4682B4] border-gray-300 rounded accent-[#4682B4]"
+                className="h-4 w-4 text-[#97CF50] focus:ring-primary border-gray-300 rounded accent-[#97CF50]"
               />
-              <label htmlFor="rememberMe" className="ml-2 block text-sm text-[#2C3E50]">
+              <label htmlFor="rememberMe" className="ml-2 block text-sm text-[#09215F]">
                 Remember me
               </label>
             </div>
@@ -368,7 +368,7 @@ export default function Login() {
             <div className="text-sm">
               <Link
                 to="/reset-password"
-                className="text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+                className="text-[#97CF50] hover:text-[#09215F] transition-colors"
               >
                 Forgot password?
               </Link>
@@ -380,7 +380,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4682B4] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#97CF50] hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {loading ? (
                 <div className="flex items-center space-x-2">
@@ -395,11 +395,11 @@ export default function Login() {
 
           {/* Register Link */}
           <div className="text-center">
-            <p className="text-sm text-[#2C3E50]/80">
+            <p className="text-sm text-[#09215F]/80">
               Don't have an account?{' '}
               <Link
                 to="/register"
-                className="text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+                className="text-[#97CF50] hover:text-[#09215F] transition-colors"
               >
                 Create one now
               </Link>
@@ -409,11 +409,11 @@ export default function Login() {
 
         {/* Additional Help */}
         <div className="mt-6 pt-6 border-t border-gray-200">
-          <p className="text-center text-sm text-[#2C3E50]/80">
+          <p className="text-center text-sm text-[#09215F]/80">
             Need help? Contact our support team at{' '}
             <a 
               href="mailto:support@bestbrightness.com" 
-              className="text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+              className="text-[#97CF50] hover:text-[#09215F] transition-colors"
             >
               support@bestbrightness.com
             </a>

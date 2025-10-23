@@ -207,20 +207,20 @@ export default function Register() {
               </div>
             </div>
             
-            <h2 className="text-3xl text-[#2C3E50] mb-4">
+            <h2 className="text-3xl text-[#09215F] mb-4">
               Check Your Email
             </h2>
             
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 mb-6">
+            <div className="bg-green-50 border border-green-200 rounded-xl p-6 mb-6">
               <div className="flex items-start space-x-3">
-                <div className="bg-blue-100 p-2 rounded-full">
-                  <CheckCircle className="h-5 w-5 text-blue-600" />
+                <div className="bg-green-100 p-2 rounded-full">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
                 </div>
                 <div className="flex-1 text-left">
-                  <h3 className="text-sm text-blue-800 mb-2">
+                  <h3 className="text-sm text-green-800 mb-2">
                     {getRoleDisplayName(formData.userType)} Account Created!
                   </h3>
-                  <p className="text-sm text-blue-700 leading-relaxed">
+                  <p className="text-sm text-green-700 leading-relaxed">
                     We've sent a confirmation email to <strong>{formData.email}</strong>. 
                     Please click the link in the email to activate your account.
                   </p>
@@ -265,7 +265,7 @@ export default function Register() {
               <button
                 onClick={handleResendConfirmation}
                 disabled={loading}
-                className="w-full flex justify-center py-3 px-4 border border-[#4682B4] text-sm rounded-xl text-[#4682B4] bg-white hover:bg-[#4682B4] hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4682B4] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
+                className="w-full flex justify-center py-3 px-4 border border-[#97CF50] text-sm rounded-xl text-[#97CF50] bg-white hover:bg-primary hover:text-primary-foreground focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300"
               >
                 {loading ? (
                   <div className="flex items-center space-x-2">
@@ -286,7 +286,7 @@ export default function Register() {
                   email: formData.email,
                   message: `Please confirm your email first, then log in to access your ${getRoleDisplayName(formData.userType)} dashboard.`
                 }}
-                className="w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] transition-all duration-300"
+                className="w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#97CF50] hover:bg-secondary transition-all duration-300"
               >
                 Go to Login Page
               </Link>
@@ -295,7 +295,7 @@ export default function Register() {
             <div className="mt-6 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-600">
                 Need help? Contact our support team at{' '}
-                <a href="mailto:support@bestbrightness.com" className="text-[#4682B4] hover:text-[#2C3E50]">
+                <a href="mailto:support@bestbrightness.com" className="text-[#97CF50] hover:text-[#09215F]">
                   support@bestbrightness.com
                 </a>
               </p>
@@ -318,7 +318,7 @@ export default function Register() {
               </div>
             </div>
             
-            <h2 className="text-3xl text-[#2C3E50] mb-4">
+            <h2 className="text-3xl text-[#09215F] mb-4">
               Account Created Successfully!
             </h2>
             
@@ -345,18 +345,18 @@ export default function Register() {
       <div className="max-w-md w-full space-y-8 bg-white rounded-2xl shadow-2xl p-8">
         <div>
           <div className="flex justify-center">
-            <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg">
+            <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg">
               <Package className="h-8 w-8" />
             </div>
           </div>
-          <h2 className="mt-6 text-center text-4xl text-[#2C3E50]">
+          <h2 className="mt-6 text-center text-4xl text-[#09215F]">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-sm text-[#2C3E50]/80">
+          <p className="mt-2 text-center text-sm text-[#09215F]/80">
             Or{' '}
             <Link
               to="/login"
-              className="text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+              className="text-[#97CF50] hover:text-[#09215F] transition-colors"
             >
               sign in to your existing account
             </Link>
@@ -364,14 +364,14 @@ export default function Register() {
         </div>
 
         {/* Email Verification Notice */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
           <div className="flex items-start space-x-3">
-            <div className="bg-blue-100 p-2 rounded-full">
-              <Mail className="h-4 w-4 text-blue-600" />
+            <div className="bg-green-100 p-2 rounded-full">
+              <Mail className="h-4 w-4 text-green-600" />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm text-blue-800 mb-1">Email Verification Required</h3>
-              <p className="text-xs text-blue-700">
+              <h3 className="text-sm text-green-800 mb-1">Email Verification Required</h3>
+              <p className="text-xs text-green-700">
                 After registration, you'll receive an email to confirm your account before you can log in.
               </p>
             </div>
@@ -384,22 +384,22 @@ export default function Register() {
             formData.userType === 'admin' 
               ? 'bg-gradient-to-r from-[#FF6B35]/20 to-[#FF6B35]/30 border-[#FF6B35]/40'
               : formData.userType === 'manager'
-              ? 'bg-gradient-to-r from-[#4682B4]/20 to-[#4682B4]/30 border-[#4682B4]/40'
+              ? 'bg-gradient-to-r from-primary/20 to-primary/30 border-primary/40'
               : 'bg-gradient-to-r from-[#28A745]/20 to-[#28A745]/30 border-[#28A745]/40'
           }`}>
             <div className="flex items-center space-x-3 mb-3">
               <div className={`text-white p-2 rounded-xl ${
                 formData.userType === 'admin' ? 'bg-[#FF6B35]' : 
-                formData.userType === 'manager' ? 'bg-[#4682B4]' : 'bg-[#28A745]'
+                formData.userType === 'manager' ? 'bg-[#97CF50]' : 'bg-[#28A745]'
               }`}>
                 {formData.userType === 'admin' ? <Shield className="h-5 w-5" /> : 
                  formData.userType === 'manager' ? <User className="h-5 w-5" /> : <CreditCard className="h-5 w-5" />}
               </div>
-              <h3 className="text-lg text-[#2C3E50]">
+              <h3 className="text-lg text-[#09215F]">
                 {getRoleDisplayName(formData.userType)} Account
               </h3>
             </div>
-            <p className="text-sm text-[#2C3E50]/80 leading-relaxed">
+            <p className="text-sm text-[#09215F]/80 leading-relaxed">
               You're creating a {formData.userType} account with{' '}
               {getRoleAccessDescription(formData.userType)}. 
               After email confirmation, you'll be redirected to your {getRoleRedirectPath(formData.userType)}.
@@ -409,15 +409,15 @@ export default function Register() {
 
         {/* Loyalty Program Highlight for Customer */}
         {formData.userType === 'customer' && (
-          <div className="bg-gradient-to-r from-[#87CEEB]/20 to-[#4682B4]/20 border border-[#4682B4]/30 rounded-2xl p-6 shadow-lg">
+          <div className="bg-gradient-to-r from-accent/20 to-primary/20 border border-primary/30 rounded-2xl p-6 shadow-lg">
             <div className="flex items-center space-x-3 mb-3">
-              <div className="bg-[#4682B4] text-white p-2 rounded-xl">
+              <div className="bg-primary text-primary-foreground p-2 rounded-xl">
                 <Gift className="h-5 w-5" />
               </div>
-              <h3 className="text-lg text-[#2C3E50]">Welcome Bonus!</h3>
+              <h3 className="text-lg text-[#09215F]">Welcome Bonus!</h3>
             </div>
-            <p className="text-sm text-[#2C3E50]/80 leading-relaxed">
-              Get <span className="text-[#4682B4]">100 loyalty points</span> when you create your account. 
+            <p className="text-sm text-[#09215F]/80 leading-relaxed">
+              Get <span className="text-[#97CF50]">100 loyalty points</span> when you create your account. 
               After email confirmation, you'll be redirected to our {getRoleRedirectPath(formData.userType)} to start shopping!
             </p>
           </div>
@@ -438,7 +438,7 @@ export default function Register() {
             {/* Name Fields */}
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="block text-sm text-[#2C3E50]">
+                <label htmlFor="firstName" className="block text-sm text-[#09215F]">
                   First name *
                 </label>
                 <input
@@ -451,7 +451,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   className={`mt-1 appearance-none relative block w-full px-3 py-3 border ${
                     errors.firstName ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                   placeholder="First name"
                 />
                 {errors.firstName && (
@@ -460,7 +460,7 @@ export default function Register() {
               </div>
 
               <div>
-                <label htmlFor="lastName" className="block text-sm text-[#2C3E50]">
+                <label htmlFor="lastName" className="block text-sm text-[#09215F]">
                   Last name *
                 </label>
                 <input
@@ -473,7 +473,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   className={`mt-1 appearance-none relative block w-full px-3 py-3 border ${
                     errors.lastName ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                   placeholder="Last name"
                 />
                 {errors.lastName && (
@@ -484,7 +484,7 @@ export default function Register() {
 
             {/* Email */}
             <div>
-              <label htmlFor="email" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="email" className="block text-sm text-[#09215F]">
                 Email address *
               </label>
               <input
@@ -497,7 +497,7 @@ export default function Register() {
                 onChange={handleInputChange}
                 className={`mt-1 appearance-none relative block w-full px-3 py-3 border ${
                   errors.email ? 'border-red-300' : 'border-gray-300'
-                } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                 placeholder="Enter your email"
               />
               {errors.email && (
@@ -507,7 +507,7 @@ export default function Register() {
 
             {/* Phone (Optional) */}
             <div>
-              <label htmlFor="phone" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="phone" className="block text-sm text-[#09215F]">
                 Phone number (optional)
               </label>
               <input
@@ -517,14 +517,14 @@ export default function Register() {
                 autoComplete="tel"
                 value={formData.phone}
                 onChange={handleInputChange}
-                className="mt-1 appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300"
+                className="mt-1 appearance-none relative block w-full px-3 py-3 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300"
                 placeholder="Enter your phone number"
               />
             </div>
 
             {/* Password */}
             <div>
-              <label htmlFor="password" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="password" className="block text-sm text-[#09215F]">
                 Password *
               </label>
               <div className="mt-1 relative">
@@ -538,7 +538,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                   placeholder="Create a password"
                 />
                 <button
@@ -560,7 +560,7 @@ export default function Register() {
 
             {/* Confirm Password */}
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm text-[#2C3E50]">
+              <label htmlFor="confirmPassword" className="block text-sm text-[#09215F]">
                 Confirm password *
               </label>
               <div className="mt-1 relative">
@@ -574,7 +574,7 @@ export default function Register() {
                   onChange={handleInputChange}
                   className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${
                     errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-sm transition-all duration-300`}
                   placeholder="Confirm your password"
                 />
                 <button
@@ -611,15 +611,15 @@ export default function Register() {
               required
               checked={formData.acceptTerms}
               onChange={handleInputChange}
-              className="h-4 w-4 text-[#4682B4] focus:ring-[#4682B4] border-gray-300 rounded accent-[#4682B4]"
+              className="h-4 w-4 text-[#97CF50] focus:ring-primary border-gray-300 rounded accent-[#97CF50]"
             />
-            <label htmlFor="acceptTerms" className="ml-2 block text-sm text-[#2C3E50]">
+            <label htmlFor="acceptTerms" className="ml-2 block text-sm text-[#09215F]">
               I agree to the{' '}
-              <a href="#" className="text-[#4682B4] hover:text-[#2C3E50] transition-colors">
+              <a href="#" className="text-[#97CF50] hover:text-[#09215F] transition-colors">
                 Terms and Conditions
               </a>{' '}
               and{' '}
-              <a href="#" className="text-[#4682B4] hover:text-[#2C3E50] transition-colors">
+              <a href="#" className="text-[#97CF50] hover:text-[#09215F] transition-colors">
                 Privacy Policy
               </a>
             </label>
@@ -633,7 +633,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4682B4] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm rounded-xl text-white bg-[#97CF50] hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {loading ? (
                 <div className="flex items-center space-x-2">
@@ -648,35 +648,35 @@ export default function Register() {
 
           {/* Additional Benefits */}
           <div className="mt-6 border-t border-gray-200 pt-6">
-            <p className="text-center text-sm text-[#2C3E50]/80 mb-4">Why create an account?</p>
+            <p className="text-center text-sm text-[#09215F]/80 mb-4">Why create an account?</p>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
-                <div className="bg-[#4682B4]/10 p-2 rounded-lg">
-                  <Gift className="h-4 w-4 text-[#4682B4]" />
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
+                <div className="bg-[#97CF50]/10 p-2 rounded-lg">
+                  <Gift className="h-4 w-4 text-[#97CF50]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-[#2C3E50]">Loyalty Rewards</p>
-                  <p className="text-xs text-[#2C3E50]/70">Earn points on every purchase</p>
+                  <p className="text-sm text-[#09215F]">Loyalty Rewards</p>
+                  <p className="text-xs text-[#09215F]/70">Earn points on every purchase</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
-                <div className="bg-[#4682B4]/10 p-2 rounded-lg">
-                  <Package className="h-4 w-4 text-[#4682B4]" />
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
+                <div className="bg-[#97CF50]/10 p-2 rounded-lg">
+                  <Package className="h-4 w-4 text-[#97CF50]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-[#2C3E50]">Order History</p>
-                  <p className="text-xs text-[#2C3E50]/70">Track your purchases easily</p>
+                  <p className="text-sm text-[#09215F]">Order History</p>
+                  <p className="text-xs text-[#09215F]/70">Track your purchases easily</p>
                 </div>
               </div>
               
-              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#87CEEB]/5 border border-[#87CEEB]/20">
-                <div className="bg-[#4682B4]/10 p-2 rounded-lg">
-                  <User className="h-4 w-4 text-[#4682B4]" />
+              <div className="flex items-center space-x-3 p-3 rounded-xl bg-[#97CF50]/5 border border-[#97CF50]/20">
+                <div className="bg-[#97CF50]/10 p-2 rounded-lg">
+                  <User className="h-4 w-4 text-[#97CF50]" />
                 </div>
                 <div className="flex-1">
-                  <p className="text-sm text-[#2C3E50]">Personal Dashboard</p>
-                  <p className="text-xs text-[#2C3E50]/70">Manage your account and preferences</p>
+                  <p className="text-sm text-[#09215F]">Personal Dashboard</p>
+                  <p className="text-xs text-[#09215F]/70">Manage your account and preferences</p>
                 </div>
               </div>
             </div>

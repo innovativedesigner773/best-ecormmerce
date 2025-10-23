@@ -20,20 +20,20 @@ const SystemThemeContext = createContext<SystemThemeContextType | undefined>(und
 // Default light theme
 const lightTheme: SystemTheme = {
   isDark: false,
-  primaryColor: '#4682B4',
-  secondaryColor: '#2C3E50',
-  accentColor: '#87CEEB',
+  primaryColor: '#97CF50',
+  secondaryColor: '#09215F',
+  accentColor: '#2D5654',
   backgroundColor: '#FFFFFF',
-  textColor: '#2C3E50',
+  textColor: '#09215F',
   borderColor: '#E5E7EB'
 };
 
 // Dark theme
 const darkTheme: SystemTheme = {
   isDark: true,
-  primaryColor: '#60A5FA',
-  secondaryColor: '#1F2937',
-  accentColor: '#3B82F6',
+  primaryColor: '#97CF50',
+  secondaryColor: '#09215F',
+  accentColor: '#2D5654',
   backgroundColor: '#111827',
   textColor: '#F9FAFB',
   borderColor: '#374151'
@@ -57,12 +57,25 @@ export function SystemThemeProvider({ children }: { children: React.ReactNode })
   useEffect(() => {
     // Apply theme to document
     const root = document.documentElement;
-    root.style.setProperty('--primary-color', theme.primaryColor);
-    root.style.setProperty('--secondary-color', theme.secondaryColor);
-    root.style.setProperty('--accent-color', theme.accentColor);
-    root.style.setProperty('--background-color', theme.backgroundColor);
-    root.style.setProperty('--text-color', theme.textColor);
-    root.style.setProperty('--border-color', theme.borderColor);
+    root.style.setProperty('--primary', theme.primaryColor);
+    root.style.setProperty('--primary-foreground', '#ffffff');
+    root.style.setProperty('--secondary', theme.accentColor);
+    root.style.setProperty('--secondary-foreground', theme.textColor);
+    root.style.setProperty('--accent', theme.accentColor);
+    root.style.setProperty('--accent-foreground', theme.textColor);
+    root.style.setProperty('--background', theme.backgroundColor);
+    root.style.setProperty('--foreground', theme.textColor);
+    root.style.setProperty('--card', theme.backgroundColor);
+    root.style.setProperty('--card-foreground', theme.textColor);
+    root.style.setProperty('--popover', theme.backgroundColor);
+    root.style.setProperty('--popover-foreground', theme.textColor);
+    root.style.setProperty('--muted', '#F8F9FA');
+    root.style.setProperty('--muted-foreground', '#6C757D');
+    root.style.setProperty('--border', `rgba(9, 33, 95, 0.1)`);
+    root.style.setProperty('--input', 'transparent');
+    root.style.setProperty('--ring', theme.accentColor);
+    root.style.setProperty('--chart-1', theme.primaryColor);
+    root.style.setProperty('--chart-2', theme.accentColor);
     
     // Update body class for dark mode
     if (theme.isDark) {
@@ -96,44 +109,70 @@ export function useSystemTheme() {
 // CSS Variables for consistent theming
 export const systemThemeStyles = `
   :root {
-    --primary-color: #4682B4;
-    --secondary-color: #2C3E50;
-    --accent-color: #87CEEB;
-    --background-color: #FFFFFF;
-    --text-color: #2C3E50;
-    --border-color: #E5E7EB;
+    --primary: #97CF50;
+    --primary-foreground: #ffffff;
+    --secondary: #2D5654;
+    --secondary-foreground: #09215F;
+    --accent: #2D5654;
+    --accent-foreground: #09215F;
+    --background: #FFFFFF;
+    --foreground: #09215F;
+    --card: #ffffff;
+    --card-foreground: #09215F;
+    --popover: #ffffff;
+    --popover-foreground: #09215F;
+    --muted: #F8F9FA;
+    --muted-foreground: #6C757D;
+    --border: rgba(9, 33, 95, 0.1);
+    --input: transparent;
+    --ring: #2D5654;
+    --chart-1: #97CF50;
+    --chart-2: #2D5654;
   }
 
   .dark {
-    --primary-color: #60A5FA;
-    --secondary-color: #1F2937;
-    --accent-color: #3B82F6;
-    --background-color: #111827;
-    --text-color: #F9FAFB;
-    --border-color: #374151;
+    --primary: #97CF50;
+    --primary-foreground: #09215F;
+    --secondary: #2D5654;
+    --secondary-foreground: #ffffff;
+    --accent: #2D5654;
+    --accent-foreground: #ffffff;
+    --background: #09215F;
+    --foreground: #ffffff;
+    --card: #09215F;
+    --card-foreground: #ffffff;
+    --popover: #09215F;
+    --popover-foreground: #ffffff;
+    --muted: #2D5654;
+    --muted-foreground: #97CF50;
+    --border: rgba(45, 86, 84, 0.2);
+    --input: #2D5654;
+    --ring: #2D5654;
+    --chart-1: #97CF50;
+    --chart-2: #2D5654;
   }
 
   .theme-primary {
-    color: var(--primary-color);
+    color: var(--primary);
   }
 
   .theme-secondary {
-    color: var(--secondary-color);
+    color: var(--secondary);
   }
 
   .theme-accent {
-    color: var(--accent-color);
+    color: var(--accent);
   }
 
   .theme-bg {
-    background-color: var(--background-color);
+    background-color: var(--background);
   }
 
   .theme-text {
-    color: var(--text-color);
+    color: var(--foreground);
   }
 
   .theme-border {
-    border-color: var(--border-color);
+    border-color: var(--border);
   }
 `;

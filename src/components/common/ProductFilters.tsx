@@ -91,7 +91,7 @@ export default function ProductFilters({
             <input
               type="text"
               placeholder="Search products..."
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent"
               value={filters.search}
               onChange={(e) => updateFilter('search', e.target.value)}
             />
@@ -99,7 +99,7 @@ export default function ProductFilters({
 
           {/* Category Filter */}
           <select
-            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[180px]"
+            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white min-w-[180px]"
             value={filters.category}
             onChange={(e) => updateFilter('category', e.target.value)}
           >
@@ -111,7 +111,7 @@ export default function ProductFilters({
 
           {/* Sort */}
           <select
-            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white min-w-[160px]"
+            className="px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-transparent bg-white min-w-[160px]"
             value={filters.sortBy}
             onChange={(e) => updateFilter('sortBy', e.target.value)}
           >
@@ -149,7 +149,7 @@ export default function ProductFilters({
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="flex items-center bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm"
+                  className="flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm"
                 >
                   <span>{filter}</span>
                   <button
@@ -157,7 +157,7 @@ export default function ProductFilters({
                       // Remove specific filter logic would go here
                       clearAllFilters();
                     }}
-                    className="ml-2 hover:text-blue-600"
+                    className="ml-2 hover:text-green-600"
                   >
                     <X className="h-3 w-3" />
                   </button>
@@ -165,7 +165,7 @@ export default function ProductFilters({
               ))}
               <button
                 onClick={clearAllFilters}
-                className="ml-auto text-sm text-blue-600 hover:text-blue-800 font-medium"
+                className="ml-auto text-sm text-green-600 hover:text-green-800 font-medium"
               >
                 Clear All
               </button>
@@ -213,7 +213,7 @@ export default function ProductFilters({
                 <div className="flex items-center space-x-2">
                   <Star className="h-4 w-4 text-yellow-400 fill-current" />
                   <select
-                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                     value={filters.rating}
                     onChange={(e) => updateFilter('rating', parseInt(e.target.value))}
                   >
@@ -233,7 +233,7 @@ export default function ProductFilters({
                   Brand
                 </label>
                 <select
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
                   value={filters.brand}
                   onChange={(e) => updateFilter('brand', e.target.value)}
                 >
@@ -255,7 +255,7 @@ export default function ProductFilters({
                       type="checkbox"
                       checked={filters.onlyInStock}
                       onChange={(e) => updateFilter('onlyInStock', e.target.checked)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
                     <span className="ml-2 text-sm text-gray-700 flex items-center">
                       <Package className="h-4 w-4 mr-1" />
@@ -267,7 +267,7 @@ export default function ProductFilters({
                       type="checkbox"
                       checked={filters.onlyOnSale}
                       onChange={(e) => updateFilter('onlyOnSale', e.target.checked)}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                     />
                     <span className="ml-2 text-sm text-gray-700 flex items-center">
                       <Percent className="h-4 w-4 mr-1" />

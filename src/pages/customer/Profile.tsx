@@ -78,7 +78,7 @@ export default function Profile() {
   if (loading) {
     return (
       <div className="min-h-screen grid place-items-center">
-        <div className="text-[#2C3E50]">Loading profile…</div>
+        <div className="text-[#09215F]">Loading profile…</div>
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function Profile() {
   if (!user) {
     return (
       <div className="min-h-screen grid place-items-center">
-        <div className="text-[#2C3E50]">Please sign in to view your profile.</div>
+        <div className="text-[#09215F]">Please sign in to view your profile.</div>
       </div>
     );
   }
@@ -97,12 +97,12 @@ export default function Profile() {
         {/* Header */}
         <div className="mb-8">
           <div className="flex items-center space-x-4 mb-4">
-            <div className="bg-[#4682B4] text-white p-3 rounded-2xl shadow-lg">
+            <div className="bg-primary text-primary-foreground p-3 rounded-2xl shadow-lg">
               <Package className="h-8 w-8" />
             </div>
             <div>
-              <h1 className="text-4xl font-bold text-[#2C3E50]">My Profile</h1>
-              <p className="text-[#2C3E50]/70 mt-1">Manage your account information and loyalty rewards</p>
+              <h1 className="text-4xl font-bold text-[#09215F]">My Profile</h1>
+              <p className="text-[#09215F]/70 mt-1">Manage your account information and loyalty rewards</p>
             </div>
           </div>
         </div>
@@ -113,11 +113,11 @@ export default function Profile() {
             {/* Personal Information Card */}
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
               <div className="flex justify-between items-center mb-8">
-                <h2 className="text-2xl font-bold text-[#2C3E50]">Personal Information</h2>
+                <h2 className="text-2xl font-bold text-[#09215F]">Personal Information</h2>
                 {!isEditing ? (
                   <button
                     onClick={() => setIsEditing(true)}
-                    className="flex items-center bg-[#4682B4] text-white px-4 py-2 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+                    className="flex items-center bg-primary text-primary-foreground px-4 py-2 rounded-xl hover:bg-secondary transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
                   >
                     <Edit2 className="h-4 w-4 mr-2" />
                     Edit Profile
@@ -143,15 +143,15 @@ export default function Profile() {
               </div>
 
               {/* Profile Header */}
-              <div className="flex items-center space-x-6 mb-8 p-6 bg-gradient-to-r from-[#4682B4]/10 to-[#2C3E50]/10 rounded-2xl border border-[#4682B4]/20">
-                <div className="bg-gradient-to-br from-[#4682B4] to-[#2C3E50] rounded-2xl p-4 shadow-lg">
+              <div className="flex items-center space-x-6 mb-8 p-6 bg-gradient-to-r from-[#97CF50]/10 to-[#09215F]/10 rounded-2xl border border-[#97CF50]/20">
+                <div className="bg-gradient-to-br from-[#97CF50] to-[#09215F] rounded-2xl p-4 shadow-lg">
                   <User className="h-12 w-12 text-white" />
                 </div>
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-[#2C3E50]">
+                  <h3 className="text-2xl font-bold text-[#09215F]">
                     {userProfile?.first_name} {userProfile?.last_name}
                   </h3>
-                  <p className="text-[#2C3E50]/70 text-lg">Customer since {new Date(userProfile?.created_at || user?.created_at || '').toLocaleDateString()}</p>
+                  <p className="text-[#09215F]/70 text-lg">Customer since {new Date(userProfile?.created_at || user?.created_at || '').toLocaleDateString()}</p>
                   <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold mt-2 ${currentTier.color}`}>
                     <Star className="h-4 w-4 mr-1" />
                     {currentTier.name} Member
@@ -162,7 +162,7 @@ export default function Profile() {
               {/* Form Fields */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                  <label className="block text-sm font-semibold text-[#09215F] mb-3">
                     First Name
                   </label>
                   {isEditing ? (
@@ -170,17 +170,17 @@ export default function Profile() {
                       type="text"
                       value={formData.firstName}
                       onChange={(e) => setFormData({...formData, firstName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                      <p className="text-[#2C3E50] font-medium">{formData.firstName}</p>
+                      <p className="text-[#09215F] font-medium">{formData.firstName}</p>
                     </div>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                  <label className="block text-sm font-semibold text-[#09215F] mb-3">
                     Last Name
                   </label>
                   {isEditing ? (
@@ -188,30 +188,30 @@ export default function Profile() {
                       type="text"
                       value={formData.lastName}
                       onChange={(e) => setFormData({...formData, lastName: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-                      <p className="text-[#2C3E50] font-medium">{formData.lastName}</p>
+                      <p className="text-[#09215F] font-medium">{formData.lastName}</p>
                     </div>
                   )}
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                  <label className="block text-sm font-semibold text-[#09215F] mb-3">
                     Email Address
                   </label>
                   <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 flex items-center space-x-3">
-                    <Mail className="h-5 w-5 text-[#4682B4]" />
+                    <Mail className="h-5 w-5 text-[#97CF50]" />
                     <div className="flex-1">
-                      <p className="text-[#2C3E50] font-medium">{formData.email}</p>
-                      <p className="text-xs text-[#2C3E50]/60 mt-1">Email cannot be changed</p>
+                      <p className="text-[#09215F] font-medium">{formData.email}</p>
+                      <p className="text-xs text-[#09215F]/60 mt-1">Email cannot be changed</p>
                     </div>
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+                  <label className="block text-sm font-semibold text-[#09215F] mb-3">
                     Phone Number
                   </label>
                   {isEditing ? (
@@ -219,13 +219,13 @@ export default function Profile() {
                       type="tel"
                       value={formData.phone}
                       onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent transition-all duration-300"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent transition-all duration-300"
                       placeholder="+27 12 345 6789"
                     />
                   ) : (
                     <div className="p-4 bg-gray-50 rounded-xl border border-gray-200 flex items-center space-x-3">
-                      <Phone className="h-5 w-5 text-[#4682B4]" />
-                      <p className="text-[#2C3E50] font-medium">{formData.phone || 'Not provided'}</p>
+                      <Phone className="h-5 w-5 text-[#97CF50]" />
+                      <p className="text-[#09215F] font-medium">{formData.phone || 'Not provided'}</p>
                     </div>
                   )}
                 </div>
@@ -234,17 +234,17 @@ export default function Profile() {
 
             {/* Account Statistics */}
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8">
-              <h2 className="text-2xl font-bold text-[#2C3E50] mb-8">Account Statistics</h2>
+              <h2 className="text-2xl font-bold text-[#09215F] mb-8">Account Statistics</h2>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+                <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
                   <div className="flex items-center justify-between mb-4">
-                    <div className="bg-[#4682B4] rounded-xl p-3 shadow-lg">
+                    <div className="bg-primary rounded-xl p-3 shadow-lg">
                       <Gift className="h-8 w-8 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-[#2C3E50] mb-1">{loyaltyPoints.toLocaleString()}</h3>
-                  <p className="text-[#2C3E50]/70 font-medium">Loyalty Points</p>
+                  <h3 className="text-3xl font-bold text-[#09215F] mb-1">{loyaltyPoints.toLocaleString()}</h3>
+                  <p className="text-[#09215F]/70 font-medium">Loyalty Points</p>
                 </div>
 
                 <div className="bg-gradient-to-br from-green-50 to-green-100 rounded-2xl p-6 border border-green-200">
@@ -255,8 +255,8 @@ export default function Profile() {
                       </svg>
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-[#2C3E50] mb-1">R{totalSpent.toLocaleString('en-ZA', {minimumFractionDigits: 2})}</h3>
-                  <p className="text-[#2C3E50]/70 font-medium">Total Spent</p>
+                  <h3 className="text-3xl font-bold text-[#09215F] mb-1">R{totalSpent.toLocaleString('en-ZA', {minimumFractionDigits: 2})}</h3>
+                  <p className="text-[#09215F]/70 font-medium">Total Spent</p>
                 </div>
 
                 <div className="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-6 border border-purple-200">
@@ -265,8 +265,8 @@ export default function Profile() {
                       <Package className="h-8 w-8 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-3xl font-bold text-[#2C3E50] mb-1">24</h3>
-                  <p className="text-[#2C3E50]/70 font-medium">Orders Placed</p>
+                  <h3 className="text-3xl font-bold text-[#09215F] mb-1">24</h3>
+                  <p className="text-[#09215F]/70 font-medium">Orders Placed</p>
                 </div>
               </div>
             </div>
@@ -276,30 +276,30 @@ export default function Profile() {
           <div className="lg:col-span-1 space-y-6">
             {/* Loyalty Program */}
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
-              <h2 className="text-xl font-bold text-[#2C3E50] mb-6">Loyalty Program</h2>
+              <h2 className="text-xl font-bold text-[#09215F] mb-6">Loyalty Program</h2>
               
               {/* Current Tier */}
               <div className="mb-6">
                 <div className="flex items-center justify-between mb-3">
-                  <span className="text-sm font-semibold text-[#2C3E50]">Current Tier</span>
+                  <span className="text-sm font-semibold text-[#09215F]">Current Tier</span>
                   <span className={`px-3 py-1 rounded-full text-xs font-bold ${currentTier.color}`}>
                     {currentTier.name}
                   </span>
                 </div>
                 
                 <div className="mb-4">
-                  <div className="flex justify-between text-sm text-[#2C3E50]/70 mb-2">
+                  <div className="flex justify-between text-sm text-[#09215F]/70 mb-2">
                     <span className="font-medium">{loyaltyPoints.toLocaleString()} points</span>
                     {nextTier && <span className="font-medium">{nextTier.minPoints.toLocaleString()} points</span>}
                   </div>
                   <div className="w-full bg-gray-200 rounded-full h-3">
                     <div 
-                      className="bg-gradient-to-r from-[#4682B4] to-[#2C3E50] h-3 rounded-full transition-all duration-500"
+                      className="bg-gradient-to-r from-[#97CF50] to-[#09215F] h-3 rounded-full transition-all duration-500"
                       style={{ width: `${Math.min(progressToNext, 100)}%` }}
                     />
                   </div>
                   {nextTier && (
-                    <p className="text-xs text-[#2C3E50]/60 mt-2 font-medium">
+                    <p className="text-xs text-[#09215F]/60 mt-2 font-medium">
                       {(nextTier.minPoints - loyaltyPoints).toLocaleString()} points to reach {nextTier.name}
                     </p>
                   )}
@@ -308,10 +308,10 @@ export default function Profile() {
 
               {/* Current Benefits */}
               <div className="mb-6">
-                <h3 className="font-bold text-[#2C3E50] mb-3">Your Benefits</h3>
+                <h3 className="font-bold text-[#09215F] mb-3">Your Benefits</h3>
                 <div className="space-y-2">
                   {currentTier.benefits.map((benefit, index) => (
-                    <div key={index} className="flex items-center text-sm text-[#2C3E50]/80 bg-gray-50 rounded-lg p-2">
+                    <div key={index} className="flex items-center text-sm text-[#09215F]/80 bg-gray-50 rounded-lg p-2">
                       <svg className="h-4 w-4 text-green-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
@@ -323,27 +323,27 @@ export default function Profile() {
 
               {/* All Tiers */}
               <div>
-                <h3 className="font-bold text-[#2C3E50] mb-4">All Tiers</h3>
+                <h3 className="font-bold text-[#09215F] mb-4">All Tiers</h3>
                 <div className="space-y-3">
                   {loyaltyTiers.reverse().map((tier) => (
                     <div 
                       key={tier.name}
                       className={`p-4 rounded-xl border-2 transition-all duration-300 ${
                         tier.name === currentTier.name 
-                          ? 'border-[#4682B4] bg-gradient-to-r from-[#4682B4]/10 to-[#2C3E50]/10 shadow-lg' 
+                          ? 'border-[#97CF50] bg-gradient-to-r from-[#97CF50]/10 to-[#09215F]/10 shadow-lg' 
                           : 'border-gray-200 hover:border-gray-300'
                       }`}
                     >
                       <div className="flex items-center justify-between mb-2">
-                        <span className="font-bold text-[#2C3E50]">{tier.name}</span>
+                        <span className="font-bold text-[#09215F]">{tier.name}</span>
                         <span className={`px-2 py-1 rounded-lg text-xs font-bold ${tier.color}`}>
                           {tier.minPoints.toLocaleString()}+ pts
                         </span>
                       </div>
-                      <div className="text-xs text-[#2C3E50]/70 space-y-1">
+                      <div className="text-xs text-[#09215F]/70 space-y-1">
                         {tier.benefits.slice(0, 2).map((benefit, index) => (
                           <div key={index} className="flex items-center">
-                            <span className="w-1 h-1 bg-[#4682B4] rounded-full mr-2"></span>
+                            <span className="w-1 h-1 bg-primary rounded-full mr-2"></span>
                             {benefit}
                           </div>
                         ))}
@@ -356,39 +356,39 @@ export default function Profile() {
 
             {/* Quick Actions */}
             <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-6">
-              <h2 className="text-lg font-bold text-[#2C3E50] mb-4">Quick Actions</h2>
+              <h2 className="text-lg font-bold text-[#09215F] mb-4">Quick Actions</h2>
               <div className="space-y-3">
-                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#4682B4] hover:bg-gradient-to-r hover:from-[#4682B4]/5 hover:to-[#2C3E50]/5 transition-all duration-300 group">
+                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#97CF50] hover:bg-gradient-to-r hover:from-[#97CF50]/5 hover:to-[#09215F]/5 transition-all duration-300 group">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <Settings className="h-5 w-5 text-[#4682B4] group-hover:text-[#2C3E50]" />
-                      <span className="text-sm font-semibold text-[#2C3E50]">Change Password</span>
+                      <Settings className="h-5 w-5 text-[#97CF50] group-hover:text-[#09215F]" />
+                      <span className="text-sm font-semibold text-[#09215F]">Change Password</span>
                     </div>
-                    <svg className="h-4 w-4 text-[#2C3E50]/40 group-hover:text-[#4682B4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-[#09215F]/40 group-hover:text-[#97CF50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
                 </button>
                 
-                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#4682B4] hover:bg-gradient-to-r hover:from-[#4682B4]/5 hover:to-[#2C3E50]/5 transition-all duration-300 group">
+                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#97CF50] hover:bg-gradient-to-r hover:from-[#97CF50]/5 hover:to-[#09215F]/5 transition-all duration-300 group">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <Bell className="h-5 w-5 text-[#4682B4] group-hover:text-[#2C3E50]" />
-                      <span className="text-sm font-semibold text-[#2C3E50]">Notification Settings</span>
+                      <Bell className="h-5 w-5 text-[#97CF50] group-hover:text-[#09215F]" />
+                      <span className="text-sm font-semibold text-[#09215F]">Notification Settings</span>
                     </div>
-                    <svg className="h-4 w-4 text-[#2C3E50]/40 group-hover:text-[#4682B4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-[#09215F]/40 group-hover:text-[#97CF50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>
                 </button>
                 
-                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#4682B4] hover:bg-gradient-to-r hover:from-[#4682B4]/5 hover:to-[#2C3E50]/5 transition-all duration-300 group">
+                <button className="w-full text-left p-4 rounded-xl border border-gray-200 hover:border-[#97CF50] hover:bg-gradient-to-r hover:from-[#97CF50]/5 hover:to-[#09215F]/5 transition-all duration-300 group">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <MapPin className="h-5 w-5 text-[#4682B4] group-hover:text-[#2C3E50]" />
-                      <span className="text-sm font-semibold text-[#2C3E50]">Address Book</span>
+                      <MapPin className="h-5 w-5 text-[#97CF50] group-hover:text-[#09215F]" />
+                      <span className="text-sm font-semibold text-[#09215F]">Address Book</span>
                     </div>
-                    <svg className="h-4 w-4 text-[#2C3E50]/40 group-hover:text-[#4682B4]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 text-[#09215F]/40 group-hover:text-[#97CF50]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </div>

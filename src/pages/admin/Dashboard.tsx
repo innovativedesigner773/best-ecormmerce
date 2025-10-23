@@ -355,7 +355,7 @@ export default function AdminDashboard() {
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl text-[#2C3E50] mb-2">
+              <h1 className="text-3xl text-[#09215F] mb-2">
                 Admin Dashboard
               </h1>
               <p className="text-[#6C757D]">
@@ -435,7 +435,7 @@ export default function AdminDashboard() {
             </div>
             {/* Stats Cards */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <Card className="bg-gradient-to-r from-[#4682B4] to-[#87CEEB] text-white">
+              <Card className="bg-gradient-to-r from-[#97CF50] to-[#97CF50] text-white">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-white/90">Total Users</CardTitle>
                 </CardHeader>
@@ -486,7 +486,7 @@ export default function AdminDashboard() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-gradient-to-r from-[#2C3E50] to-[#34495E] text-white">
+              <Card className="bg-gradient-to-r from-[#09215F] to-[#34495E] text-white">
                 <CardHeader className="pb-2">
                   <CardTitle className="text-sm font-medium text-white/90">Revenue</CardTitle>
                 </CardHeader>
@@ -534,7 +534,7 @@ export default function AdminDashboard() {
                   <div className="space-y-4">
                     {loading ? (
                       <div className="flex items-center justify-center py-8">
-                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4682B4]"></div>
+                        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#97CF50]"></div>
                         <span className="ml-2 text-[#6C757D]">Loading activities...</span>
                       </div>
                     ) : recentActivity.length > 0 ? (
@@ -542,7 +542,7 @@ export default function AdminDashboard() {
                         <div key={activity.id} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
                           <div className="flex items-center space-x-3">
                             <div className={`p-2 rounded-full ${
-                              activity.type === 'user' ? 'bg-[#4682B4]/10 text-[#4682B4]' :
+                              activity.type === 'user' ? 'bg-[#97CF50]/10 text-[#97CF50]' :
                               activity.type === 'order' ? 'bg-[#28A745]/10 text-[#28A745]' :
                               'bg-[#FF6B35]/10 text-[#FF6B35]'
                             }`}>
@@ -551,7 +551,7 @@ export default function AdminDashboard() {
                                <Package className="h-4 w-4" />}
                             </div>
                             <div>
-                              <p className="text-sm text-[#2C3E50]">{activity.action}</p>
+                              <p className="text-sm text-[#09215F]">{activity.action}</p>
                               <p className="text-xs text-[#6C757D]">{activity.user}</p>
                             </div>
                           </div>
@@ -585,9 +585,9 @@ export default function AdminDashboard() {
                         {(loading ? [] : bestByQty).map((p, index) => (
                           <div key={p.id} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
                             <div className="flex items-center space-x-3">
-                              <div className="bg-[#4682B4] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{index + 1}</div>
+                              <div className="bg-[#97CF50] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{index + 1}</div>
                               <div>
-                                <p className="text-sm text-[#2C3E50]">{p.name}</p>
+                                <p className="text-sm text-[#09215F]">{p.name}</p>
                                 <p className="text-xs text-[#6C757D]">{p.quantity} units</p>
                               </div>
                             </div>
@@ -607,7 +607,7 @@ export default function AdminDashboard() {
                             <div className="flex items-center space-x-3">
                               <div className="bg-[#34495E] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{index + 1}</div>
                               <div>
-                                <p className="text-sm text-[#2C3E50]">{p.name}</p>
+                                <p className="text-sm text-[#09215F]">{p.name}</p>
                                 <p className="text-xs text-[#6C757D]">R{p.revenue.toLocaleString()}</p>
                               </div>
                             </div>
@@ -636,19 +636,19 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Subtotal</div>
-                        <div className="text-[#2C3E50] font-semibold">R{revBreakdown.subtotal.toLocaleString()}</div>
+                        <div className="text-[#09215F] font-semibold">R{revBreakdown.subtotal.toLocaleString()}</div>
                       </div>
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Tax</div>
-                        <div className="text-[#2C3E50] font-semibold">R{revBreakdown.tax.toLocaleString()}</div>
+                        <div className="text-[#09215F] font-semibold">R{revBreakdown.tax.toLocaleString()}</div>
                       </div>
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Shipping</div>
-                        <div className="text-[#2C3E50] font-semibold">R{revBreakdown.shipping.toLocaleString()}</div>
+                        <div className="text-[#09215F] font-semibold">R{revBreakdown.shipping.toLocaleString()}</div>
                       </div>
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Discount</div>
-                        <div className="text-[#2C3E50] font-semibold">-R{revBreakdown.discount.toLocaleString()}</div>
+                        <div className="text-[#09215F] font-semibold">-R{revBreakdown.discount.toLocaleString()}</div>
                       </div>
                       <div className="col-span-2 p-3 bg-[#E8F5E9] rounded-lg">
                         <div className="text-[#2E7D32]">Total</div>
@@ -670,11 +670,11 @@ export default function AdminDashboard() {
                     <div className="grid grid-cols-2 gap-4 text-sm">
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Total</div>
-                        <div className="text-[#2C3E50] font-semibold">{inventory.totalProducts}</div>
+                        <div className="text-[#09215F] font-semibold">{inventory.totalProducts}</div>
                       </div>
                       <div className="p-3 bg-[#F8F9FA] rounded-lg">
                         <div className="text-[#6C757D]">Active</div>
-                        <div className="text-[#2C3E50] font-semibold">{inventory.active}</div>
+                        <div className="text-[#09215F] font-semibold">{inventory.active}</div>
                       </div>
                       <div className="p-3 bg-[#FFF3E0] rounded-lg">
                         <div className="text-[#EF6C00]">Low Stock (≤5)</div>
@@ -705,10 +705,10 @@ export default function AdminDashboard() {
                       {salesByCat.slice(0, 6).map(row => (
                         <div key={row.categoryId} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
                           <div>
-                            <div className="text-sm text-[#2C3E50]">{row.categoryName}</div>
+                            <div className="text-sm text-[#09215F]">{row.categoryName}</div>
                             <div className="text-xs text-[#6C757D]">{row.items} items</div>
                           </div>
-                          <div className="text-sm font-semibold text-[#2C3E50]">R{row.revenue.toLocaleString()}</div>
+                          <div className="text-sm font-semibold text-[#09215F]">R{row.revenue.toLocaleString()}</div>
                         </div>
                       ))}
                     </div>
@@ -728,13 +728,13 @@ export default function AdminDashboard() {
                       {topCustomers.map((c, idx) => (
                         <div key={c.id} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
                           <div className="flex items-center gap-3">
-                            <div className="bg-[#4682B4] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{idx + 1}</div>
+                            <div className="bg-[#97CF50] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{idx + 1}</div>
                             <div>
-                              <div className="text-sm text-[#2C3E50]">{c.name || 'Customer'}</div>
+                              <div className="text-sm text-[#09215F]">{c.name || 'Customer'}</div>
                               <div className="text-xs text-[#6C757D]">{c.email}</div>
                             </div>
                           </div>
-                          <div className="text-sm font-semibold text-[#2C3E50]">R{c.total.toLocaleString()}</div>
+                          <div className="text-sm font-semibold text-[#09215F]">R{c.total.toLocaleString()}</div>
                         </div>
                       ))}
                     </div>
@@ -756,27 +756,27 @@ export default function AdminDashboard() {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Average Order Value</div>
-                      <div className="text-[#2C3E50] font-semibold">R{Math.round(biz.aov).toLocaleString()}</div>
+                      <div className="text-[#09215F] font-semibold">R{Math.round(biz.aov).toLocaleString()}</div>
                     </div>
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Items per Order</div>
-                      <div className="text-[#2C3E50] font-semibold">{biz.itemsPerOrder.toFixed(2)}</div>
+                      <div className="text-[#09215F] font-semibold">{biz.itemsPerOrder.toFixed(2)}</div>
                     </div>
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Repeat Customer Rate</div>
-                      <div className="text-[#2C3E50] font-semibold">{Math.round(biz.repeatRate * 100)}%</div>
+                      <div className="text-[#09215F] font-semibold">{Math.round(biz.repeatRate * 100)}%</div>
                     </div>
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Gross Margin</div>
-                      <div className="text-[#2C3E50] font-semibold">{Math.round(biz.grossMargin * 100)}%</div>
+                      <div className="text-[#09215F] font-semibold">{Math.round(biz.grossMargin * 100)}%</div>
                     </div>
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Inventory Value (Retail)</div>
-                      <div className="text-[#2C3E50] font-semibold">R{Math.round(biz.inventoryValueRetail).toLocaleString()}</div>
+                      <div className="text-[#09215F] font-semibold">R{Math.round(biz.inventoryValueRetail).toLocaleString()}</div>
                     </div>
                     <div className="p-3 bg-[#F8F9FA] rounded-lg">
                       <div className="text-[#6C757D] text-sm">Inventory Value (Cost)</div>
-                      <div className="text-[#2C3E50] font-semibold">R{Math.round(biz.inventoryValueCost).toLocaleString()}</div>
+                      <div className="text-[#09215F] font-semibold">R{Math.round(biz.inventoryValueCost).toLocaleString()}</div>
                     </div>
                     <div className="p-3 bg-[#FFF3E0] rounded-lg">
                       <div className="text-[#EF6C00] text-sm">Sell-Through</div>
@@ -805,7 +805,7 @@ export default function AdminDashboard() {
               <CardContent>
                 {loading ? (
                   <div className="flex items-center justify-center py-8">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#4682B4]"></div>
+                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#97CF50]"></div>
                     <span className="ml-2 text-[#6C757D]">Checking stock...</span>
                   </div>
                 ) : stock50.length > 0 ? (
@@ -822,7 +822,7 @@ export default function AdminDashboard() {
                       <tbody>
                         {stock50.map(p => (
                           <tr key={p.id} className="border-t">
-                            <td className="py-2 pr-4 text-[#2C3E50]">{p.name}</td>
+                            <td className="py-2 pr-4 text-[#09215F]">{p.name}</td>
                             <td className="py-2 pr-4">{p.soldThisMonth}</td>
                             <td className="py-2 pr-4">{p.startingStock}</td>
                             <td className="py-2">{Math.round(p.percentSold * 100)}%</td>
@@ -842,7 +842,7 @@ export default function AdminDashboard() {
           <TabsContent value="testing" className="space-y-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl text-[#2C3E50] mb-2">Registration System Testing</h2>
+                <h2 className="text-2xl text-[#09215F] mb-2">Registration System Testing</h2>
                 <p className="text-[#6C757D]">
                   Test and verify that the database fix has resolved the "Database error saving new user" issue.
                 </p>
@@ -861,12 +861,12 @@ export default function AdminDashboard() {
               </div>
 
               {/* Instructions */}
-              <div className="mt-8 p-6 bg-blue-50 border border-blue-200 rounded-xl">
-                <h3 className="font-medium text-blue-900 mb-3 flex items-center gap-2">
+              <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl">
+                <h3 className="font-medium text-green-900 mb-3 flex items-center gap-2">
                   <Zap className="h-5 w-5" />
                   Quick Testing Guide
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-blue-800">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-green-800">
                   <div>
                     <h4 className="font-medium mb-2">Before Testing:</h4>
                     <ol className="list-decimal list-inside space-y-1">
@@ -899,7 +899,7 @@ export default function AdminDashboard() {
           <TabsContent value="notifications" className="space-y-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl text-[#2C3E50] mb-2">Stock Notification Management</h2>
+                <h2 className="text-2xl text-[#09215F] mb-2">Stock Notification Management</h2>
                 <p className="text-[#6C757D]">
                   Manage and send stock availability notifications to customers who requested to be notified.
                 </p>
@@ -913,7 +913,7 @@ export default function AdminDashboard() {
           <TabsContent value="database" className="space-y-6">
             <div className="bg-white rounded-2xl shadow-lg p-6">
               <div className="mb-6">
-                <h2 className="text-2xl text-[#2C3E50] mb-2">Database Status & Verification</h2>
+                <h2 className="text-2xl text-[#09215F] mb-2">Database Status & Verification</h2>
                 <p className="text-[#6C757D]">
                   Monitor database health and verify that all components are properly configured.
                 </p>
@@ -935,13 +935,13 @@ export default function AdminDashboard() {
                   </CardContent>
                 </Card>
 
-                <Card className="bg-blue-50 border-blue-200">
+                <Card className="bg-green-50 border-green-200">
                   <CardContent className="p-4">
                     <div className="flex items-center gap-3">
-                      <Activity className="h-5 w-5 text-blue-600" />
+                      <Activity className="h-5 w-5 text-green-600" />
                       <div>
-                        <h4 className="text-sm font-medium text-blue-900">Trigger Function</h4>
-                        <p className="text-xs text-blue-700">handle_new_user active</p>
+                        <h4 className="text-sm font-medium text-green-900">Trigger Function</h4>
+                        <p className="text-xs text-green-700">handle_new_user active</p>
                       </div>
                     </div>
                   </CardContent>

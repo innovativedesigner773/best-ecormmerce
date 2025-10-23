@@ -39,11 +39,11 @@ export default function StripePaymentForm({
   const getCardBrandInfo = (brand: string) => {
     switch (brand) {
       case 'visa':
-        return { color: 'text-blue-600', label: 'Visa' };
+        return { color: 'text-green-600', label: 'Visa' };
       case 'mastercard':
         return { color: 'text-red-600', label: 'Mastercard' };
       case 'amex':
-        return { color: 'text-blue-500', label: 'American Express' };
+        return { color: 'text-green-500', label: 'American Express' };
       case 'discover':
         return { color: 'text-orange-500', label: 'Discover' };
       case 'diners':
@@ -144,7 +144,7 @@ export default function StripePaymentForm({
   const elementStyles = {
     base: {
       fontSize: '16px',
-      color: '#2C3E50',
+      color: '#09215F',
       fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
       '::placeholder': {
         color: '#94a3b8',
@@ -169,10 +169,10 @@ export default function StripePaymentForm({
   return (
     <div className="bg-white rounded-2xl shadow-2xl border border-gray-100 p-8">
       <div className="flex items-center mb-6">
-        <div className="bg-[#4682B4] text-white p-3 rounded-xl mr-4">
+        <div className="bg-[#97CF50] text-white p-3 rounded-xl mr-4">
           <CreditCard className="h-6 w-6" />
         </div>
-        <h2 className="text-2xl font-bold text-[#2C3E50]">Payment Information</h2>
+        <h2 className="text-2xl font-bold text-[#09215F]">Payment Information</h2>
       </div>
 
       {/* Secure Payment Badge */}
@@ -184,11 +184,11 @@ export default function StripePaymentForm({
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Combined Card Element (number, expiry, CVC) */}
         <div>
-          <label className="block text-sm font-semibold text-[#2C3E50] mb-3">
+          <label className="block text-sm font-semibold text-[#09215F] mb-3">
             Card Details *
           </label>
           <div className="relative">
-            <div className="w-full px-4 py-3 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-[#4682B4] focus-within:border-transparent transition-all duration-300">
+            <div className="w-full px-4 py-3 border border-gray-300 rounded-xl focus-within:ring-2 focus-within:ring-[#97CF50] focus-within:border-transparent transition-all duration-300">
               <CardElement
                 options={elementOptions}
                 onChange={(e) => {
@@ -214,17 +214,17 @@ export default function StripePaymentForm({
         {/* Payment Amount Display */}
         <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
           <div className="flex items-center justify-between">
-            <span className="text-[#2C3E50] font-medium">Total Payment</span>
-            <span className="text-2xl font-bold text-[#2C3E50]">
+            <span className="text-[#09215F] font-medium">Total Payment</span>
+            <span className="text-2xl font-bold text-[#09215F]">
               R{amount.toFixed(2)}
             </span>
           </div>
         </div>
 
         {/* Test Card Info */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-          <p className="text-xs font-semibold text-blue-800 mb-2">Test Mode - Use Test Cards:</p>
-          <div className="space-y-1 text-xs text-blue-700">
+        <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+          <p className="text-xs font-semibold text-green-800 mb-2">Test Mode - Use Test Cards:</p>
+          <div className="space-y-1 text-xs text-green-700">
             <p>• Visa: 4242 4242 4242 4242</p>
             <p>• Mastercard: 5555 5555 5555 4444</p>
             <p>• Any future expiry date (e.g., 12/34) and any 3-digit CVC</p>
@@ -237,14 +237,14 @@ export default function StripePaymentForm({
             type="button"
             onClick={onBack}
             disabled={loading}
-            className="flex-1 border-2 border-[#4682B4] text-[#4682B4] py-4 px-6 rounded-xl hover:bg-[#4682B4] hover:text-white transition-all duration-300 text-lg font-semibold disabled:opacity-50"
+            className="flex-1 border-2 border-[#97CF50] text-[#97CF50] py-4 px-6 rounded-xl hover:bg-[#97CF50] hover:text-white transition-all duration-300 text-lg font-semibold disabled:opacity-50"
           >
             Back
           </button>
           <button
             type="submit"
             disabled={loading || !stripe || !cardComplete}
-            className="flex-1 bg-[#4682B4] text-white py-4 px-6 rounded-xl hover:bg-[#2C3E50] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
+            className="flex-1 bg-[#97CF50] text-white py-4 px-6 rounded-xl hover:bg-[#09215F] transition-all duration-300 text-lg font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none flex items-center justify-center"
           >
             {loading ? (
               <>

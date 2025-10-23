@@ -261,7 +261,7 @@ export default function AdminProductEditor() {
               <button
                 onClick={handleSave}
                 disabled={saving}
-                className="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-[#4682B4] to-[#87CEEB] hover:from-[#2C3E50] hover:to-[#4682B4] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50"
+                className="px-4 py-2 rounded-lg text-white bg-gradient-to-r from-[#97CF50] to-[#97CF50] hover:from-[#09215F] hover:to-[#97CF50] transition-all duration-300 shadow-lg hover:shadow-xl disabled:opacity-50"
               >
                 {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Save Changes'}
               </button>
@@ -303,7 +303,7 @@ export default function AdminProductEditor() {
             {form.images.length > 0 && (
               <div className="flex gap-2 overflow-x-auto pb-2">
                 {form.images.map((img, idx) => (
-                  <div key={idx} className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === idx ? 'border-blue-500' : 'border-gray-200'}`}>
+                  <div key={idx} className={`relative flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 ${selectedImage === idx ? 'border-green-500' : 'border-gray-200'}`}>
                     <button className="absolute -top-2 -right-2 bg-white border rounded-full p-1 shadow" onClick={() => removeImageAt(idx)}>
                       <Trash2 className="h-3 w-3 text-red-600" />
                     </button>
@@ -350,7 +350,7 @@ export default function AdminProductEditor() {
           {/* Editable details */}
           <div className="space-y-6">
             <div>
-              <p className="text-sm text-blue-600 font-medium mb-2">Admin editor</p>
+              <p className="text-sm text-green-600 font-medium mb-2">Admin editor</p>
               <input
                 className="w-full text-3xl font-bold text-gray-900 mb-2 bg-transparent focus:outline-none"
                 value={form.name}
@@ -438,7 +438,7 @@ export default function AdminProductEditor() {
             <div>
               <div className="flex items-center justify-between">
                 <label className="block text-sm text-gray-700">Key Features</label>
-                <button onClick={addFeature} className="text-blue-600 text-sm">+ Add Feature</button>
+                <button onClick={addFeature} className="text-green-600 text-sm">+ Add Feature</button>
               </div>
               <div className="space-y-2 mt-2">
                 {form.features.map((f, i) => (
@@ -486,7 +486,7 @@ export default function AdminProductEditor() {
             <div>
               <div className="flex items-center justify-between">
                 <label className="block text-sm text-gray-700">Tags</label>
-                <button onClick={addTag} className="text-blue-600 text-sm">+ Add Tag</button>
+                <button onClick={addTag} className="text-green-600 text-sm">+ Add Tag</button>
               </div>
               <div className="space-y-2 mt-2">
                 {form.tags.map((t, i) => (
@@ -506,7 +506,7 @@ export default function AdminProductEditor() {
                 <label className="block text-sm text-gray-700">Specifications (key/value)</label>
                 <button
                   onClick={() => setSpec(`spec_${Object.keys(form.specifications).length + 1}`, '')}
-                  className="text-blue-600 text-sm"
+                  className="text-green-600 text-sm"
                 >
                   + Add Spec
                 </button>

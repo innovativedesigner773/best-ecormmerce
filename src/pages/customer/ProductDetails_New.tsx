@@ -122,7 +122,7 @@ export default function ProductDetails() {
           <p className="text-gray-600 mb-4">{error || 'The product you are looking for does not exist.'}</p>
           <button
             onClick={() => navigate('/products')}
-            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-secondary"
           >
             Back to Products
           </button>
@@ -289,7 +289,7 @@ export default function ProductDetails() {
                     onClick={() => setSelectedImage(index)}
                     className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden border-2 transition-colors ${
                       selectedImage === index 
-                        ? 'border-blue-500' 
+                        ? 'border-green-500' 
                         : 'border-gray-200 hover:border-gray-300'
                     }`}
                   >
@@ -309,7 +309,7 @@ export default function ProductDetails() {
             {/* Header */}
             <div>
               {category && (
-                <p className="text-sm text-blue-600 font-medium mb-2">{category.name}</p>
+                <p className="text-sm text-green-600 font-medium mb-2">{category.name}</p>
               )}
               <h1 className="text-3xl font-bold text-gray-900 mb-2">{product.name}</h1>
               <div className="flex items-center gap-4">
@@ -405,7 +405,7 @@ export default function ProductDetails() {
                 <button
                   onClick={handleAddToCart}
                   disabled={loading || stockInfo.status === 'out-of-stock'}
-                  className="flex-1 bg-blue-600 text-white py-3 px-6 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                  className="flex-1 bg-primary text-primary-foreground py-3 px-6 rounded-lg font-semibold hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 >
                   {loading ? (
                     <Loader2 className="h-5 w-5 animate-spin" />
@@ -447,7 +447,7 @@ export default function ProductDetails() {
                 <p className="text-xs text-gray-600">Quality Guarantee</p>
               </div>
               <div className="text-center">
-                <Truck className="h-6 w-6 text-blue-600 mx-auto mb-1" />
+                <Truck className="h-6 w-6 text-green-600 mx-auto mb-1" />
                 <p className="text-xs text-gray-600">Free Delivery over $500</p>
               </div>
               <div className="text-center">

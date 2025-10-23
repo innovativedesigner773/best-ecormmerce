@@ -84,7 +84,7 @@ export function QuickStartGuide({ onDatabaseInitialized }: QuickStartGuideProps)
     <Card className="max-w-2xl mx-auto">
       <CardHeader className="text-center">
         <CardTitle className="flex items-center justify-center gap-2">
-          <Package className="h-6 w-6 text-blue-600" />
+          <Package className="h-6 w-6 text-green-600" />
           Welcome to Best Brightness Product Management
         </CardTitle>
         <CardDescription>
@@ -119,7 +119,7 @@ export function QuickStartGuide({ onDatabaseInitialized }: QuickStartGuideProps)
                 step.isCompleted 
                   ? 'bg-green-100 text-green-600' 
                   : step.isLoading
-                  ? 'bg-blue-100 text-blue-600 animate-pulse'
+                  ? 'bg-[#97CF50]/20 text-[#97CF50] animate-pulse'
                   : 'bg-gray-100 text-gray-400'
               }`}>
                 {step.isCompleted ? (
@@ -142,7 +142,7 @@ export function QuickStartGuide({ onDatabaseInitialized }: QuickStartGuideProps)
                 <Button 
                   onClick={step.action}
                   disabled={step.isLoading}
-                  className="bg-blue-600 hover:bg-blue-700"
+                  className="bg-[#97CF50] hover:bg-[#09215F]"
                 >
                   {step.isLoading ? 'Initializing...' : 'Initialize'}
                 </Button>

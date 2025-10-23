@@ -146,7 +146,7 @@ export default function ShareableCartNotifications() {
       case 'expired':
         return <AlertCircle className="w-5 h-5 text-orange-600" />;
       case 'accessed':
-        return <Bell className="w-5 h-5 text-blue-600" />;
+        return <Bell className="w-5 h-5 text-green-600" />;
       default:
         return <Bell className="w-5 h-5 text-gray-600" />;
     }
@@ -159,7 +159,7 @@ export default function ShareableCartNotifications() {
       case 'expired':
         return 'border-l-orange-500 bg-orange-50';
       case 'accessed':
-        return 'border-l-blue-500 bg-blue-50';
+        return 'border-l-green-500 bg-green-50';
       default:
         return 'border-l-gray-500 bg-gray-50';
     }
@@ -185,7 +185,7 @@ export default function ShareableCartNotifications() {
       {/* Notification Bell */}
       <button
         onClick={() => setShowNotifications(!showNotifications)}
-        className="relative p-1.5 sm:p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-full"
+        className="relative p-1.5 sm:p-2 text-gray-600 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-green-500 rounded-full"
       >
         <Bell className="w-5 h-5 sm:w-6 sm:h-6" />
         {unreadCount > 0 && (
@@ -204,7 +204,7 @@ export default function ShareableCartNotifications() {
               {unreadCount > 0 && (
                 <button
                   onClick={markAllAsRead}
-                  className="text-sm text-blue-600 hover:text-blue-800"
+                  className="text-sm text-green-600 hover:text-green-800"
                 >
                   Mark all as read
                 </button>
@@ -241,7 +241,7 @@ export default function ShareableCartNotifications() {
                     {!notification.read && (
                       <button
                         onClick={() => markAsRead(notification.id)}
-                        className="text-xs text-blue-600 hover:text-blue-800"
+                        className="text-xs text-green-600 hover:text-green-800"
                       >
                         Mark read
                       </button>

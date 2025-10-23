@@ -154,7 +154,7 @@ export default function EmailTestComponent() {
             <Button 
               onClick={handleTestWithCustomEmail}
               disabled={loading || !testEmail}
-              className="bg-blue-600 hover:bg-blue-700"
+              className="bg-[#97CF50] hover:bg-[#09215F]"
             >
               {loading ? 'Sending...' : 'Send Test Email'}
             </Button>

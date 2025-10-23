@@ -14,7 +14,7 @@ const roleOptions = [
     label: 'Customer',
     description: 'Browse and purchase products',
     icon: User,
-    color: 'from-[#87CEEB]/20 to-[#4682B4]/20 border-[#4682B4]/30',
+    color: 'from-[#97CF50]/20 to-[#4682B4]/20 border-[#4682B4]/30',
     iconColor: 'text-[#4682B4]',
     bgColor: 'bg-[#4682B4]/10',
     requiresAuth: false
@@ -274,13 +274,13 @@ export default function RoleSelector({ selectedRole, onRoleChange, error, classN
                   )}
                   
                   {/* Demo codes hint for development */}
-                  <div className="mt-3 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-xs text-blue-600 font-medium mb-1">Demo Authorization Codes:</p>
-                    <div className="text-xs text-blue-600 space-y-1">
-                      <div>• Cashier: <code className="bg-blue-100 px-1 rounded">CASHIER2024</code></div>
-                      <div>• Staff: <code className="bg-blue-100 px-1 rounded">STAFF2024</code></div>
-                      <div>• Manager: <code className="bg-blue-100 px-1 rounded">MANAGER2024</code></div>
-                      <div>• Admin: <code className="bg-blue-100 px-1 rounded">ADMIN2024</code></div>
+                  <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <p className="text-xs text-green-600 font-medium mb-1">Demo Authorization Codes:</p>
+                    <div className="text-xs text-green-600 space-y-1">
+                      <div>• Cashier: <code className="bg-green-100 px-1 rounded">CASHIER2024</code></div>
+                      <div>• Staff: <code className="bg-green-100 px-1 rounded">STAFF2024</code></div>
+                      <div>• Manager: <code className="bg-green-100 px-1 rounded">MANAGER2024</code></div>
+                      <div>• Admin: <code className="bg-green-100 px-1 rounded">ADMIN2024</code></div>
                     </div>
                   </div>
                 </div>
@@ -291,9 +291,9 @@ export default function RoleSelector({ selectedRole, onRoleChange, error, classN
       </div>
       
       {/* Role Selection Information */}
-      <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl">
-        <h5 className="font-medium text-blue-800 mb-2">Role Information</h5>
-        <div className="space-y-2 text-sm text-blue-700">
+      <div className="mt-4 p-4 bg-green-50 border border-green-200 rounded-xl">
+        <h5 className="font-medium text-green-800 mb-2">Role Information</h5>
+        <div className="space-y-2 text-sm text-green-700">
           <div className="flex items-center space-x-2">
             <User className="h-3 w-3" />
             <span><strong>Customer:</strong> Open registration - browse and purchase products</span>
@@ -314,8 +314,8 @@ export default function RoleSelector({ selectedRole, onRoleChange, error, classN
             <Shield className="h-3 w-3" />
             <span><strong>Admin:</strong> Full system access and user management</span>
           </div>
-          <div className="mt-3 pt-2 border-t border-blue-200">
-            <p className="text-xs text-blue-600">
+          <div className="mt-3 pt-2 border-t border-green-200">
+            <p className="text-xs text-green-600">
               <Lock className="h-3 w-3 inline mr-1" />
               Privileged roles require authorization codes from your administrator.
             </p>

@@ -12,10 +12,9 @@ Best Brightness is a comprehensive e-commerce platform for cleaning supplies fea
 
 ### Brand Colors
 Our hygiene-focused theme uses a clean, trustworthy color palette:
-- **Primary Blue**: `#4682B4` - Main brand color for buttons and highlights
-- **Light Blue**: `#87CEEB` - Accent color for backgrounds and secondary elements  
-- **Fresh Blue**: `#B0E0E6` - Light backgrounds and subtle highlights
-- **Trust Navy**: `#2C3E50` - Text color and headers
+- **Primary Green**: `#97CF50` - Main brand color for buttons and highlights
+- **Deep Navy**: `#09215F` - Text color and headers
+- **Teal Accent**: `#2D5654` - Accent color for backgrounds and secondary elements  
 - **Fresh Green**: `#28A745` - Success states and positive actions
 - **Alert Orange**: `#FF6B35` - Warnings and attention-grabbing elements
 - **Pure White**: `#FFFFFF` - Clean backgrounds
@@ -31,11 +30,11 @@ Our hygiene-focused theme uses a clean, trustworthy color palette:
 ### Component Guidelines
 
 #### Buttons
-- **Primary Button**: Use `bg-[#4682B4]` with white text for main actions
-- **Secondary Button**: Use `border-[#4682B4] text-[#4682B4]` for secondary actions  
+- **Primary Button**: Use `bg-[#97CF50]` with white text for main actions
+- **Secondary Button**: Use `border-[#97CF50] text-[#97CF50]` for secondary actions  
 - **Success Button**: Use `bg-[#28A745]` for positive confirmations
 - **Warning Button**: Use `bg-[#FF6B35]` for destructive actions
-- **Hover states**: Transition to `bg-[#2C3E50]` for primary buttons
+- **Hover states**: Transition to `bg-[#09215F]` for primary buttons
 
 #### Cards and Containers
 - Use `rounded-xl` (12px) for main content cards
@@ -44,7 +43,7 @@ Our hygiene-focused theme uses a clean, trustworthy color palette:
 - Background: `bg-white` with `border border-gray-200`
 
 #### Form Elements
-- **Input fields**: `rounded-xl` with `border-gray-300`, focus ring `ring-[#4682B4]`
+- **Input fields**: `rounded-xl` with `border-gray-300`, focus ring `ring-[#97CF50]`
 - **Labels**: Medium font weight, `text-[#2C3E50]`
 - **Error states**: `border-red-300 bg-red-50` with red text
 - **Success states**: `border-green-300 bg-green-50` with green text
