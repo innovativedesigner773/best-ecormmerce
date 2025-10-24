@@ -259,7 +259,9 @@ export class ShareableCartService {
    * Generate shareable URL
    */
   static generateShareableUrl(token: string, baseUrl?: string): string {
-    const base = baseUrl || window.location.origin;
+    // Always use production URL for shareable carts to avoid localhost issues
+    // This ensures shared cart links work properly regardless of where they're created
+    const base = baseUrl || 'https://best-ecormmerce.vercel.app';
     return `${base}/checkout?shared=${token}`;
   }
 

@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BarChart3, 
   ArrowLeft,
-  DollarSign, 
+  Banknote, 
   ShoppingCart, 
   Package, 
   Users,
@@ -24,6 +24,30 @@ import {
 } from 'lucide-react';
 import CashierLayout from '../../components/cashier/CashierLayout';
 import { getSalesReport, getProductPerformance, getCustomerReport, getTransactionReport, DateRange } from '../../services/reportsService';
+
+// Custom South African Rand icon component
+const RandIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <text
+      x="12"
+      y="16"
+      textAnchor="middle"
+      fontSize="10"
+      fontWeight="500"
+      fill="currentColor"
+    >
+      R
+    </text>
+  </svg>
+);
 
 export default function CashierReportsRealData() {
   const navigate = useNavigate();
@@ -47,7 +71,7 @@ export default function CashierReportsRealData() {
   ];
 
   const reportTypes = [
-    { key: 'sales', label: 'Sales Report', icon: DollarSign },
+    { key: 'sales', label: 'Sales Report', icon: RandIcon },
     { key: 'transactions', label: 'Transaction Report', icon: ShoppingCart },
     { key: 'products', label: 'Product Performance', icon: Package },
     { key: 'customers', label: 'Customer Report', icon: Users }

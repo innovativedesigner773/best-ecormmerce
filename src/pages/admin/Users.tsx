@@ -19,7 +19,7 @@ export default function AdminUsers() {
             <h1 className="text-3xl font-bold text-[#2C3E50]">Users</h1>
             <p className="text-[#6C757D] mt-2">Manage customers and staff accounts</p>
           </div>
-          <button onClick={() => setOpenAdd(true)} className="bg-[#4682B4] text-white px-5 py-3 h-11 rounded-xl text-sm font-medium hover:bg-[#2C3E50] transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap shadow-lg">
+          <button onClick={() => setOpenAdd(true)} className="bg-[#97CF50] text-white px-5 py-3 h-11 rounded-xl text-sm font-medium hover:bg-[#09215F] transition-all duration-300 inline-flex items-center justify-center gap-2 whitespace-nowrap shadow-lg">
             <UserPlus className="h-5 w-5" />
             Add User
           </button>
@@ -35,12 +35,12 @@ export default function AdminUsers() {
                   onChange={(e) => setSearch(e.target.value)}
                   type="text"
                   placeholder="Search users..."
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] bg-white"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] bg-white"
                 />
               </div>
               <div className="flex items-center gap-2">
                 <Filter className="h-5 w-5 text-gray-500" />
-                <select value={roleFilter} onChange={(e) => setRoleFilter(e.target.value as any)} className="border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#4682B4] bg-white">
+                <select value={roleFilter} onChange={(e) => setRoleFilter(e.target.value as any)} className="border rounded-xl px-3 py-2.5 focus:outline-none focus:ring-2 focus:ring-[#97CF50] bg-white">
                   <option value="all">All roles</option>
                   <option value="customer">Customer</option>
                   <option value="cashier">Cashier</option>

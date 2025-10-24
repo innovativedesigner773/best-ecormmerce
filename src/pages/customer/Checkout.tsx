@@ -16,6 +16,7 @@ import AddressSelector from '../../components/address/AddressSelector';
 import { Address } from '../../utils/address-service';
 import { toast } from 'sonner';
 
+
 export default function Checkout() {
   const { items, subtotal, discount_amount, total, loyalty_points_used, loyalty_discount, clearCart } = useCart();
   const { user, userProfile } = useAuth();
@@ -466,6 +467,7 @@ export default function Checkout() {
                       selectedAddress={selectedAddress}
                       showAddNew={true}
                       className="mb-4"
+                      userProfile={userProfile}
                     />
                     
                     {selectedAddress && (

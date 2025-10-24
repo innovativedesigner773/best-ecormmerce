@@ -9,13 +9,15 @@ interface AddressSelectorProps {
   selectedAddress?: Address | null;
   showAddNew?: boolean;
   className?: string;
+  userProfile?: any; // User profile data for auto-population
 }
 
 export default function AddressSelector({ 
   onAddressSelect, 
   selectedAddress, 
   showAddNew = true,
-  className = '' 
+  className = '',
+  userProfile
 }: AddressSelectorProps) {
   const { user } = useAuth();
   const [addresses, setAddresses] = useState<Address[]>([]);
@@ -43,6 +45,19 @@ export default function AddressSelector({
   useEffect(() => {
     loadAddresses();
   }, [user]);
+
+  // Auto-populate personal details from user profile when available
+  useEffect(() => {
+    if (userProfile && user) {
+      setNewAddress(prev => ({
+        ...prev,
+        firstName: userProfile.first_name || '',
+        lastName: userProfile.last_name || '',
+        email: userProfile.email || user.email || '',
+        phone: userProfile.phone || '',
+      }));
+    }
+  }, [userProfile, user]);
 
   const loadAddresses = async () => {
     if (!user?.id) {
@@ -81,9 +96,12 @@ export default function AddressSelector({
   const handleAddAddress = async () => {
     if (!user?.id) return;
 
-    // Validate required fields
-    const required = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode', 'province'];
-    const missing = required.filter(field => !newAddress[field as keyof Address]);
+    // For logged-in users, only validate address fields since personal details are auto-populated
+    const addressFields = ['address', 'city', 'postalCode', 'province'];
+    const allFields = ['firstName', 'lastName', 'email', 'phone', 'address', 'city', 'postalCode', 'province'];
+    
+    const fieldsToValidate = user ? addressFields : allFields;
+    const missing = fieldsToValidate.filter(field => !newAddress[field as keyof Address]);
     
     if (missing.length > 0) {
       toast.error(`Please fill in all required fields: ${missing.join(', ')}`);
@@ -173,7 +191,7 @@ export default function AddressSelector({
     return (
       <div className={`bg-gray-50 border border-gray-200 rounded-xl p-6 ${className}`}>
         <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#4682B4]"></div>
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-[#97CF50]"></div>
           <span className="ml-2 text-[#2C3E50]">Loading addresses...</span>
         </div>
       </div>
@@ -185,13 +203,13 @@ export default function AddressSelector({
       <div className="p-6">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center">
-            <MapPin className="h-5 w-5 text-[#4682B4] mr-2" />
+            <MapPin className="h-5 w-5 text-[#97CF50] mr-2" />
             <h3 className="text-lg font-semibold text-[#2C3E50]">Delivery Address</h3>
           </div>
           {addresses.length > 1 && (
             <button
               onClick={() => setExpanded(!expanded)}
-              className="text-[#4682B4] hover:text-[#2C3E50] transition-colors duration-300 flex items-center"
+              className="text-[#97CF50] hover:text-[#09215F] transition-colors duration-300 flex items-center"
             >
               {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
               <span className="ml-1 text-sm">
@@ -207,7 +225,7 @@ export default function AddressSelector({
             <div className="flex items-start justify-between">
               <div className="flex-1">
                 <div className="flex items-center mb-2">
-                  <span className="bg-[#4682B4] text-white text-xs px-2 py-1 rounded-full mr-2">
+                  <span className="bg-[#97CF50] text-white text-xs px-2 py-1 rounded-full mr-2">
                     {selectedAddress.label || 'Default'}
                   </span>
                   {selectedAddress.isDefault && (
@@ -227,7 +245,7 @@ export default function AddressSelector({
               </div>
               <button
                 onClick={() => setExpanded(true)}
-                className="text-[#4682B4] hover:text-[#2C3E50] transition-colors duration-300"
+                className="text-[#97CF50] hover:text-[#09215F] transition-colors duration-300"
               >
                 <Edit className="h-4 w-4" />
               </button>
@@ -243,7 +261,7 @@ export default function AddressSelector({
                 key={address.id}
                 className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 ${
                   selectedAddress?.id === address.id
-                    ? 'border-[#4682B4] bg-green-50'
+                    ? 'border-[#97CF50] bg-green-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
                 onClick={() => {
@@ -263,7 +281,7 @@ export default function AddressSelector({
                         </span>
                       )}
                       {selectedAddress?.id === address.id && (
-                        <Check className="h-4 w-4 text-[#4682B4] ml-2" />
+                        <Check className="h-4 w-4 text-[#97CF50] ml-2" />
                       )}
                     </div>
                     <p className="font-semibold text-[#2C3E50]">
@@ -309,7 +327,7 @@ export default function AddressSelector({
             {!showAddForm ? (
               <button
                 onClick={() => setShowAddForm(true)}
-                className="w-full flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-[#4682B4] hover:border-[#4682B4] hover:bg-green-50 transition-all duration-300"
+                className="w-full flex items-center justify-center py-3 px-4 border-2 border-dashed border-gray-300 rounded-xl text-[#97CF50] hover:border-[#97CF50] hover:bg-green-50 transition-all duration-300"
               >
                 <Plus className="h-4 w-4 mr-2" />
                 Add New Address
@@ -318,50 +336,106 @@ export default function AddressSelector({
               <div className="bg-gray-50 border border-gray-200 rounded-xl p-4">
                 <h4 className="font-semibold text-[#2C3E50] mb-4">Add New Address</h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={newAddress.firstName || ''}
-                      onChange={(e) => setNewAddress({...newAddress, firstName: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      value={newAddress.lastName || ''}
-                      onChange={(e) => setNewAddress({...newAddress, lastName: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      value={newAddress.email || ''}
-                      onChange={(e) => setNewAddress({...newAddress, email: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-[#2C3E50] mb-1">
-                      Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      value={newAddress.phone || ''}
-                      onChange={(e) => setNewAddress({...newAddress, phone: e.target.value})}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent"
-                    />
-                  </div>
+                  {/* Personal details - read-only for logged-in users */}
+                  {user ? (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          value={newAddress.firstName || ''}
+                          readOnly
+                          className="w-full px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg text-gray-600"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">From your profile</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          value={newAddress.lastName || ''}
+                          readOnly
+                          className="w-full px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg text-gray-600"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">From your profile</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Email
+                        </label>
+                        <input
+                          type="email"
+                          value={newAddress.email || ''}
+                          readOnly
+                          className="w-full px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg text-gray-600"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">From your profile</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Phone
+                        </label>
+                        <input
+                          type="tel"
+                          value={newAddress.phone || ''}
+                          readOnly
+                          className="w-full px-3 py-2 border border-gray-200 bg-gray-50 rounded-lg text-gray-600"
+                        />
+                        <p className="text-xs text-gray-500 mt-1">From your profile</p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          First Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={newAddress.firstName || ''}
+                          onChange={(e) => setNewAddress({...newAddress, firstName: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Last Name *
+                        </label>
+                        <input
+                          type="text"
+                          value={newAddress.lastName || ''}
+                          onChange={(e) => setNewAddress({...newAddress, lastName: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Email *
+                        </label>
+                        <input
+                          type="email"
+                          value={newAddress.email || ''}
+                          onChange={(e) => setNewAddress({...newAddress, email: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#2C3E50] mb-1">
+                          Phone *
+                        </label>
+                        <input
+                          type="tel"
+                          value={newAddress.phone || ''}
+                          onChange={(e) => setNewAddress({...newAddress, phone: e.target.value})}
+                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
+                        />
+                      </div>
+                    </>
+                  )}
                   <div className="md:col-span-2">
                     <label className="block text-sm font-medium text-[#2C3E50] mb-1">
                       Street Address *
@@ -438,7 +512,7 @@ export default function AddressSelector({
                 <div className="flex space-x-3 mt-4">
                   <button
                     onClick={handleAddAddress}
-                    className="flex-1 bg-[#4682B4] text-white py-2 px-4 rounded-lg hover:bg-[#2C3E50] transition-colors duration-300"
+                    className="flex-1 bg-[#97CF50] text-white py-2 px-4 rounded-lg hover:bg-[#09215F] transition-colors duration-300"
                   >
                     Add Address
                   </button>

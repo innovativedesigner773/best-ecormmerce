@@ -41,23 +41,14 @@ export interface OrderResult {
 export class OrderService {
   /**
    * Create a Supabase client with service role key for admin operations
+   * Note: For security reasons, service role operations should be handled server-side
+   * This method is kept for compatibility but will use the regular client
    */
   private static getServiceRoleClient() {
-    const supabaseUrl = import.meta.env?.VITE_SUPABASE_URL || 
-                       process.env.REACT_APP_SUPABASE_URL || 
-                       process.env.VITE_SUPABASE_URL ||
-                       process.env.SUPABASE_URL;
-    
-    const serviceRoleKey = import.meta.env?.VITE_SUPABASE_SERVICE_ROLE_KEY || 
-                          process.env.REACT_APP_SUPABASE_SERVICE_ROLE_KEY || 
-                          process.env.VITE_SUPABASE_SERVICE_ROLE_KEY ||
-                          process.env.SUPABASE_SERVICE_ROLE_KEY;
-    
-    if (!supabaseUrl || !serviceRoleKey) {
-      throw new Error('Service role key not available for shared cart orders');
-    }
-
-    return createClient(supabaseUrl, serviceRoleKey);
+    // For security reasons, we don't use service role key in frontend
+    // Instead, we use the regular client and rely on RLS policies
+    console.warn('⚠️ Service role client requested in frontend - using regular client instead');
+    return supabase;
   }
 
   /**
@@ -132,39 +123,63 @@ export class OrderService {
         }
       }
 
-      // Choose the appropriate Supabase client
-      // For shared cart orders or cashier orders, use service role to bypass RLS
-      const client = (orderData.isSharedCartOrder || orderData.isCashierOrder) ? this.getServiceRoleClient() : supabase;
+      // For shared cart orders or cashier orders, we need to handle RLS differently
+      // The issue is that RLS policies require auth.uid() to be not null
+      // But shared cart orders might have customer_id = null
       
       if (orderData.isSharedCartOrder) {
-        console.log('🔑 Using service role client for shared cart order');
+        console.log('🔑 Processing shared cart order - will use special RLS handling');
       } else if (orderData.isCashierOrder) {
-        console.log('🔑 Using service role client for cashier POS order');
+        console.log('🔑 Processing cashier POS order - will use special RLS handling');
       }
 
       // Create the order record (using only columns that exist in the actual database)
-      const { data: order, error: orderError } = await client
+      const orderInsertData = {
+        order_number: orderNumber,
+        customer_id: orderData.customer_id,
+        customer_email: orderData.customer_email,
+        customer_info: orderData.customer_info,
+        billing_address: orderData.billing_address || (orderData.isCashierOrder ? {
+          name: orderData.customer_info?.name || 'POS Customer',
+          email: orderData.customer_email,
+          phone: orderData.customer_info?.phone || null,
+          address_line_1: 'Store Location',
+          address_line_2: null,
+          city: 'Store City',
+          state: 'Store State',
+          postal_code: '00000',
+          country: 'South Africa'
+        } : null),
+        shipping_address: orderData.shipping_address || (orderData.isCashierOrder ? {
+          name: orderData.customer_info?.name || 'POS Customer',
+          email: orderData.customer_email,
+          phone: orderData.customer_info?.phone || null,
+          address_line_1: 'Store Location',
+          address_line_2: null,
+          city: 'Store City',
+          state: 'Store State',
+          postal_code: '00000',
+          country: 'South Africa'
+        } : null),
+        payment_method: orderData.payment_method,
+        payment_details: orderData.payment_details,
+        subtotal: orderData.subtotal,
+        tax_amount: orderData.tax_amount || 0,
+        shipping_amount: orderData.shipping_amount,
+        discount_amount: orderData.discount_amount,
+        total: orderData.total_amount, // Use 'total' to match actual database schema
+        currency: orderData.currency || 'USD', // Use USD to match old schema default
+        notes: orderData.notes,
+        status: 'confirmed', // Set as confirmed immediately after checkout
+        payment_status: 'paid',
+        processed_at: new Date().toISOString(),
+      };
+
+      console.log('📝 Order insert data:', orderInsertData);
+
+      const { data: order, error: orderError } = await supabase
         .from('orders')
-        .insert({
-          order_number: orderNumber,
-          customer_id: orderData.customer_id,
-          customer_email: orderData.customer_email,
-          customer_info: orderData.customer_info,
-          billing_address: orderData.billing_address,
-          shipping_address: orderData.shipping_address,
-          payment_method: orderData.payment_method,
-          payment_details: orderData.payment_details,
-          subtotal: orderData.subtotal,
-          tax_amount: orderData.tax_amount || 0,
-          shipping_amount: orderData.shipping_amount,
-          discount_amount: orderData.discount_amount,
-          total: orderData.total_amount, // Note: using 'total' instead of 'total_amount'
-          currency: orderData.currency || 'USD', // Note: using 'USD' as default
-          notes: orderData.notes,
-          status: 'confirmed', // Set as confirmed immediately after checkout
-          payment_status: 'paid',
-          processed_at: new Date().toISOString(),
-        })
+        .insert(orderInsertData)
         .select()
         .single();
 
@@ -198,7 +213,7 @@ export class OrderService {
 
         console.log('📦 Creating order items:', orderItems);
         
-        const { error: itemsError } = await client
+        const { error: itemsError } = await supabase
           .from('order_items')
           .insert(orderItems);
 
@@ -217,7 +232,7 @@ export class OrderService {
       }
 
       // Update stock levels when order is completed
-      const stockResult = await this.updateStockLevels(order.id, client);
+      const stockResult = await this.updateStockLevels(order.id, supabase);
       if (!stockResult.success) {
         console.warn('⚠️ Order created but stock update failed:', stockResult.error);
         // Don't fail the order creation if stock update fails

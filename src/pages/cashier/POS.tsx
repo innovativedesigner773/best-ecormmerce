@@ -10,7 +10,9 @@ import {
   Plus,
   Minus,
   Receipt,
-  DollarSign,
+  Banknote,
+  Coins,
+  Wallet,
   UserCheck,
   Gift,
   Settings,
@@ -24,6 +26,31 @@ import { BrowserMultiFormatReader, type Result } from '@zxing/browser';
 import CashierLayout from '../../components/cashier/CashierLayout';
 import { useAuth } from '../../contexts/AuthContext';
 import { OrderService, type OrderData } from '../../utils/order-service';
+import { toast } from 'sonner';
+
+// Custom South African Rand icon component
+const RandIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <text
+      x="12"
+      y="16"
+      textAnchor="middle"
+      fontSize="10"
+      fontWeight="500"
+      fill="currentColor"
+    >
+      R
+    </text>
+  </svg>
+);
 
 type CartItem = {
   id: number;
@@ -200,6 +227,10 @@ export default function EnhancedPOS() {
             ? { ...item, quantity: item.quantity + 1 }
             : item
         ));
+        toast.success('Item Updated', {
+          description: `${product.name} quantity increased to ${existingItem.quantity + 1}`,
+          duration: 3000,
+        });
       } else {
         const newItem: CartItem = {
           id: Date.now(),
@@ -211,6 +242,10 @@ export default function EnhancedPOS() {
           sku: product.sku,
         };
         setCartItems([...cartItems, newItem]);
+        toast.success('Item Added', {
+          description: `${product.name} added to cart`,
+          duration: 3000,
+        });
       }
       setBarcodeInput('');
     }
@@ -221,6 +256,10 @@ export default function EnhancedPOS() {
     if (foundCustomer) {
       setCustomer(foundCustomer);
       setCustomerSearch('');
+      toast.success('Customer Selected', {
+        description: `${foundCustomer.name} (${foundCustomer.email})`,
+        duration: 3000,
+      });
     }
   };
 
@@ -253,6 +292,36 @@ export default function EnhancedPOS() {
     try {
       const amountNumber = Number(paymentAmount || '0');
       const safeAmount = isNaN(amountNumber) ? 0 : amountNumber;
+      
+      // Validate payment amount
+      if (paymentMethod === 'cash') {
+        if (safeAmount < total) {
+          toast.error('Insufficient Cash', {
+            description: `Cash tendered (R${safeAmount.toFixed(2)}) is less than total (R${total.toFixed(2)}). Shortfall: R${(total - safeAmount).toFixed(2)}`,
+            duration: 7000,
+          });
+          setIsProcessingPayment(false);
+          return;
+        }
+      } else if (paymentMethod === 'card') {
+        if (safeAmount <= 0) {
+          toast.error('Invalid Card Amount', {
+            description: 'Please enter a valid amount for card payment',
+            duration: 5000,
+          });
+          setIsProcessingPayment(false);
+          return;
+        }
+        if (safeAmount !== total) {
+          toast.error('Card Amount Mismatch', {
+            description: `Card amount (R${safeAmount.toFixed(2)}) must equal total (R${total.toFixed(2)})`,
+            duration: 5000,
+          });
+          setIsProcessingPayment(false);
+          return;
+        }
+      }
+      
       const computedChange = paymentMethod === 'cash' ? Math.max(safeAmount - total, 0) : 0;
       
       // Generate transaction ID
@@ -319,18 +388,30 @@ export default function EnhancedPOS() {
         console.log('✅ POS sale recorded successfully:', result.data);
         setOrderRecord(result.data);
         
+        // Show success toast
+        toast.success('Payment Successful!', {
+          description: `Sale recorded for R${total.toFixed(2)}. Order #${result.data?.order_number || 'N/A'}`,
+          duration: 5000,
+        });
+        
         // Close payment modal and show receipt
         setShowPaymentModal(false);
         setShowReceipt(true);
       } else {
         console.error('❌ Failed to record POS sale:', result.error);
-        alert(`Failed to record sale: ${result.error}`);
+        toast.error('Payment Failed', {
+          description: result.error || 'Failed to record sale. Please try again.',
+          duration: 7000,
+        });
         return;
       }
       
     } catch (error) {
       console.error('❌ Error processing payment:', error);
-      alert('Error processing payment. Please try again.');
+      toast.error('Payment Error', {
+        description: 'An unexpected error occurred. Please try again.',
+        duration: 7000,
+      });
       return;
     } finally {
       setIsProcessingPayment(false);
@@ -696,7 +777,10 @@ export default function EnhancedPOS() {
                 )}
                 <div className="flex justify-between text-2xl font-bold text-[#09215F] border-t border-gray-200 pt-2">
                   <span>Total:</span>
-                  <span>R{total.toFixed(2)}</span>
+                  <div className="flex items-center">
+                    <RandIcon className="h-6 w-6 mr-1" />
+                    <span>{total.toFixed(2)}</span>
+                  </div>
                 </div>
               </div>
 
@@ -707,7 +791,7 @@ export default function EnhancedPOS() {
                   onClick={() => { setPaymentMethod('cash'); setShowPaymentModal(true); }}
                   className="w-full bg-gradient-to-r from-green-500 to-green-600 text-white py-4 px-4 rounded-xl hover:from-green-600 hover:to-green-700 transition-all duration-300 disabled:from-gray-300 disabled:to-gray-400 disabled:cursor-not-allowed shadow-lg hover:shadow-xl transform hover:-translate-y-1 font-semibold flex items-center justify-center"
                 >
-                  <DollarSign className="h-5 w-5 mr-2" />
+                  <Banknote className="h-5 w-5 mr-2" />
                   Cash Payment
                 </button>
                 <button
@@ -760,7 +844,15 @@ export default function EnhancedPOS() {
                   Cancel
                 </button>
                 <button
-                  onClick={() => setShowDiscountModal(false)}
+                  onClick={() => {
+                    setShowDiscountModal(false);
+                    if (discountPercent > 0) {
+                      toast.success('Discount Applied', {
+                        description: `${discountPercent}% discount applied (R${discountAmount.toFixed(2)} off)`,
+                        duration: 3000,
+                      });
+                    }
+                  }}
                   className="flex-1 bg-[#97CF50] text-white py-3 px-4 rounded-xl hover:bg-[#09215F] transition-all duration-300 font-semibold"
                 >
                   Apply
@@ -796,7 +888,10 @@ export default function EnhancedPOS() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <span className="text-[#09215F]">Total Due</span>
-                  <span className="text-2xl font-bold text-[#09215F]">R{total.toFixed(2)}</span>
+                  <div className="flex items-center">
+                    <RandIcon className="h-6 w-6 mr-1 text-[#09215F]" />
+                    <span className="text-2xl font-bold text-[#09215F]">{total.toFixed(2)}</span>
+                  </div>
                 </div>
 
                 <div className="flex items-center space-x-2">
@@ -813,7 +908,11 @@ export default function EnhancedPOS() {
                         value={paymentAmount}
                         onChange={(e) => setPaymentAmount(e.target.value)}
                         placeholder="Enter cash received"
-                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
+                        className={`flex-1 px-4 py-3 border-2 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent ${
+                          paymentAmount && Number(paymentAmount) < total 
+                            ? 'border-red-500 bg-red-50' 
+                            : 'border-gray-200'
+                        }`}
                         min="0"
                         step="0.01"
                       />
@@ -821,6 +920,18 @@ export default function EnhancedPOS() {
                         <Calculator className="h-5 w-5" />
                       </button>
                     </div>
+                    {paymentAmount && Number(paymentAmount) < total && (
+                      <div className="mt-2 text-sm text-red-600 flex items-center">
+                        <X className="h-4 w-4 mr-1" />
+                        Insufficient cash. Need R{(total - Number(paymentAmount)).toFixed(2)} more.
+                      </div>
+                    )}
+                    {paymentAmount && Number(paymentAmount) >= total && (
+                      <div className="mt-2 text-sm text-green-600 flex items-center">
+                        <UserCheck className="h-4 w-4 mr-1" />
+                        Sufficient cash. Change: R{(Number(paymentAmount) - total).toFixed(2)}
+                      </div>
+                    )}
                   </div>
                 )}
 
@@ -841,7 +952,11 @@ export default function EnhancedPOS() {
                   </button>
                   <button 
                     onClick={handleConfirmPayment} 
-                    disabled={isProcessingPayment}
+                    disabled={
+                      isProcessingPayment || 
+                      (paymentMethod === 'cash' && paymentAmount && Number(paymentAmount) < total) ||
+                      (paymentMethod === 'card' && (!paymentAmount || Number(paymentAmount) !== total))
+                    }
                     className="flex-1 bg-green-600 text-white py-3 px-4 rounded-xl hover:bg-green-700 transition-all duration-300 font-semibold disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
                   >
                     {isProcessingPayment ? (

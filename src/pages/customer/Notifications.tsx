@@ -36,7 +36,7 @@ export default function Notifications() {
             <p className="text-gray-600 mb-8">Please log in to view your stock notifications.</p>
             <Link
               to="/login"
-              className="inline-flex items-center px-6 py-3 bg-[#4682B4] text-white rounded-xl hover:bg-[#2C3E50] transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-[#97CF50] text-white rounded-xl hover:bg-[#09215F] transition-colors"
             >
               Sign In
             </Link>
@@ -62,7 +62,7 @@ export default function Notifications() {
         {/* Header */}
         <div className="text-center mb-8">
           <div className="flex items-center justify-center mb-4">
-            <Bell className="h-12 w-12 text-[#4682B4] mr-3" />
+            <Bell className="h-12 w-12 text-[#97CF50] mr-3" />
             <h1 className="text-3xl font-bold text-gray-900">Stock Notifications</h1>
           </div>
           <p className="text-gray-600 max-w-2xl mx-auto">
@@ -153,7 +153,7 @@ export default function Notifications() {
                     <div className="flex-shrink-0 flex space-x-2">
                       <Link
                         to={`/products/${notification.product_id}`}
-                        className="p-2 text-[#4682B4] hover:bg-[#F8F9FA] rounded-lg transition-colors"
+                        className="p-2 text-[#97CF50] hover:bg-[#F8F9FA] rounded-lg transition-colors"
                         title="View Product"
                       >
                         <Eye className="h-5 w-5" />
@@ -222,7 +222,7 @@ export default function Notifications() {
                     <div className="flex-shrink-0">
                       <Link
                         to={`/products/${notification.product_id}`}
-                        className="p-2 text-[#4682B4] hover:bg-[#F8F9FA] rounded-lg transition-colors"
+                        className="p-2 text-[#97CF50] hover:bg-[#F8F9FA] rounded-lg transition-colors"
                         title="View Product"
                       >
                         <Eye className="h-5 w-5" />
@@ -245,7 +245,7 @@ export default function Notifications() {
             </p>
             <Link
               to="/products"
-              className="inline-flex items-center px-6 py-3 bg-[#4682B4] text-white rounded-xl hover:bg-[#2C3E50] transition-colors"
+              className="inline-flex items-center px-6 py-3 bg-[#97CF50] text-white rounded-xl hover:bg-[#09215F] transition-colors"
             >
               <Package className="h-5 w-5 mr-2" />
               Browse Products

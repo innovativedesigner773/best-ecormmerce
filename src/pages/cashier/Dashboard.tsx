@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { 
   BarChart3, 
   ShoppingCart, 
-  DollarSign, 
+  Banknote, 
   Package, 
   Users, 
   ArrowUpRight,
@@ -23,6 +23,30 @@ import {
   Eye
 } from 'lucide-react';
 import CashierLayout from '../../components/cashier/CashierLayout';
+
+// Custom South African Rand icon component
+const RandIcon = ({ className = "h-8 w-8" }: { className?: string }) => (
+  <svg
+    className={className}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.5"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <text
+      x="12"
+      y="16"
+      textAnchor="middle"
+      fontSize="12"
+      fontWeight="500"
+      fill="currentColor"
+    >
+      R
+    </text>
+  </svg>
+);
 
 export default function EnhancedCashierDashboard() {
   const navigate = useNavigate();
@@ -159,7 +183,7 @@ export default function EnhancedCashierDashboard() {
                 <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.sales.value}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg">
-                <DollarSign className="h-8 w-8" />
+                <RandIcon className="h-8 w-8" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
