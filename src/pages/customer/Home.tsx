@@ -614,8 +614,8 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Server Status Diagnostic Banner */}
-      {serverStatus !== 'online' && (
+      {/* Server Status Diagnostic Banner - HIDDEN */}
+      {/* {serverStatus !== 'online' && (
         <div className={`w-full p-4 text-center text-sm ${
           serverStatus === 'checking' 
             ? 'bg-green-50 text-green-800 border-b border-green-200' 
@@ -640,7 +640,7 @@ export default function Home() {
             )}
           </div>
         </div>
-      )}
+      )} */}
       
       {/* Updated Hero Section with Promotions */}
       <section 

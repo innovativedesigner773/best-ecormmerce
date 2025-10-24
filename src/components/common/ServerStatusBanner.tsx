@@ -90,59 +90,63 @@ export default function ServerStatusBanner() {
     }
   }, [dismissed]);
 
-  // Don't show banner if server is online, user dismissed it, or we haven't checked yet
-  if (serverStatus.isOnline || dismissed || !serverStatus.lastChecked) {
-    return null;
-  }
+  // Server status banner is now hidden - always return null
+  return null;
 
-  // Don't show after multiple failed attempts to avoid spam
-  if (checkAttempts >= 3) {
-    return null;
-  }
+  // Original code commented out:
+  // // Don't show banner if server is online, user dismissed it, or we haven't checked yet
+  // if (serverStatus.isOnline || dismissed || !serverStatus.lastChecked) {
+  //   return null;
+  // }
 
-  return (
-    <Alert className="border-red-500 bg-gradient-to-r from-red-50 to-pink-50 shadow-sm rounded-none border-x-0 border-t-0">
-      <AlertTriangle className="h-4 w-4 text-red-600" />
-      <AlertDescription className="flex items-center justify-between w-full">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-1">
-            <strong className="text-red-800">Server Connection Issue</strong>
-            <span className="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">
-              Offline
-            </span>
-          </div>
-          <p className="text-sm text-red-700">
-            Some features like barcode scanning may not work properly while the server is unavailable.
-          </p>
-          {serverStatus.error && (
-            <p className="text-xs text-red-600 mt-1 font-mono">
-              Error: {serverStatus.error}
-            </p>
-          )}
-        </div>
+  // // Don't show after multiple failed attempts to avoid spam
+  // if (checkAttempts >= 3) {
+  //   return null;
+  // }
+
+  // return (
+  //   <Alert className="border-red-500 bg-gradient-to-r from-red-50 to-pink-50 shadow-sm rounded-none border-x-0 border-t-0">
+  //     <AlertTriangle className="h-4 w-4 text-red-600" />
+  //     <AlertDescription className="flex items-center justify-between w-full">
+  //       <div className="flex-1">
+  //         <div className="flex items-center gap-2 mb-1">
+  //           <strong className="text-red-800">Server Connection Issue</strong>
+  //           <span className="text-xs bg-red-200 text-red-800 px-2 py-0.5 rounded-full">
+  //             Offline
+  //           </span>
+  //         </div>
+  //         <p className="text-sm text-red-700">
+  //           Some features like barcode scanning may not work properly while the server is unavailable.
+  //         </p>
+  //         {serverStatus.error && (
+  //           <p className="text-xs text-red-600 mt-1 font-mono">
+  //             Error: {serverStatus.error}
+  //           </p>
+  //         )}
+  //       </div>
         
-        <div className="flex items-center gap-3 ml-4">
-          <Button
-            size="sm"
-            variant="outline"
-            onClick={checkServerHealth}
-            disabled={isChecking}
-            className="border-red-300 text-red-700 hover:bg-red-100"
-          >
-            <RefreshCw className={`w-4 h-4 mr-2 ${isChecking ? 'animate-spin' : ''}`} />
-            {isChecking ? 'Checking...' : 'Retry'}
-          </Button>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setDismissed(true)}
-            className="text-red-600 hover:text-red-800 hover:bg-red-100"
-          >
-            <X className="w-4 h-4" />
-          </Button>
-        </div>
-      </AlertDescription>
-    </Alert>
-  );
+  //       <div className="flex items-center gap-3 ml-4">
+  //         <Button
+  //           size="sm"
+  //           variant="outline"
+  //           onClick={checkServerHealth}
+  //           disabled={isChecking}
+  //           className="border-red-300 text-red-700 hover:bg-red-100"
+  //         >
+  //           <RefreshCw className={`w-4 h-4 mr-2 ${isChecking ? 'animate-spin' : ''}`} />
+  //           {isChecking ? 'Checking...' : 'Retry'}
+  //         </Button>
+        
+  //         <Button
+  //           variant="ghost"
+  //           size="sm"
+  //           onClick={() => setDismissed(true)}
+  //           className="text-red-600 hover:text-red-800 hover:bg-red-100"
+  //         >
+  //           <X className="w-4 h-4" />
+  //         </Button>
+  //       </div>
+  //     </AlertDescription>
+  //   </Alert>
+  // );
 }
