@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useRef, ReactNode } from 'react';
 import { useAuth } from './AuthContext';
 import { supabase } from '../lib/supabase';
 import { toast } from 'sonner';
@@ -55,6 +55,7 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
   const { user } = useAuth();
 
   const [realStockData, setRealStockData] = useState<Record<string, { stock_count: number; in_stock: boolean }>>({});
+  const lastFetchedProductIds = useRef<string>('');
 
   // Load favourites on mount and when user changes
   useEffect(() => {
@@ -64,55 +65,83 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
   // Fetch real stock data for favourites
   useEffect(() => {
     const fetchStockData = async () => {
-      if (items.length === 0) return;
+      if (items.length === 0) {
+        setRealStockData({});
+        return;
+      }
+
+      // Get unique product IDs from favourites
+      const productIds = [...new Set(items.map(item => item.product_id))];
+      const productIdsString = productIds.sort().join(',');
+      
+      // Skip fetch if we already have data for these products
+      if (productIdsString === lastFetchedProductIds.current) {
+        return;
+      }
 
       try {
         console.log('📦 Fetching real stock data for favourites...');
         
-        // Get unique product IDs from favourites
-        const productIds = [...new Set(items.map(item => item.product_id))];
-        
-        // Fetch stock data from Supabase
+        // Fetch stock data from Supabase with optimized query
         const { data: productsData, error: productsError } = await supabase
           .from('products')
           .select('id, stock_quantity, is_active, stock_tracking')
-          .in('id', productIds);
+          .in('id', productIds)
+          .limit(100); // Add limit for performance
 
         if (productsError) {
           console.error('❌ Error fetching stock data for favourites:', productsError);
+          // Set empty stock data to prevent undefined errors
+          setRealStockData({});
           return;
         }
 
-        console.log('✅ Stock data fetched for favourites:', productsData);
+        console.log('✅ Stock data fetched for favourites:', productsData?.length || 0, 'products');
 
-        // Create stock data mapping
+        // Create stock data mapping with better error handling
         const stockDataMap: Record<string, { stock_count: number; in_stock: boolean }> = {};
         productsData?.forEach(product => {
-          const stockCount = product.stock_quantity || 0;
-          const isInStock = product.is_active && (product.stock_tracking ? stockCount > 0 : true);
-          
-          stockDataMap[product.id] = {
-            stock_count: stockCount,
-            in_stock: isInStock
-          };
+          try {
+            const stockCount = Number(product.stock_quantity) || 0;
+            const isInStock = product.is_active && (product.stock_tracking ? stockCount > 0 : true);
+            
+            stockDataMap[product.id] = {
+              stock_count: stockCount,
+              in_stock: isInStock
+            };
+          } catch (error) {
+            console.warn('Error processing stock data for product:', product.id, error);
+            // Set default values for problematic products
+            stockDataMap[product.id] = {
+              stock_count: 0,
+              in_stock: false
+            };
+          }
         });
 
         setRealStockData(stockDataMap);
+        lastFetchedProductIds.current = productIdsString;
       } catch (error) {
         console.error('Error fetching stock data for favourites:', error);
+        // Set empty stock data to prevent undefined errors
+        setRealStockData({});
       }
     };
 
-    fetchStockData();
-  }, [items]);
+    // Debounce the fetch to avoid too many requests
+    const timeoutId = setTimeout(fetchStockData, 300);
+    return () => clearTimeout(timeoutId);
+  }, [items.length]); // Only depend on items.length, not the entire items array
 
   // Update favourites with real stock data
   useEffect(() => {
     const updateStockLevels = () => {
-      setItems(prevItems => 
-        prevItems.map(item => {
+      setItems(prevItems => {
+        let hasUpdates = false;
+        const updatedItems = prevItems.map(item => {
           const stockData = realStockData[item.product_id];
           if (stockData && (stockData.stock_count !== item.stock_count || stockData.in_stock !== item.in_stock)) {
+            hasUpdates = true;
             return {
               ...item,
               stock_count: stockData.stock_count,
@@ -120,11 +149,17 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
             };
           }
           return item;
-        })
-      );
+        });
+        
+        // Only update state if there are actual changes
+        return hasUpdates ? updatedItems : prevItems;
+      });
     };
 
-    updateStockLevels();
+    // Only run if we have real stock data
+    if (Object.keys(realStockData).length > 0) {
+      updateStockLevels();
+    }
   }, [realStockData]);
 
   const loadFavourites = async () => {
@@ -136,29 +171,53 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
         const serverKey = `${FAVOURITES_STORAGE_KEY}_${user.id}`;
         const stored = localStorage.getItem(serverKey);
         if (stored) {
-          const favourites = JSON.parse(stored);
-          // Update with current stock data
-          const updatedFavourites = favourites.map((item: FavouriteItem) => {
-            const stockData = mockStockData[item.product_id];
-            return stockData ? { ...item, ...stockData } : item;
-          });
-          setItems(updatedFavourites);
+          try {
+            const favourites = JSON.parse(stored);
+            // Update with current stock data if available
+            const updatedFavourites = favourites.map((item: FavouriteItem) => {
+              const stockData = realStockData[item.product_id];
+              if (stockData) {
+                return { ...item, ...stockData };
+              }
+              // Keep existing stock data if no real data available
+              return item;
+            });
+            setItems(updatedFavourites);
+          } catch (parseError) {
+            console.error('Error parsing stored favourites:', parseError);
+            // Clear corrupted data
+            localStorage.removeItem(serverKey);
+            setItems([]);
+          }
         }
       } else {
         // For guest users, load from localStorage
         const stored = localStorage.getItem(FAVOURITES_STORAGE_KEY);
         if (stored) {
-          const favourites = JSON.parse(stored);
-          // Update with current stock data
-          const updatedFavourites = favourites.map((item: FavouriteItem) => {
-            const stockData = mockStockData[item.product_id];
-            return stockData ? { ...item, ...stockData } : item;
-          });
-          setItems(updatedFavourites);
+          try {
+            const favourites = JSON.parse(stored);
+            // Update with current stock data if available
+            const updatedFavourites = favourites.map((item: FavouriteItem) => {
+              const stockData = realStockData[item.product_id];
+              if (stockData) {
+                return { ...item, ...stockData };
+              }
+              // Keep existing stock data if no real data available
+              return item;
+            });
+            setItems(updatedFavourites);
+          } catch (parseError) {
+            console.error('Error parsing stored favourites:', parseError);
+            // Clear corrupted data
+            localStorage.removeItem(FAVOURITES_STORAGE_KEY);
+            setItems([]);
+          }
         }
       }
     } catch (error) {
       console.error('Error loading favourites:', error);
+      // Set empty array as fallback
+      setItems([]);
     } finally {
       setLoading(false);
     }
@@ -189,8 +248,11 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
         return;
       }
 
-      // Get current stock data
-      const stockData = mockStockData[productId] || { stock_count: 0, in_stock: false };
+      // Get current stock data from real stock data or use product data as fallback
+      const stockData = realStockData[productId] || {
+        stock_count: product.stock_count || 0,
+        in_stock: product.in_stock !== false && (product.stock_count || 0) > 0
+      };
 
       const favouriteItem: FavouriteItem = {
         id: `fav_${productId}_${Date.now()}`,
@@ -199,7 +261,7 @@ export function FavouritesProvider({ children }: FavouritesProviderProps) {
         price: product.price,
         original_price: product.original_price,
         image_url: product.image_url,
-        sku: product.sku,
+        sku: product.sku || `SKU-${productId}`,
         category: product.category || 'Unknown',
         brand: product.brand,
         description: product.description,
