@@ -13,7 +13,11 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-3 mb-4">
               <div className="bg-gradient-to-br from-[#97CF50] to-[#97CF50] text-white p-2 rounded-xl shadow-lg">
-                <Sparkles className="h-6 w-6" />
+                <img 
+                  src="/assets/icon.png" 
+                  alt="Best Brightness Logo" 
+                  className="h-8 w-16 object-contain"
+                />
               </div>
               <div>
                 <span className="text-xl font-bold">Best Brightness</span>
