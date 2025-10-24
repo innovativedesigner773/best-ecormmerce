@@ -345,8 +345,12 @@ export default function Register() {
       <div className="max-w-md w-full space-y-8 bg-white rounded-2xl shadow-2xl p-8">
         <div>
           <div className="flex justify-center">
-            <div className="bg-primary text-primary-foreground p-4 rounded-2xl shadow-lg">
-              <Package className="h-8 w-8" />
+            <div className="p-4">
+              <img 
+                src="/assets/icon.png" 
+                alt="Best Brightness Logo" 
+                className="h-10 w-20 object-contain"
+              />
             </div>
           </div>
           <h2 className="mt-6 text-center text-4xl text-[#09215F]">

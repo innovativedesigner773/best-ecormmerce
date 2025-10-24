@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { supabase } from '../../utils/supabase/client';
-import { Eye, EyeOff, Package, CheckCircle, AlertTriangle, ArrowLeft } from 'lucide-react';
+import { Eye, EyeOff, Package, CheckCircle, AlertTriangle, ArrowLeft, Mail, Key } from 'lucide-react';
 import LoadingSpinner from '../../components/common/LoadingSpinner';
 
 export default function ResetPassword() {
@@ -9,6 +9,7 @@ export default function ResetPassword() {
   const navigate = useNavigate();
   
   const [formData, setFormData] = useState({
+    email: '',
     password: '',
     confirmPassword: '',
   });
@@ -19,6 +20,7 @@ export default function ResetPassword() {
   const [success, setSuccess] = useState(false);
   const [validSession, setValidSession] = useState(false);
   const [checkingSession, setCheckingSession] = useState(true);
+  const [pageMode, setPageMode] = useState<'request' | 'reset'>('request');
 
   // Check if we have a valid session from the email link
   useEffect(() => {
@@ -29,18 +31,23 @@ export default function ResetPassword() {
         if (error) {
           console.error('Session check error:', error);
           setValidSession(false);
+          setPageMode('request');
+          setCheckingSession(false);
           return;
         }
 
         // Check if this is a password recovery session
         if (session?.user?.recovery_sent_at) {
           setValidSession(true);
+          setPageMode('reset');
         } else {
           setValidSession(false);
+          setPageMode('request');
         }
       } catch (error) {
         console.error('Unexpected session check error:', error);
         setValidSession(false);
+        setPageMode('request');
       } finally {
         setCheckingSession(false);
       }
@@ -59,7 +66,20 @@ export default function ResetPassword() {
     }
   };
 
-  const validateForm = () => {
+  const validateEmailForm = () => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.email) {
+      newErrors.email = 'Email is required';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const validatePasswordForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.password) {
@@ -78,10 +98,42 @@ export default function ResetPassword() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleRequestReset = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!validateForm()) return;
+    if (!validateEmailForm()) return;
+
+    try {
+      setLoading(true);
+      setErrors({});
+
+      const { error } = await supabase.auth.resetPasswordForEmail(formData.email, {
+        redirectTo: `${window.location.origin}/reset-password`
+      });
+
+      if (error) {
+        console.error('Password reset request error:', error);
+        setErrors({
+          general: error.message || 'Failed to send reset email. Please try again.'
+        });
+        return;
+      }
+
+      setSuccess(true);
+    } catch (error) {
+      console.error('Unexpected password reset request error:', error);
+      setErrors({
+        general: 'An unexpected error occurred. Please try again.'
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handlePasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!validatePasswordForm()) return;
 
     try {
       setLoading(true);
@@ -121,32 +173,119 @@ export default function ResetPassword() {
 
   if (checkingSession) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745]">
         <div className="text-center">
           <LoadingSpinner size="large" />
-          <p className="mt-4 text-sm text-gray-600">Verifying reset link...</p>
+          <p className="mt-4 text-sm text-white">Verifying reset link...</p>
         </div>
       </div>
     );
   }
 
-  if (!validSession) {
+  // Show email request form by default when no valid session
+  if (!validSession && pageMode === 'request') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
-          <div className="text-center">
-            <div className="flex justify-center mb-6">
-              <div className="bg-red-100 p-4 rounded-2xl">
-                <AlertTriangle className="h-8 w-8 text-red-600" />
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
+          <div>
+            <div className="flex justify-center">
+              <div className="p-4">
+                <img 
+                  src="/assets/icon.png" 
+                  alt="Best Brightness Logo" 
+                  className="h-10 w-20 object-contain"
+                />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-[#2C3E50] mb-4">Invalid Reset Link</h2>
-            <p className="text-sm text-[#2C3E50]/80 mb-6">
-              This password reset link is invalid or has expired. Please request a new one.
+            <h2 className="mt-6 text-center text-4xl font-bold text-gray-900">
+              Reset Password
+            </h2>
+            <p className="mt-2 text-center text-sm text-gray-700">
+              Enter your email address and we'll send you a link to reset your password.
+            </p>
+          </div>
+
+          {/* General Error Message */}
+          {errors.general && (
+            <div className="mt-6 bg-red-50 border border-red-200 rounded-xl p-4">
+              <div className="flex items-start space-x-3">
+                <AlertTriangle className="h-5 w-5 text-red-600 flex-shrink-0 mt-0.5" />
+                <div className="text-sm text-red-700">{errors.general}</div>
+              </div>
+            </div>
+          )}
+
+          <form className="mt-8 space-y-6" onSubmit={handleRequestReset}>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-gray-900">
+                Email Address
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                value={formData.email}
+                onChange={handleChange}
+                className={`mt-1 appearance-none relative block w-full px-3 py-3 border ${
+                  errors.email ? 'border-red-300' : 'border-gray-300'
+                } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent sm:text-sm transition-all duration-300`}
+                placeholder="Enter your email address"
+              />
+              {errors.email && (
+                <p className="mt-1 text-sm text-red-600">{errors.email}</p>
+              )}
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                disabled={loading}
+                className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-[#97CF50] hover:bg-[#28A745] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#97CF50] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              >
+                {loading ? (
+                  <LoadingSpinner size="small" />
+                ) : (
+                  'Send Reset Link'
+                )}
+              </button>
+            </div>
+
+            <div className="text-center">
+              <Link
+                to="/login"
+                className="inline-flex items-center text-sm font-medium text-[#97CF50] hover:text-[#09215F] transition-colors"
+              >
+                <ArrowLeft className="h-4 w-4 mr-2" />
+                Back to Login
+              </Link>
+            </div>
+          </form>
+        </div>
+      </div>
+    );
+  }
+
+  // Success state for email sent
+  if (success && pageMode === 'request') {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
+          <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <div className="bg-green-100 p-4 rounded-2xl">
+                <Mail className="h-8 w-8 text-green-600" />
+              </div>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Check Your Email</h2>
+            <p className="text-sm text-gray-700 mb-6">
+              We've sent a password reset link to <strong>{formData.email}</strong>. 
+              Please check your email and click the link to reset your password.
             </p>
             <Link
               to="/login"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] transition-colors"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-[#97CF50] hover:bg-[#28A745] transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Login
@@ -157,23 +296,24 @@ export default function ResetPassword() {
     );
   }
 
-  if (success) {
+  // Success state for password updated
+  if (success && pageMode === 'reset') {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745] py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 border border-gray-100">
           <div className="text-center">
             <div className="flex justify-center mb-6">
               <div className="bg-green-100 p-4 rounded-2xl">
                 <CheckCircle className="h-8 w-8 text-green-600" />
               </div>
             </div>
-            <h2 className="text-2xl font-bold text-[#2C3E50] mb-4">Password Updated!</h2>
-            <p className="text-sm text-[#2C3E50]/80 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">Password Updated!</h2>
+            <p className="text-sm text-gray-700 mb-6">
               Your password has been successfully updated. You will be redirected to the login page shortly.
             </p>
             <Link
               to="/login"
-              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] transition-colors"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-xl text-white bg-[#97CF50] hover:bg-[#28A745] transition-colors"
             >
               Sign in now
             </Link>
@@ -183,19 +323,25 @@ export default function ResetPassword() {
     );
   }
 
+
+  // Reset password form (when user has valid session)
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8">
         <div>
           <div className="flex justify-center">
-            <div className="bg-[#4682B4] text-white p-4 rounded-2xl shadow-lg">
-              <Package className="h-8 w-8" />
+            <div className="p-4">
+              <img 
+                src="/assets/icon.png" 
+                alt="Best Brightness Logo" 
+                className="h-10 w-20 object-contain"
+              />
             </div>
           </div>
-          <h2 className="mt-6 text-center text-4xl font-bold text-[#2C3E50]">
+          <h2 className="mt-6 text-center text-4xl font-bold text-gray-900">
             Set New Password
           </h2>
-          <p className="mt-2 text-center text-sm text-[#2C3E50]/80">
+          <p className="mt-2 text-center text-sm text-gray-700">
             Enter your new password below
           </p>
         </div>
@@ -210,10 +356,10 @@ export default function ResetPassword() {
           </div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="mt-8 space-y-6" onSubmit={handlePasswordReset}>
           <div className="space-y-5">
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-[#2C3E50]">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-900">
                 New Password
               </label>
               <div className="mt-1 relative">
@@ -226,7 +372,7 @@ export default function ResetPassword() {
                   onChange={handleChange}
                   className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${
                     errors.password ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent sm:text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent sm:text-sm transition-all duration-300`}
                   placeholder="Enter your new password"
                 />
                 <button
@@ -247,7 +393,7 @@ export default function ResetPassword() {
             </div>
 
             <div>
-              <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#2C3E50]">
+              <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-900">
                 Confirm New Password
               </label>
               <div className="mt-1 relative">
@@ -260,7 +406,7 @@ export default function ResetPassword() {
                   onChange={handleChange}
                   className={`appearance-none relative block w-full px-3 py-3 pr-10 border ${
                     errors.confirmPassword ? 'border-red-300' : 'border-gray-300'
-                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#4682B4] focus:border-transparent sm:text-sm transition-all duration-300`}
+                  } placeholder-gray-500 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent sm:text-sm transition-all duration-300`}
                   placeholder="Confirm your new password"
                 />
                 <button
@@ -285,7 +431,7 @@ export default function ResetPassword() {
             <button
               type="submit"
               disabled={loading}
-              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-[#4682B4] hover:bg-[#2C3E50] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#4682B4] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-xl text-white bg-[#97CF50] hover:bg-[#28A745] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#97CF50] disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               {loading ? (
                 <LoadingSpinner size="small" />
@@ -298,7 +444,7 @@ export default function ResetPassword() {
           <div className="text-center">
             <Link
               to="/login"
-              className="inline-flex items-center text-sm font-medium text-[#4682B4] hover:text-[#2C3E50] transition-colors"
+              className="inline-flex items-center text-sm font-medium text-[#97CF50] hover:text-[#09215F] transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Login

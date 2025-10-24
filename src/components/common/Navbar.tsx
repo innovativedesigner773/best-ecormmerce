@@ -72,7 +72,11 @@ export default function Navbar() {
             {/* Logo */}
             <Link to="/" className="flex items-center space-x-2 sm:space-x-3 group flex-shrink-0">
               <div className="bg-gradient-to-br from-[#97CF50] to-[#97CF50] text-white p-1.5 sm:p-2 rounded-xl group-hover:scale-105 transition-transform duration-300 shadow-lg">
-                <Sparkles className="h-5 w-5 sm:h-6 sm:w-6" />
+                <img 
+                  src="/assets/icon.png" 
+                  alt="Best Brightness Logo" 
+                  className="h-6 w-12 sm:h-8 sm:w-16 object-contain"
+                />
               </div>
               <div className="min-w-0">
                 <span className="text-base sm:text-xl font-bold text-[#09215F] dark:text-white group-hover:text-[#97CF50] transition-colors block truncate">

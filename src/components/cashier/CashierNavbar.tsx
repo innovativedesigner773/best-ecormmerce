@@ -64,7 +64,11 @@ export default function CashierNavbar() {
           <div className="flex items-center space-x-2 sm:space-x-3 flex-shrink-0">
             <Link to="/cashier/dashboard" className="flex items-center space-x-2 sm:space-x-3 group">
               <div className="bg-white/20 backdrop-blur-sm text-white p-1.5 sm:p-2 rounded-xl group-hover:bg-white/30 transition-all duration-300 shadow-lg">
-                <DollarSign className="h-5 w-5 sm:h-6 sm:w-6" />
+                <img 
+                  src="/assets/icon.png" 
+                  alt="Best Brightness Logo" 
+                  className="h-6 w-12 sm:h-8 sm:w-16 object-contain"
+                />
               </div>
               <div className="min-w-0">
                 <span className="text-base sm:text-xl font-bold text-white group-hover:text-[#97CF50] transition-colors block truncate">

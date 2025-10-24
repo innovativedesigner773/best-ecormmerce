@@ -630,7 +630,7 @@ export function SafeAuthProvider({ children }: { children: ReactNode }) {
       }
 
       const redirectTo = process.env.NODE_ENV === 'development' 
-        ? 'http://localhost:3000/reset-password' 
+        ? 'http://localhost:3001/reset-password' 
         : `${window.location.origin}/reset-password`;
 
       const { error } = await supabase.auth.resetPasswordForEmail(email.trim().toLowerCase(), {

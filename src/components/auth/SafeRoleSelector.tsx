@@ -218,26 +218,6 @@ export default function SafeRoleSelector({ selectedRole, onRoleChange, error }: 
               </button>
             </div>
 
-            {/* Development Helper - Shows auth codes for testing */}
-            {process.env.NODE_ENV === 'development' && (
-              <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
-                <p className="text-xs font-medium text-green-800 mb-2">Development Helper - Auth Codes:</p>
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="bg-white p-2 rounded border">
-                    <strong>Cashier:</strong> CASHIER2024
-                  </div>
-                  <div className="bg-white p-2 rounded border">
-                    <strong>Staff:</strong> STAFF2024
-                  </div>
-                  <div className="bg-white p-2 rounded border">
-                    <strong>Manager:</strong> MANAGER2024
-                  </div>
-                  <div className="bg-white p-2 rounded border">
-                    <strong>Admin:</strong> ADMIN2024
-                  </div>
-                </div>
-              </div>
-            )}
 
             <div className="mt-3 flex gap-2">
               <button
