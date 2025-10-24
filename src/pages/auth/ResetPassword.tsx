@@ -176,7 +176,7 @@ export default function ResetPassword() {
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#97CF50] to-[#28A745]">
         <div className="text-center">
           <LoadingSpinner size="large" />
-          <p className="mt-4 text-sm text-white">Verifying reset link...</p>
+          <p className="mt-4 text-sm text-[#09215F]">Verifying reset link...</p>
         </div>
       </div>
     );

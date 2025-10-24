@@ -526,6 +526,16 @@
   input, textarea, select {
     color: var(--foreground) !important;
   }
+
+  /* Ensure all text elements are visible */
+  p, span, div, h1, h2, h3, h4, h5, h6, label, button {
+    color: var(--foreground);
+  }
+
+  /* Override any white text that might be invisible */
+  .text-white {
+    color: var(--foreground) !important;
+  }
 }
 
 @layer utilities {

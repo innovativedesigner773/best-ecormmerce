@@ -206,7 +206,7 @@ export default function CartIcon({ className = '' }: CartIconProps) {
                 {/* Total */}
                 <div className="flex justify-between items-center mb-3">
                   <span className="font-semibold text-gray-800">Total:</span>
-                  <span className="font-bold text-lg text-[#4682B4]">
+                  <span className="font-bold text-lg text-[#09215F]">
                     R{total.toFixed(2)}
                   </span>
                 </div>
@@ -221,7 +221,7 @@ export default function CartIcon({ className = '' }: CartIconProps) {
                   </button>
                   <button
                     onClick={handleCheckout}
-                    className="flex-1 bg-[#4682B4] text-white py-2 px-4 rounded-lg hover:bg-[#2C3E50] transition-colors font-medium"
+                    className="flex-1 bg-[#97CF50] text-white py-2 px-4 rounded-lg hover:bg-[#09215F] transition-colors font-medium"
                   >
                     Checkout
                   </button>

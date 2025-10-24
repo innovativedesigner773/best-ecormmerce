@@ -132,11 +132,11 @@ export default function CashierNavbar() {
                         {getFullUserName()}
                       </p>
                       <p className="text-sm text-gray-600">{user?.email}</p>
-                      <p className="text-xs text-[#4682B4] mt-1">Cashier Account</p>
+                      <p className="text-xs text-[#97CF50] mt-1">Cashier Account</p>
                     </div>
                     <Link
                       to="/profile"
-                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
+                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#97CF50] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
                       <User className="h-4 w-4 mr-3 text-[#97CF50]" />
@@ -144,7 +144,7 @@ export default function CashierNavbar() {
                     </Link>
                     <Link
                       to="/cashier/reports"
-                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
+                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#97CF50] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
                       <Receipt className="h-4 w-4 mr-3 text-[#97CF50]" />
@@ -152,7 +152,7 @@ export default function CashierNavbar() {
                     </Link>
                     <Link
                       to="/"
-                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#4682B4] transition-colors"
+                      className="flex items-center px-4 py-3 text-sm text-[#2C3E50] hover:bg-[#F8F9FA] hover:text-[#97CF50] transition-colors"
                       onClick={() => setIsProfileOpen(false)}
                     >
                       <Home className="h-4 w-4 mr-3 text-[#97CF50]" />
