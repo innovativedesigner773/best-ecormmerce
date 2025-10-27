@@ -57,6 +57,8 @@ interface DisplayProduct {
   sku: string;
   description?: string;
   brand?: string;
+  featured?: boolean;
+  created_at?: string;
 }
 
 export default function Products() {
@@ -549,7 +551,7 @@ export default function Products() {
                 {/* Price Range */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Price Range: ${priceRange[0]} - ${priceRange[1]}
+                    Price Range: R{priceRange[0]} - R{priceRange[1]}
                   </label>
                   <input
                     type="range"
@@ -675,16 +677,16 @@ export default function Products() {
                         
                         {/* Price and Actions */}
                         <div className="flex items-center justify-between mt-4">
-                          <div className="flex items-center gap-2">
-                            <span className="text-2xl font-bold text-gray-900">
-                              ${product.price.toFixed(2)}
-                            </span>
-                            {product.original_price && (
-                              <span className="text-lg text-gray-500 line-through">
-                                ${product.original_price.toFixed(2)}
-                              </span>
-                            )}
-                          </div>
+                           <div className="flex items-center gap-2">
+                             <span className="text-2xl font-bold text-gray-900">
+                               R{product.price.toFixed(2)}
+                             </span>
+                             {product.original_price && (
+                               <span className="text-lg text-gray-500 line-through">
+                                 R{product.original_price.toFixed(2)}
+                               </span>
+                             )}
+                           </div>
                           
                           <button
                             onClick={() => handleAddToCart(product)}

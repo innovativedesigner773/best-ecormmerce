@@ -330,11 +330,11 @@ export function HotDeals({ maxPromotions = 6, showViewAll = true }: HotDealsProp
                       
                       <div className="flex items-center gap-2 mb-3">
                         <span className="text-xl font-bold text-gray-900">
-                          ${product.price.toFixed(2)}
+                          R{product.price.toFixed(2)}
                         </span>
                         {product.compare_at_price && (
                           <span className="text-sm text-gray-500 line-through">
-                            ${product.compare_at_price.toFixed(2)}
+                            R{product.compare_at_price.toFixed(2)}
                           </span>
                         )}
                       </div>

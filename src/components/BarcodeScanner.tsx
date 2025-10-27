@@ -292,7 +292,7 @@ export function BarcodeScanner({ onProductScanned, onClose }: BarcodeScannerProp
                           <span className="font-medium">Category:</span> {scannedProduct.category}
                         </div>
                         <div>
-                          <span className="font-medium">Price:</span> ${scannedProduct.price}
+                          <span className="font-medium">Price:</span> R{scannedProduct.price}
                         </div>
                         <div>
                           <span className="font-medium">SKU:</span> {scannedProduct.sku}

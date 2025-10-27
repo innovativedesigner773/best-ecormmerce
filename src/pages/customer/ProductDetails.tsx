@@ -331,16 +331,16 @@ export default function ProductDetails() {
             <div className="space-y-1">
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl font-bold text-foreground">
-                  ${product.price.toFixed(2)}
+                  R{product.price.toFixed(2)}
                 </span>
                 {product.compare_at_price && (
                   <span className="text-lg text-muted-foreground line-through">
-                    ${product.compare_at_price.toFixed(2)}
+                    R{product.compare_at_price.toFixed(2)}
                   </span>
                 )}
                 {discount > 0 && (
                   <span className="text-lg font-medium text-green-600">
-                    Save ${(product.compare_at_price! - product.price).toFixed(2)}
+                    Save R{(product.compare_at_price! - product.price).toFixed(2)}
                   </span>
                 )}
               </div>
