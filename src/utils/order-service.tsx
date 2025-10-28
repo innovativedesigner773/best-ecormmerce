@@ -108,9 +108,10 @@ export class OrderService {
     try {
       console.log('🛒 Creating order:', orderData);
 
-      // Generate unique order number if not provided
-      const orderNumber = orderData.order_number || generateUniqueId('ORDER');
-      console.log('📋 Generated order number:', orderNumber);
+      // Generate a shared identifier to use for BOTH id and order_number
+      const orderId = (globalThis as any).crypto?.randomUUID?.() || generateUniqueId('UUID');
+      const orderNumber = orderId;
+      console.log('📋 Using shared order id/number:', orderNumber);
 
       // First, check stock availability
       if (orderData.items && orderData.items.length > 0) {
@@ -135,7 +136,9 @@ export class OrderService {
 
       // Create the order record (using only columns that exist in the actual database)
       const orderInsertData = {
+        id: orderId,
         order_number: orderNumber,
+        tracking_number: orderNumber,
         customer_id: orderData.customer_id,
         customer_email: orderData.customer_email,
         customer_info: orderData.customer_info,
@@ -242,7 +245,8 @@ export class OrderService {
         success: true,
         data: {
           ...order,
-          order_number: orderNumber
+          order_number: orderNumber,
+          tracking_number: orderNumber
         }
       };
 

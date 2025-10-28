@@ -267,13 +267,13 @@ export async function getRevenueBreakdown(range: TimeRange) {
 
 export async function getInventoryKpis() {
   const [{ data: products, error: pErr }] = await Promise.all([
-    supabase.from('products').select('id, stock_quantity, is_active')
+    supabase.from('products').select('id, stock_quantity, status')
   ]);
   if (pErr) throw pErr;
   const all = products || [];
   const outOfStock = all.filter(p => (p.stock_quantity || 0) === 0).length;
   const lowStock = all.filter(p => (p.stock_quantity || 0) > 0 && (p.stock_quantity || 0) <= 5).length;
-  const active = all.filter(p => p.is_active).length;
+  const active = all.filter(p => (p as any).status === 'active').length;
   return { totalProducts: all.length, active, outOfStock, lowStock };
 }
 
@@ -434,6 +434,479 @@ export async function getBusinessValue(range: TimeRange) {
     revenue,
     ordersCount,
     itemsCount
+  };
+}
+
+// Sales mix analytics using existing fields only
+export async function getSalesMix(range: TimeRange) {
+  const since = getRangeStart(range);
+  // Pull orders in range with commonly available columns
+  const { data: orders, error } = await supabase
+    .from('orders')
+    .select('id, status, created_at, total, total_amount, channel, payment_method, customer_id, customer_email')
+    .gte('created_at', since);
+  if (error) throw error;
+
+  const completed = (orders || []).filter(o => isCompletedStatus(o.status));
+
+  // Helper to amount
+  const getAmount = (o: any) => Number(o.total ?? o.total_amount ?? 0);
+
+  // Channel split (fallback to 'online' when missing)
+  const channelAgg = new Map<string, { revenue: number; orders: number }>();
+  for (const o of completed) {
+    const key = (o as any).channel || 'online';
+    const rec = channelAgg.get(key) || { revenue: 0, orders: 0 };
+    rec.revenue += getAmount(o);
+    rec.orders += 1;
+    channelAgg.set(key, rec);
+  }
+
+  // Payment method split (fallback to 'unknown')
+  const payAgg = new Map<string, { revenue: number; orders: number }>();
+  for (const o of completed) {
+    const key = (o as any).payment_method || 'unknown';
+    const rec = payAgg.get(key) || { revenue: 0, orders: 0 };
+    rec.revenue += getAmount(o);
+    rec.orders += 1;
+    payAgg.set(key, rec);
+  }
+
+  // New vs returning revenue based on presence of multiple orders per customer_id/email within range
+  const keyOf = (o: any) => o.customer_id || o.customer_email || `anon-${o.id}`;
+  const byCustomer = new Map<string, Array<any>>();
+  for (const o of completed) {
+    const k = keyOf(o);
+    const arr = byCustomer.get(k) || [];
+    arr.push(o);
+    byCustomer.set(k, arr);
+  }
+  let newRevenue = 0;
+  let returningRevenue = 0;
+  let newOrders = 0;
+  let returningOrders = 0;
+  for (const [, arr] of byCustomer) {
+    // Sort by created_at to identify first order in range
+    arr.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+    if (arr.length) {
+      newRevenue += getAmount(arr[0]);
+      newOrders += 1;
+      for (let i = 1; i < arr.length; i++) {
+        returningRevenue += getAmount(arr[i]);
+        returningOrders += 1;
+      }
+    }
+  }
+
+  // Shape outputs
+  const channel = Array.from(channelAgg.entries()).map(([name, v]) => ({ name, revenue: v.revenue, orders: v.orders }));
+  const payments = Array.from(payAgg.entries()).map(([name, v]) => ({ name, revenue: v.revenue, orders: v.orders }));
+  const newVsReturning = { new: { revenue: newRevenue, orders: newOrders }, returning: { revenue: returningRevenue, orders: returningOrders } };
+
+  // Totals for percentages
+  const totalRevenue = completed.reduce((s, o) => s + getAmount(o), 0);
+  const totalOrders = completed.length;
+
+  return {
+    channel,
+    payments,
+    newVsReturning,
+    totals: { revenue: totalRevenue, orders: totalOrders }
+  };
+}
+
+// Comprehensive Product Analytics from products table
+export async function getProductAnalytics(range: TimeRange) {
+  const since = getRangeStart(range);
+  
+  // Get all products with their details
+  const { data: products, error: productsError } = await supabase
+    .from('products')
+    .select('id, name, price, cost_price, stock_quantity, category_id, is_active, created_at, updated_at, categories(name)');
+  
+  if (productsError) throw productsError;
+  
+  // Get completed orders in range for sales data
+  const { data: orders, error: ordersError } = await supabase
+    .from('orders')
+    .select('id, status, created_at')
+    .gte('created_at', since);
+  
+  if (ordersError) throw ordersError;
+  
+  const completedOrderIds = (orders || [])
+    .filter(o => isCompletedStatus(o.status))
+    .map(o => o.id);
+  
+  // Get order items for completed orders
+  let orderItems: any[] = [];
+  if (completedOrderIds.length > 0) {
+    const { data: items, error: itemsError } = await supabase
+      .from('order_items')
+      .select('product_id, quantity, unit_price, total_price')
+      .in('order_id', completedOrderIds);
+    
+    if (itemsError) throw itemsError;
+    orderItems = items || [];
+  }
+  
+  // Calculate product performance metrics
+  const productStats = new Map<string, {
+    id: string;
+    name: string;
+    category: string;
+    price: number;
+    costPrice: number;
+    currentStock: number;
+    isActive: boolean;
+    totalSold: number;
+    totalRevenue: number;
+    profitMargin: number;
+    stockTurnover: number;
+    daysSinceCreated: number;
+    daysSinceUpdated: number;
+  }>();
+  
+  // Initialize all products
+  for (const product of products || []) {
+    const categoryName = (product as any).categories?.name || 'Uncategorized';
+    const daysSinceCreated = Math.floor((Date.now() - new Date(product.created_at).getTime()) / (1000 * 60 * 60 * 24));
+    const daysSinceUpdated = Math.floor((Date.now() - new Date(product.updated_at).getTime()) / (1000 * 60 * 60 * 24));
+    
+    productStats.set(product.id, {
+      id: product.id,
+      name: product.name,
+      category: categoryName,
+      price: product.price || 0,
+      costPrice: product.cost_price || 0,
+      currentStock: product.stock_quantity || 0,
+      isActive: product.is_active || false,
+      totalSold: 0,
+      totalRevenue: 0,
+      profitMargin: 0,
+      stockTurnover: 0,
+      daysSinceCreated,
+      daysSinceUpdated
+    });
+  }
+  
+  // Aggregate sales data
+  for (const item of orderItems) {
+    const product = productStats.get(item.product_id);
+    if (product) {
+      product.totalSold += item.quantity || 0;
+      product.totalRevenue += Number(item.total_price || (item.unit_price || 0) * (item.quantity || 0));
+    }
+  }
+  
+  // Calculate derived metrics
+  const allProducts = Array.from(productStats.values()).map(product => {
+    product.profitMargin = product.costPrice > 0 ? 
+      ((product.price - product.costPrice) / product.price) * 100 : 0;
+    product.stockTurnover = product.currentStock > 0 ? 
+      product.totalSold / product.currentStock : 0;
+    return product;
+  });
+  
+  // Categorize products
+  const topSellers = allProducts
+    .filter(p => p.isActive)
+    .sort((a, b) => b.totalSold - a.totalSold)
+    .slice(0, 10);
+    
+  const topRevenue = allProducts
+    .filter(p => p.isActive)
+    .sort((a, b) => b.totalRevenue - a.totalRevenue)
+    .slice(0, 10);
+    
+  const lowStock = allProducts
+    .filter(p => p.isActive && p.currentStock <= 5)
+    .sort((a, b) => a.currentStock - b.currentStock);
+    
+  const outOfStock = allProducts
+    .filter(p => p.isActive && p.currentStock === 0);
+    
+  const inactiveProducts = allProducts
+    .filter(p => !p.isActive);
+    
+  const highMargin = allProducts
+    .filter(p => p.isActive && p.profitMargin > 50)
+    .sort((a, b) => b.profitMargin - a.profitMargin);
+    
+  const slowMoving = allProducts
+    .filter(p => p.isActive && p.totalSold === 0 && p.daysSinceCreated > 30)
+    .sort((a, b) => b.daysSinceCreated - a.daysSinceCreated);
+  
+  // Summary statistics
+  const totalProducts = allProducts.length;
+  const activeProducts = allProducts.filter(p => p.isActive).length;
+  const totalInventoryValue = allProducts.reduce((sum, p) => sum + (p.price * p.currentStock), 0);
+  const totalCostValue = allProducts.reduce((sum, p) => sum + (p.costPrice * p.currentStock), 0);
+  const avgProfitMargin = allProducts.length > 0 ? 
+    allProducts.reduce((sum, p) => sum + p.profitMargin, 0) / allProducts.length : 0;
+  
+  return {
+    summary: {
+      totalProducts,
+      activeProducts,
+      inactiveProducts: inactiveProducts.length,
+      totalInventoryValue,
+      totalCostValue,
+      avgProfitMargin,
+      lowStockCount: lowStock.length,
+      outOfStockCount: outOfStock.length,
+      slowMovingCount: slowMoving.length
+    },
+    topSellers,
+    topRevenue,
+    lowStock,
+    outOfStock,
+    inactiveProducts,
+    highMargin,
+    slowMoving,
+    allProducts
+  };
+}
+
+// User Analytics from user_profiles table
+export async function getUserAnalytics(range: TimeRange) {
+  const since = getRangeStart(range);
+  
+  // Get all users
+  const { data: users, error: usersError } = await supabase
+    .from('user_profiles')
+    .select('id, first_name, last_name, email, role, created_at, updated_at');
+  
+  if (usersError) throw usersError;
+  
+  // Get user registration trends
+  const userRegistrations = (users || []).map(user => ({
+    id: user.id,
+    name: `${user.first_name || ''} ${user.last_name || ''}`.trim() || 'Unknown',
+    email: user.email,
+    role: user.role,
+    created_at: user.created_at,
+    daysSinceRegistration: Math.floor((Date.now() - new Date(user.created_at).getTime()) / (1000 * 60 * 60 * 24))
+  })).sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+  
+  // Get users who registered in the selected period
+  const newUsers = userRegistrations.filter(user => 
+    new Date(user.created_at) >= new Date(since)
+  );
+  
+  // Get users who registered in the previous period for growth calculation
+  const previousSince = new Date(since);
+  const previousStart = new Date(previousSince);
+  previousStart.setMonth(previousStart.getMonth() - 1);
+  
+  const previousUsers = userRegistrations.filter(user => 
+    new Date(user.created_at) >= previousStart && 
+    new Date(user.created_at) < previousSince
+  );
+  
+  // Group by role
+  const usersByRole = new Map<string, number>();
+  for (const user of users || []) {
+    const role = user.role || 'customer';
+    usersByRole.set(role, (usersByRole.get(role) || 0) + 1);
+  }
+  
+  // Get customer order data for engagement analysis
+  const { data: orders, error: ordersError } = await supabase
+    .from('orders')
+    .select('customer_id, status, created_at, total, total_amount')
+    .gte('created_at', since);
+  
+  if (ordersError) throw ordersError;
+  
+  const completedOrders = (orders || []).filter(o => isCompletedStatus(o.status));
+  
+  // Calculate customer engagement metrics
+  const customerEngagement = new Map<string, {
+    customerId: string;
+    totalOrders: number;
+    totalSpent: number;
+    lastOrderDate: string;
+    avgOrderValue: number;
+    daysSinceLastOrder: number;
+  }>();
+  
+  for (const order of completedOrders) {
+    const customerId = order.customer_id;
+    if (!customerId) continue;
+    
+    const existing = customerEngagement.get(customerId) || {
+      customerId,
+      totalOrders: 0,
+      totalSpent: 0,
+      lastOrderDate: order.created_at,
+      avgOrderValue: 0,
+      daysSinceLastOrder: 0
+    };
+    
+    existing.totalOrders += 1;
+    existing.totalSpent += Number(order.total ?? order.total_amount ?? 0);
+    existing.lastOrderDate = existing.lastOrderDate > order.created_at ? existing.lastOrderDate : order.created_at;
+    
+    customerEngagement.set(customerId, existing);
+  }
+  
+  // Calculate averages and days since last order
+  const engagementData = Array.from(customerEngagement.values()).map(customer => {
+    customer.avgOrderValue = customer.totalOrders > 0 ? customer.totalSpent / customer.totalOrders : 0;
+    customer.daysSinceLastOrder = Math.floor((Date.now() - new Date(customer.lastOrderDate).getTime()) / (1000 * 60 * 60 * 24));
+    return customer;
+  });
+  
+  // Categorize customers
+  const activeCustomers = engagementData.filter(c => c.daysSinceLastOrder <= 30);
+  const atRiskCustomers = engagementData.filter(c => c.daysSinceLastOrder > 30 && c.daysSinceLastOrder <= 90);
+  const inactiveCustomers = engagementData.filter(c => c.daysSinceLastOrder > 90);
+  const highValueCustomers = engagementData
+    .sort((a, b) => b.totalSpent - a.totalSpent)
+    .slice(0, 10);
+  
+  // Calculate growth rates
+  const userGrowthRate = previousUsers.length > 0 ? 
+    ((newUsers.length - previousUsers.length) / previousUsers.length) * 100 : 0;
+  
+  return {
+    summary: {
+      totalUsers: users?.length || 0,
+      newUsers: newUsers.length,
+      userGrowthRate,
+      activeCustomers: activeCustomers.length,
+      atRiskCustomers: atRiskCustomers.length,
+      inactiveCustomers: inactiveCustomers.length,
+      avgOrdersPerCustomer: engagementData.length > 0 ? 
+        engagementData.reduce((sum, c) => sum + c.totalOrders, 0) / engagementData.length : 0,
+      avgSpentPerCustomer: engagementData.length > 0 ? 
+        engagementData.reduce((sum, c) => sum + c.totalSpent, 0) / engagementData.length : 0
+    },
+    usersByRole: Array.from(usersByRole.entries()).map(([role, count]) => ({ role, count })),
+    recentRegistrations: newUsers.slice(0, 10),
+    highValueCustomers,
+    activeCustomers,
+    atRiskCustomers,
+    inactiveCustomers,
+    allEngagement: engagementData
+  };
+}
+
+// Order Analytics from orders table
+export async function getOrderAnalytics(range: TimeRange) {
+  const since = getRangeStart(range);
+  
+  // Get all orders in range
+  const { data: orders, error: ordersError } = await supabase
+    .from('orders')
+    .select('id, order_number, status, payment_status, created_at, updated_at, total, total_amount, customer_id, customer_email, subtotal, tax_amount, shipping_amount, discount_amount, channel, payment_method');
+  
+  if (ordersError) throw ordersError;
+  
+  const ordersInRange = (orders || []).filter(o => new Date(o.created_at) >= new Date(since));
+  const completedOrders = ordersInRange.filter(o => isCompletedStatus(o.status));
+  
+  // Order status distribution
+  const statusDistribution = new Map<string, number>();
+  for (const order of ordersInRange) {
+    const status = order.status || 'unknown';
+    statusDistribution.set(status, (statusDistribution.get(status) || 0) + 1);
+  }
+  
+  // Payment status distribution
+  const paymentStatusDistribution = new Map<string, number>();
+  for (const order of ordersInRange) {
+    const paymentStatus = order.payment_status || 'unknown';
+    paymentStatusDistribution.set(paymentStatus, (paymentStatusDistribution.get(paymentStatus) || 0) + 1);
+  }
+  
+  // Order value analysis
+  const orderValues = completedOrders.map(o => Number(o.total ?? o.total_amount ?? 0));
+  const totalRevenue = orderValues.reduce((sum, val) => sum + val, 0);
+  const avgOrderValue = orderValues.length > 0 ? totalRevenue / orderValues.length : 0;
+  const minOrderValue = orderValues.length > 0 ? Math.min(...orderValues) : 0;
+  const maxOrderValue = orderValues.length > 0 ? Math.max(...orderValues) : 0;
+  
+  // Order value ranges
+  const valueRanges = {
+    under100: orderValues.filter(v => v < 100).length,
+    between100500: orderValues.filter(v => v >= 100 && v < 500).length,
+    between5001000: orderValues.filter(v => v >= 500 && v < 1000).length,
+    over1000: orderValues.filter(v => v >= 1000).length
+  };
+  
+  // Daily order trends
+  const dailyOrders = new Map<string, { orders: number; revenue: number }>();
+  for (const order of completedOrders) {
+    const date = order.created_at.slice(0, 10);
+    const existing = dailyOrders.get(date) || { orders: 0, revenue: 0 };
+    existing.orders += 1;
+    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    dailyOrders.set(date, existing);
+  }
+  
+  const dailyTrends = Array.from(dailyOrders.entries())
+    .map(([date, data]) => ({ date, ...data }))
+    .sort((a, b) => a.date.localeCompare(b.date));
+  
+  // Order processing time analysis
+  const processingTimes = completedOrders
+    .filter(o => o.updated_at)
+    .map(o => {
+      const created = new Date(o.created_at);
+      const updated = new Date(o.updated_at);
+      return Math.floor((updated.getTime() - created.getTime()) / (1000 * 60 * 60 * 24)); // days
+    });
+  
+  const avgProcessingTime = processingTimes.length > 0 ? 
+    processingTimes.reduce((sum, time) => sum + time, 0) / processingTimes.length : 0;
+  
+  // Channel analysis
+  const channelDistribution = new Map<string, { orders: number; revenue: number }>();
+  for (const order of completedOrders) {
+    const channel = (order as any).channel || 'online';
+    const existing = channelDistribution.get(channel) || { orders: 0, revenue: 0 };
+    existing.orders += 1;
+    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    channelDistribution.set(channel, existing);
+  }
+  
+  // Payment method analysis
+  const paymentMethodDistribution = new Map<string, { orders: number; revenue: number }>();
+  for (const order of completedOrders) {
+    const method = (order as any).payment_method || 'unknown';
+    const existing = paymentMethodDistribution.get(method) || { orders: 0, revenue: 0 };
+    existing.orders += 1;
+    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    paymentMethodDistribution.set(method, existing);
+  }
+  
+  // Recent orders
+  const recentOrders = ordersInRange
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 10);
+  
+  return {
+    summary: {
+      totalOrders: ordersInRange.length,
+      completedOrders: completedOrders.length,
+      completionRate: ordersInRange.length > 0 ? (completedOrders.length / ordersInRange.length) * 100 : 0,
+      totalRevenue,
+      avgOrderValue,
+      minOrderValue,
+      maxOrderValue,
+      avgProcessingTime,
+      pendingOrders: ordersInRange.filter(o => o.status === 'pending').length,
+      cancelledOrders: ordersInRange.filter(o => o.status === 'cancelled').length
+    },
+    statusDistribution: Array.from(statusDistribution.entries()).map(([status, count]) => ({ status, count })),
+    paymentStatusDistribution: Array.from(paymentStatusDistribution.entries()).map(([status, count]) => ({ status, count })),
+    valueRanges,
+    dailyTrends,
+    channelDistribution: Array.from(channelDistribution.entries()).map(([channel, data]) => ({ channel, ...data })),
+    paymentMethodDistribution: Array.from(paymentMethodDistribution.entries()).map(([method, data]) => ({ method, ...data })),
+    recentOrders
   };
 }
 
