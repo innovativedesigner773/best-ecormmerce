@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../components/ui/card';
 import { Button } from '../../components/ui/button';
-import { Badge } from '../../components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../../components/ui/tabs';
 import { 
   BarChart3, 
@@ -9,22 +8,12 @@ import {
   Package, 
   ShoppingCart, 
   TrendingUp, 
-  AlertCircle,
-  CheckCircle,
   Clock,
-  Database,
-  TestTube,
-  Zap,
-  Activity,
-  Bell,
-  RefreshCw
+  Bell
 } from 'lucide-react';
 import D3TimeSeries from '../../components/ui/D3TimeSeries';
 
-// Import test components
-import DatabaseFixVerification from '../../components/admin/DatabaseFixVerification';
-import RealTimeRegistrationTest from '../../components/admin/RealTimeRegistrationTest';
-import QuickRegistrationTest from '../../components/admin/QuickRegistrationTest';
+// Import admin components
 import StockNotificationManager from '../../components/admin/StockNotificationManager';
 import AdvancedAnalytics from '../../components/admin/AdvancedAnalytics';
 
@@ -49,6 +38,7 @@ interface RecentActivity {
   user: string;
   time: string;
   type: 'user' | 'order' | 'product';
+  createdAt: string;
 }
 
 interface TopProduct {
@@ -61,7 +51,7 @@ interface TopProduct {
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [loading, setLoading] = useState(true);
-  const [range, setRange] = useState<TimeRange>('1M');
+  const [range, setRange] = useState<TimeRange>('1W');
   const [stats, setStats] = useState<DashboardStats>({
     totalUsers: 0,
     totalProducts: 0,
@@ -189,7 +179,8 @@ export default function AdminDashboard() {
             action: 'New user registered',
             user: `${user.first_name} ${user.last_name}`,
             time: formatTimeAgo(user.created_at),
-            type: 'user'
+            type: 'user',
+            createdAt: user.created_at
           });
         });
       }
@@ -218,13 +209,14 @@ export default function AdminDashboard() {
             action: `Order ${order.status}`,
             user: customerName,
             time: formatTimeAgo(order.created_at),
-            type: 'order'
+            type: 'order',
+            createdAt: order.created_at
           });
         });
       }
 
-      // Sort activities by time and take the most recent 4
-      activities.sort((a, b) => new Date(b.time).getTime() - new Date(a.time).getTime());
+      // Sort activities by timestamp (desc) and take the most recent 4
+      activities.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
       setRecentActivity(activities.slice(0, 4));
 
       console.log('✅ Recent activity fetched successfully');
@@ -254,9 +246,10 @@ export default function AdminDashboard() {
       const productSales = new Map<string, { name: string; sales: number; revenue: number }>();
       
       orderItems?.forEach(item => {
-        if (item.product_id && item.product) {
+        if (item.product_id && (item as any).product) {
+          const productName = (item as any).product?.name || 'Product';
           const existing = productSales.get(item.product_id) || { 
-            name: item.product.name, 
+            name: productName, 
             sales: 0, 
             revenue: 0 
           };
@@ -374,28 +367,9 @@ export default function AdminDashboard() {
                 Welcome back! Here's what's happening with Best Brightness today.
               </p>
             </div>
-            <div className="flex items-center space-x-3">
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={refreshData}
-                disabled={loading}
-                className="flex items-center gap-2"
-              >
-                <RefreshCw className={`h-4 w-4 ${loading ? 'animate-spin' : ''}`} />
-                Refresh
-              </Button>
-              <Badge variant="secondary" className="px-3 py-1">
-                <Activity className="h-4 w-4 mr-1" />
-                {loading ? 'Loading...' : 'System Healthy'}
-              </Badge>
-            </div>
+          {/* Refresh button and System Healthy badge removed */}
           </div>
-          {error && (
-            <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-700 text-sm">{error}</p>
-            </div>
-          )}
+          {/* Error banner removed */}
         </div>
 
         {/* Main Content Tabs */}
@@ -405,10 +379,7 @@ export default function AdminDashboard() {
               <BarChart3 className="h-4 w-4" />
               Overview
             </TabsTrigger>
-            <TabsTrigger value="testing" className="flex items-center gap-2">
-              <TestTube className="h-4 w-4" />
-              Registration Testing
-            </TabsTrigger>
+            {/* Registration Testing tab removed */}
             <TabsTrigger value="analytics" className="flex items-center gap-2">
               <BarChart3 className="h-4 w-4" />
               Advanced Analytics
@@ -417,10 +388,7 @@ export default function AdminDashboard() {
               <Bell className="h-4 w-4" />
               Stock Notifications
             </TabsTrigger>
-            <TabsTrigger value="database" className="flex items-center gap-2">
-              <Database className="h-4 w-4" />
-              Database Status
-            </TabsTrigger>
+            {/* Database Status tab removed */}
           </TabsList>
 
           {/* Overview Tab */}
@@ -1107,55 +1075,7 @@ export default function AdminDashboard() {
             )}
           </TabsContent>
 
-          {/* Registration Testing Tab */}
-          <TabsContent value="testing" className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <div className="mb-6">
-                <h2 className="text-2xl text-[#09215F] mb-2">Registration System Testing</h2>
-                <p className="text-[#6C757D]">
-                  Test and verify that the database fix has resolved the "Database error saving new user" issue.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Real-Time Test */}
-                <div className="space-y-4">
-                  <RealTimeRegistrationTest />
-                </div>
-
-                {/* Quick Test */}
-                <div className="space-y-4">
-                  <QuickRegistrationTest />
-                </div>
-              </div>
-
-              {/* Instructions */}
-              <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl">
-                <h3 className="font-medium text-green-900 mb-3 flex items-center gap-2">
-                  <Zap className="h-5 w-5" />
-                  Quick Testing Guide
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-green-800">
-                  <div>
-                    <h4 className="font-medium mb-2">Before Testing:</h4>
-                    <ol className="list-decimal list-inside space-y-1">
-                      <li>Run COMPREHENSIVE_DATABASE_FIX.sql in Supabase</li>
-                      <li>Wait for all ✅ success messages</li>
-                      <li>Clear browser cache completely</li>
-                    </ol>
-                  </div>
-                  <div>
-                    <h4 className="font-medium mb-2">During Testing:</h4>
-                    <ol className="list-decimal list-inside space-y-1">
-                      <li>Use "Real-Time Test" for comprehensive testing</li>
-                      <li>Use "Quick Test" for simple verification</li>
-                      <li>Check results show ✅ success indicators</li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </TabsContent>
+          {/* Registration Testing content removed */}
 
           {/* Advanced Analytics Tab */}
           <TabsContent value="analytics" className="space-y-6">
@@ -1178,58 +1098,7 @@ export default function AdminDashboard() {
             </div>
           </TabsContent>
 
-          {/* Database Status Tab */}
-          <TabsContent value="database" className="space-y-6">
-            <div className="bg-white rounded-2xl shadow-lg p-6">
-              <div className="mb-6">
-                <h2 className="text-2xl text-[#09215F] mb-2">Database Status & Verification</h2>
-                <p className="text-[#6C757D]">
-                  Monitor database health and verify that all components are properly configured.
-                </p>
-              </div>
-
-              <DatabaseFixVerification />
-
-              {/* Database Health Indicators */}
-              <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
-                <Card className="bg-green-50 border-green-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <CheckCircle className="h-5 w-5 text-green-600" />
-                      <div>
-                        <h4 className="text-sm font-medium text-green-900">Database Schema</h4>
-                        <p className="text-xs text-green-700">user_profiles table ready</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-green-50 border-green-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <Activity className="h-5 w-5 text-green-600" />
-                      <div>
-                        <h4 className="text-sm font-medium text-green-900">Trigger Function</h4>
-                        <p className="text-xs text-green-700">handle_new_user active</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card className="bg-yellow-50 border-yellow-200">
-                  <CardContent className="p-4">
-                    <div className="flex items-center gap-3">
-                      <AlertCircle className="h-5 w-5 text-yellow-600" />
-                      <div>
-                        <h4 className="text-sm font-medium text-yellow-900">RLS Policies</h4>
-                        <p className="text-xs text-yellow-700">INSERT policy configured</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            </div>
-          </TabsContent>
+          {/* Database Status content removed */}
         </Tabs>
       </div>
     </div>

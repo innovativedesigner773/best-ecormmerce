@@ -330,7 +330,7 @@ export function PromotionsManagement() {
       case 'percentage':
         return `${promotion.value}% OFF`;
       case 'fixed_amount':
-        return `$${promotion.value} OFF`;
+        return `R{promotion.value} OFF`;
       case 'free_shipping':
         return 'FREE SHIPPING';
       case 'buy_x_get_y':
@@ -697,7 +697,7 @@ export function PromotionsManagement() {
                         />
                         <div>
                           <div className="text-sm font-medium">{product.name}</div>
-                          <div className="text-xs text-gray-500">SKU: {product.sku} | ${product.price}</div>
+                          <div className="text-xs text-gray-500">SKU: {product.sku} | {product.price}</div>
                         </div>
                       </label>
                     ))}
@@ -816,7 +816,7 @@ export function PromotionsManagement() {
                 </div>
                 {promotion.minimum_order_amount > 0 && (
                   <div className="text-sm text-gray-600">
-                    Min. order: ${promotion.minimum_order_amount}
+                    Min. order: {promotion.minimum_order_amount}
                   </div>
                 )}
               </div>

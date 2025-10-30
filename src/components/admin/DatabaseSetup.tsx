@@ -287,74 +287,7 @@ export default function DatabaseSetupComponent() {
         </CardContent>
       </Card>
 
-      {/* Database Health Status */}
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Database className="w-5 h-5 text-[#4682B4]" />
-            Database Status
-          </CardTitle>
-          <CardDescription>
-            Current state of the Best Brightness database
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {dbHealth ? (
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="text-sm text-gray-600">Tables</div>
-                <div className="text-2xl font-medium text-gray-900">
-                  {dbHealth.tableCount}/12
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {dbHealth.missingTables.length > 0 
-                    ? `${dbHealth.missingTables.length} missing`
-                    : 'All tables present'
-                  }
-                </div>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="text-sm text-gray-600">Demo Data</div>
-                <div className="text-2xl font-medium text-gray-900">
-                  {dbHealth.hasData ? 'Yes' : 'No'}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {dbHealth.hasData ? 'Sample products loaded' : 'No demo data found'}
-                </div>
-              </div>
-              
-              <div className="bg-gray-50 p-4 rounded-lg">
-                <div className="text-sm text-gray-600">Status</div>
-                <div className="text-2xl font-medium text-gray-900">
-                  {dbHealth.isHealthy ? 'Ready' : 'Setup Needed'}
-                </div>
-                <div className="text-xs text-gray-500 mt-1">
-                  {dbHealth.isHealthy ? 'Database operational' : 'Requires initialization'}
-                </div>
-              </div>
-            </div>
-          ) : (
-            <div className="text-center py-8">
-              <Database className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600">Click refresh to check database status</p>
-            </div>
-          )}
-
-          {dbHealth?.missingTables && dbHealth.missingTables.length > 0 && (
-            <div className="mt-4">
-              <h4 className="text-sm font-medium text-gray-900 mb-2">Missing Tables:</h4>
-              <div className="flex flex-wrap gap-2">
-                {dbHealth.missingTables.map((table) => (
-                  <Badge key={table} variant="outline" className="text-red-600 border-red-200">
-                    {table}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-          )}
-        </CardContent>
-      </Card>
+      {/* Database Health Status removed */}
 
       {/* Setup Progress */}
       {isSetupRunning && (

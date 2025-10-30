@@ -14,7 +14,6 @@ import Footer from './components/common/Footer';
 import ErrorBoundary from './components/common/ErrorBoundary';
 import { OptimizedErrorBoundary } from './components/common/OptimizedErrorBoundary';
 import { SystemThemeProvider } from './components/common/SystemThemeProvider';
-import DatabaseStatusBanner from './components/common/DatabaseStatusBanner';
 import ServerStatusBanner from './components/common/ServerStatusBanner';
 import OfflineIndicator from './components/common/OfflineIndicator';
 import AppLoading from './components/common/AppLoading';
@@ -101,7 +100,6 @@ function AppContent() {
           <Navbar />
           <OfflineIndicator />
           <ServerStatusBanner />
-          <DatabaseStatusBanner />
           
           <main className="min-h-screen">
             <AppRoutes />
