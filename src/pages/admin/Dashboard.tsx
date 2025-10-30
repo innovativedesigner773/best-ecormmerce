@@ -30,7 +30,7 @@ import AdvancedAnalytics from '../../components/admin/AdvancedAnalytics';
 
 // Import Supabase client
 import { supabase } from '../../lib/supabase';
-import { getSummary, getSalesTimeSeries, getBestSellers, getMonthlyStock50Reached, getRevenueBreakdown, getInventoryKpis, getSalesByCategory, getTopCustomers, getBusinessValue, type TimeRange } from '../../services/analyticsService';
+import { getSummary, getSalesTimeSeries, getBestSellers, getMonthlyStock50Reached, getRevenueBreakdown, getInventoryKpis, getSalesByCategory, getTopCustomers, getBusinessValue, getSalesMix, getProductAnalytics, getUserAnalytics, getOrderAnalytics, type TimeRange } from '../../services/analyticsService';
 
 // Data interfaces
 interface DashboardStats {
@@ -83,6 +83,10 @@ export default function AdminDashboard() {
   const [salesByCat, setSalesByCat] = useState<Array<{ categoryId: string; categoryName: string; revenue: number; orders: number; items: number }>>([]);
   const [topCustomers, setTopCustomers] = useState<Array<{ id: string; name: string; email: string; total: number; orders: number }>>([]);
   const [biz, setBiz] = useState<{ aov: number; itemsPerOrder: number; repeatRate: number; grossMargin: number; inventoryValueRetail: number; inventoryValueCost: number; sellThrough: number; refundRate: number; revenue: number; ordersCount: number; itemsCount: number } | null>(null);
+  const [mix, setMix] = useState<{ channel: Array<{ name: string; revenue: number; orders: number }>; payments: Array<{ name: string; revenue: number; orders: number }>; newVsReturning: { new: { revenue: number; orders: number }; returning: { revenue: number; orders: number } }; totals: { revenue: number; orders: number } } | null>(null);
+  const [productAnalytics, setProductAnalytics] = useState<any>(null);
+  const [userAnalytics, setUserAnalytics] = useState<any>(null);
+  const [orderAnalytics, setOrderAnalytics] = useState<any>(null);
 
   // Fetch dashboard statistics
   const fetchDashboardStats = async () => {
@@ -314,10 +318,14 @@ export default function AdminDashboard() {
         getInventoryKpis(),
         getSalesByCategory(range),
         getTopCustomers(range, 5),
-        getBusinessValue(range)
+        getBusinessValue(range),
+        getSalesMix(range),
+        getProductAnalytics(range),
+        getUserAnalytics(range),
+        getOrderAnalytics(range)
       ]);
 
-      const [, [summary, ts, qty, rev, stock, rbd, inv, cat, customers, business]] = await Promise.all([basics, analytics]);
+      const [, [summary, ts, qty, rev, stock, rbd, inv, cat, customers, business, mixData, productData, userData, orderData]] = await Promise.all([basics, analytics]);
       // Merge KPIs for orders/sales, keep users/products from base stats to avoid unintended range-scoping
       setStats(prev => ({
         ...prev,
@@ -335,6 +343,10 @@ export default function AdminDashboard() {
       setSalesByCat(cat as any);
       setTopCustomers(customers as any);
       setBiz(business as any);
+      setMix(mixData as any);
+      setProductAnalytics(productData as any);
+      setUserAnalytics(userData as any);
+      setOrderAnalytics(orderData as any);
     } catch (error) {
       console.error('❌ Error refreshing data:', error);
       setError('Failed to refresh dashboard data');
@@ -745,6 +757,76 @@ export default function AdminDashboard() {
               </Card>
             </div>
             
+            {/* Sales Mix (Channel, Payment, New vs Returning) */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle>Sales by Channel</CardTitle>
+                  <CardDescription>Share of completed orders</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {mix && mix.channel.length ? (
+                    <div className="space-y-3">
+                      {mix.channel.map(row => (
+                        <div key={row.name} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                          <div className="text-sm text-[#09215F] capitalize">{row.name}</div>
+                          <div className="text-xs text-[#6C757D]">{row.orders} orders</div>
+                          <div className="text-sm font-semibold text-[#09215F]">R{row.revenue.toLocaleString()}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-[#6C757D] text-sm">No data</div>
+                  )}
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle>Payment Methods</CardTitle>
+                  <CardDescription>Completed orders by method</CardDescription>
+                </CardHeader>
+                <CardContent>
+                  {mix && mix.payments.length ? (
+                    <div className="space-y-3">
+                      {mix.payments.map(row => (
+                        <div key={row.name} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                          <div className="text-sm text-[#09215F] capitalize">{row.name}</div>
+                          <div className="text-xs text-[#6C757D]">{row.orders} orders</div>
+                          <div className="text-sm font-semibold text-[#09215F]">R{row.revenue.toLocaleString()}</div>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="text-[#6C757D] text-sm">No data</div>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>New vs Returning Customers</CardTitle>
+                <CardDescription>Within the selected period</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {mix ? (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                      <div className="text-[#6C757D]">New Customers</div>
+                      <div className="text-[#09215F] font-semibold">R{mix.newVsReturning.new.revenue.toLocaleString()} • {mix.newVsReturning.new.orders} orders</div>
+                    </div>
+                    <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                      <div className="text-[#6C757D]">Returning Customers</div>
+                      <div className="text-[#09215F] font-semibold">R{mix.newVsReturning.returning.revenue.toLocaleString()} • {mix.newVsReturning.returning.orders} orders</div>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-[#6C757D] text-sm">No data</div>
+                )}
+              </CardContent>
+            </Card>
+
             {/* Business Value KPIs */}
             <Card>
               <CardHeader>
@@ -836,6 +918,193 @@ export default function AdminDashboard() {
                 )}
               </CardContent>
             </Card>
+
+            {/* Comprehensive Product Analytics */}
+            {productAnalytics && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Product Performance Summary</CardTitle>
+                    <CardDescription>Key metrics from products table</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Total Products</div>
+                        <div className="text-[#09215F] font-semibold">{productAnalytics.summary.totalProducts}</div>
+                      </div>
+                      <div className="p-3 bg-[#E8F5E9] rounded-lg">
+                        <div className="text-[#2E7D32]">Active Products</div>
+                        <div className="text-[#1B5E20] font-semibold">{productAnalytics.summary.activeProducts}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFF3E0] rounded-lg">
+                        <div className="text-[#EF6C00]">Low Stock (≤5)</div>
+                        <div className="text-[#E65100] font-semibold">{productAnalytics.summary.lowStockCount}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFEBEE] rounded-lg">
+                        <div className="text-[#C62828]">Out of Stock</div>
+                        <div className="text-[#B71C1C] font-semibold">{productAnalytics.summary.outOfStockCount}</div>
+                      </div>
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Inventory Value</div>
+                        <div className="text-[#09215F] font-semibold">R{productAnalytics.summary.totalInventoryValue.toLocaleString()}</div>
+                      </div>
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Avg Profit Margin</div>
+                        <div className="text-[#09215F] font-semibold">{productAnalytics.summary.avgProfitMargin.toFixed(1)}%</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Top Performing Products</CardTitle>
+                    <CardDescription>By revenue in selected period</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {productAnalytics.topRevenue.slice(0, 5).map((product: any, index: number) => (
+                        <div key={product.id} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                          <div className="flex items-center space-x-3">
+                            <div className="bg-[#97CF50] text-white rounded-full w-8 h-8 flex items-center justify-center text-sm">#{index + 1}</div>
+                            <div>
+                              <p className="text-sm text-[#09215F]">{product.name}</p>
+                              <p className="text-xs text-[#6C757D]">{product.category} • {product.totalSold} sold</p>
+                            </div>
+                          </div>
+                          <div className="text-sm font-semibold text-[#09215F]">R{product.totalRevenue.toLocaleString()}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* User Analytics */}
+            {userAnalytics && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>User Growth & Engagement</CardTitle>
+                    <CardDescription>Key metrics from user_profiles table</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Total Users</div>
+                        <div className="text-[#09215F] font-semibold">{userAnalytics.summary.totalUsers}</div>
+                      </div>
+                      <div className="p-3 bg-[#E8F5E9] rounded-lg">
+                        <div className="text-[#2E7D32]">New Users</div>
+                        <div className="text-[#1B5E20] font-semibold">{userAnalytics.summary.newUsers}</div>
+                      </div>
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Growth Rate</div>
+                        <div className="text-[#09215F] font-semibold">{userAnalytics.summary.userGrowthRate.toFixed(1)}%</div>
+                      </div>
+                      <div className="p-3 bg-[#E8F5E9] rounded-lg">
+                        <div className="text-[#2E7D32]">Active Customers</div>
+                        <div className="text-[#1B5E20] font-semibold">{userAnalytics.summary.activeCustomers}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFF3E0] rounded-lg">
+                        <div className="text-[#EF6C00]">At Risk</div>
+                        <div className="text-[#E65100] font-semibold">{userAnalytics.summary.atRiskCustomers}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFEBEE] rounded-lg">
+                        <div className="text-[#C62828]">Inactive</div>
+                        <div className="text-[#B71C1C] font-semibold">{userAnalytics.summary.inactiveCustomers}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>User Roles Distribution</CardTitle>
+                    <CardDescription>Breakdown by user roles</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      {userAnalytics.usersByRole.map((role: any) => (
+                        <div key={role.role} className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                          <div className="text-sm text-[#09215F] capitalize">{role.role}</div>
+                          <div className="text-sm font-semibold text-[#09215F]">{role.count} users</div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
+
+            {/* Order Analytics */}
+            {orderAnalytics && (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Order Performance</CardTitle>
+                    <CardDescription>Key metrics from orders table</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-2 gap-4 text-sm">
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Total Orders</div>
+                        <div className="text-[#09215F] font-semibold">{orderAnalytics.summary.totalOrders}</div>
+                      </div>
+                      <div className="p-3 bg-[#E8F5E9] rounded-lg">
+                        <div className="text-[#2E7D32]">Completed</div>
+                        <div className="text-[#1B5E20] font-semibold">{orderAnalytics.summary.completedOrders}</div>
+                      </div>
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Completion Rate</div>
+                        <div className="text-[#09215F] font-semibold">{orderAnalytics.summary.completionRate.toFixed(1)}%</div>
+                      </div>
+                      <div className="p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-[#6C757D]">Avg Order Value</div>
+                        <div className="text-[#09215F] font-semibold">R{orderAnalytics.summary.avgOrderValue.toLocaleString()}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFF3E0] rounded-lg">
+                        <div className="text-[#EF6C00]">Pending</div>
+                        <div className="text-[#E65100] font-semibold">{orderAnalytics.summary.pendingOrders}</div>
+                      </div>
+                      <div className="p-3 bg-[#FFEBEE] rounded-lg">
+                        <div className="text-[#C62828]">Cancelled</div>
+                        <div className="text-[#B71C1C] font-semibold">{orderAnalytics.summary.cancelledOrders}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                <Card>
+                  <CardHeader>
+                    <CardTitle>Order Value Distribution</CardTitle>
+                    <CardDescription>Orders by value ranges</CardDescription>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-sm text-[#09215F]">Under R100</div>
+                        <div className="text-sm font-semibold text-[#09215F]">{orderAnalytics.valueRanges.under100}</div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-sm text-[#09215F]">R100 - R500</div>
+                        <div className="text-sm font-semibold text-[#09215F]">{orderAnalytics.valueRanges.between100500}</div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-sm text-[#09215F]">R500 - R1000</div>
+                        <div className="text-sm font-semibold text-[#09215F]">{orderAnalytics.valueRanges.between5001000}</div>
+                      </div>
+                      <div className="flex items-center justify-between p-3 bg-[#F8F9FA] rounded-lg">
+                        <div className="text-sm text-[#09215F]">Over R1000</div>
+                        <div className="text-sm font-semibold text-[#09215F]">{orderAnalytics.valueRanges.over1000}</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            )}
           </TabsContent>
 
           {/* Registration Testing Tab */}
