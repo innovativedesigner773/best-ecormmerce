@@ -355,6 +355,7 @@ export default function OrderHistory() {
                         </h3>
                         <p className="text-[#09215F]/60 font-medium mt-1">
                           Placed on {new Date(order.created_at).toLocaleDateString('en-ZA', {
+                            timeZone: 'Africa/Johannesburg',
                             year: 'numeric',
                             month: 'long',
                             day: 'numeric',
@@ -453,6 +454,7 @@ export default function OrderHistory() {
                     <h3 className="font-bold text-[#09215F] text-lg">{selectedOrder.order_number}</h3>
                     <p className="text-sm text-[#09215F]/70 font-medium mt-1">
                       {new Date(selectedOrder.created_at).toLocaleDateString('en-ZA', {
+                        timeZone: 'Africa/Johannesburg',
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric',

@@ -284,3 +284,4 @@ DO $$
 BEGIN
     RAISE NOTICE '🔧 Registration fix completed. Try registering a new user now!';
 END $$;
+

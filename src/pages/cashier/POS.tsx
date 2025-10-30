@@ -3,7 +3,6 @@ import {
   Scan,
   ShoppingCart,
   CreditCard,
-  Percent,
   Users,
   Calculator,
   Trash2,
@@ -65,7 +64,7 @@ type CartItem = {
 type OnScreenKeyboardProps = {
   onKeyPress: (key: string) => void;
   onClose: () => void;
-  target: 'barcode' | 'customer' | 'payment' | 'manual';
+  target: 'barcode' | 'customer' | 'payment';
 };
 
 type Customer = { name: string; email: string; points: number } | null;
@@ -77,7 +76,7 @@ export default function EnhancedPOS() {
   const [barcodeInput, setBarcodeInput] = useState<string>('');
   const [customerSearch, setCustomerSearch] = useState<string>('');
   const [showKeyboard, setShowKeyboard] = useState<boolean>(false);
-  const [keyboardTarget, setKeyboardTarget] = useState<'barcode' | 'customer' | 'payment' | 'manual'>('barcode');
+  const [keyboardTarget, setKeyboardTarget] = useState<'barcode' | 'customer' | 'payment'>('barcode');
   const [discountPercent, setDiscountPercent] = useState<number>(0);
   const [showDiscountModal, setShowDiscountModal] = useState<boolean>(false);
   const [showPaymentModal, setShowPaymentModal] = useState<boolean>(false);
@@ -449,7 +448,7 @@ export default function EnhancedPOS() {
         <div className="bg-white rounded-2xl shadow-2xl p-6 max-w-2xl w-full mx-4">
           <div className="flex justify-between items-center mb-6">
             <h3 className="text-xl font-bold text-[#09215F]">
-              {target === 'barcode' ? 'Enter Barcode' : target === 'customer' ? 'Customer Search' : 'Manual Entry'}
+              {target === 'barcode' ? 'Enter Barcode' : target === 'customer' ? 'Customer Search' : 'Payment Entry'}
             </h3>
             <button
               onClick={onClose}
@@ -745,23 +744,7 @@ export default function EnhancedPOS() {
                 </div>
               )}
 
-              {/* Quick Actions */}
-              <div className="space-y-3 mb-6">
-                <button
-                  onClick={() => setShowDiscountModal(true)}
-                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#97CF50]/30 rounded-xl hover:bg-[#97CF50]/10 transition-all duration-300 text-[#09215F] font-semibold"
-                >
-                  <Percent className="h-5 w-5 mr-2" />
-                  Apply Discount ({discountPercent}%)
-                </button>
-                <button
-                  onClick={() => openKeyboard('manual')}
-                  className="w-full flex items-center justify-center px-4 py-3 border-2 border-[#97CF50]/30 rounded-xl hover:bg-[#97CF50]/10 transition-all duration-300 text-[#09215F] font-semibold"
-                >
-                  <Calculator className="h-5 w-5 mr-2" />
-                  Manual Entry
-                </button>
-              </div>
+              {/* Quick Actions removed: discount and manual entry per requirements */}
 
               {/* Total Display */}
               <div className="border-t-2 border-[#97CF50]/20 pt-4 mb-6 space-y-2">
@@ -819,48 +802,7 @@ export default function EnhancedPOS() {
           </div>
         </div>
 
-        {/* Discount Modal */}
-        {showDiscountModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full mx-4">
-              <h3 className="text-2xl font-bold text-[#09215F] mb-6">Apply Discount</h3>
-              <div className="mb-6">
-                <label className="block text-sm font-medium text-[#09215F] mb-2">Discount Percentage</label>
-                <input
-                  type="number"
-                  value={discountPercent}
-                  onChange={(e) => setDiscountPercent(Number(e.target.value))}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent"
-                  placeholder="Enter discount percentage..."
-                  min="0"
-                  max="100"
-                />
-              </div>
-              <div className="flex space-x-4">
-                <button
-                  onClick={() => setShowDiscountModal(false)}
-                  className="flex-1 bg-gray-200 text-[#09215F] py-3 px-4 rounded-xl hover:bg-gray-300 transition-all duration-300 font-semibold"
-                >
-                  Cancel
-                </button>
-                <button
-                  onClick={() => {
-                    setShowDiscountModal(false);
-                    if (discountPercent > 0) {
-                      toast.success('Discount Applied', {
-                        description: `${discountPercent}% discount applied (R${discountAmount.toFixed(2)} off)`,
-                        duration: 3000,
-                      });
-                    }
-                  }}
-                  className="flex-1 bg-[#97CF50] text-white py-3 px-4 rounded-xl hover:bg-[#09215F] transition-all duration-300 font-semibold"
-                >
-                  Apply
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Discount Modal removed per requirements */}
 
         {/* On-Screen Keyboard */}
         {showKeyboard && (

@@ -139,6 +139,7 @@ export class OrderService {
         customer_id: orderData.customer_id,
         customer_email: orderData.customer_email,
         customer_info: orderData.customer_info,
+        channel: orderData.isCashierOrder ? 'pos' : 'online',
         billing_address: orderData.billing_address || (orderData.isCashierOrder ? {
           name: orderData.customer_info?.name || 'POS Customer',
           email: orderData.customer_email,

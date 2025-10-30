@@ -23,6 +23,8 @@ import {
   Eye
 } from 'lucide-react';
 import CashierLayout from '../../components/cashier/CashierLayout';
+import { supabase } from '../../lib/supabase';
+import { getSalesReport } from '../../services/reportsService';
 
 // Custom South African Rand icon component
 const RandIcon = ({ className = "h-8 w-8" }: { className?: string }) => (
@@ -51,36 +53,111 @@ const RandIcon = ({ className = "h-8 w-8" }: { className?: string }) => (
 export default function EnhancedCashierDashboard() {
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
-  const [selectedPeriod, setSelectedPeriod] = useState('today');
-  const [activeStats, setActiveStats] = useState(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<'today' | 'week' | 'month'>('today');
+  const [activeStats, setActiveStats] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [stats, setStats] = useState({
+    salesRevenue: 0,
+    salesChangePct: 0,
+    ordersCount: 0,
+    itemsSold: 0,
+    customersServed: 0,
+    salesAvg: 0,
+    growthPct: 0
+  });
 
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  const statsData = {
-    today: {
-      sales: { value: 'R1,234.56', change: '+8.2%', trend: 'up' },
-      orders: { value: '24', change: '+15.3%', trend: 'up' },
-      items: { value: '89', change: '+12.1%', trend: 'up' },
-      customers: { value: '18', change: '+5.7%', trend: 'up' }
-    },
-    week: {
-      sales: { value: 'R8,945.23', change: '+22.4%', trend: 'up' },
-      orders: { value: '157', change: '+18.9%', trend: 'up' },
-      items: { value: '634', change: '+15.7%', trend: 'up' },
-      customers: { value: '142', change: '+12.3%', trend: 'up' }
-    },
-    month: {
-      sales: { value: 'R34,567.89', change: '-2.1%', trend: 'down' },
-      orders: { value: '892', change: '+5.6%', trend: 'up' },
-      items: { value: '2,847', change: '+8.9%', trend: 'up' },
-      customers: { value: '567', change: '-1.2%', trend: 'down' }
+  function getSince(period: 'today' | 'week' | 'month'): string {
+    const now = new Date();
+    const start = new Date(now);
+    if (period === 'today') {
+      start.setHours(0, 0, 0, 0);
+    } else if (period === 'week') {
+      const day = start.getDay() || 7; // ISO: Monday as 1
+      start.setDate(start.getDate() - (day - 1));
+      start.setHours(0, 0, 0, 0);
+    } else if (period === 'month') {
+      start.setDate(1);
+      start.setHours(0, 0, 0, 0);
     }
-  };
+    return new Date(start.getTime() - start.getTimezoneOffset() * 60000).toISOString();
+  }
 
-  const currentStats = statsData[selectedPeriod];
+  useEffect(() => {
+    const fetchStats = async () => {
+      setLoading(true);
+      setError(null);
+      try {
+        // Sales aggregates via shared logic
+        const sales = await getSalesReport(selectedPeriod);
+
+        // Orders for POS in period with allowed statuses
+        const since = getSince(selectedPeriod);
+        const allowed = ['confirmed','processing','shipped','delivered','completed','paid'];
+        let { data: orders, error: ordersErr } = await supabase
+          .from('orders')
+          .select('id, customer_id, customer_email')
+          .eq('channel', 'pos')
+          .gte('created_at', since)
+          .in('status', allowed);
+        // Fallback if 'channel' column does not exist (older schema)
+        if (ordersErr) {
+          const msg = (ordersErr as any)?.message?.toLowerCase?.() || '';
+          const details = (ordersErr as any)?.details?.toLowerCase?.() || '';
+          if (msg.includes('column') && msg.includes('channel')) {
+            const fallback = await supabase
+              .from('orders')
+              .select('id, customer_id, customer_email')
+              .contains('payment_details', { pos_location: 'Store POS' })
+              .gte('created_at', since)
+              .in('status', allowed);
+            orders = fallback.data as any;
+            ordersErr = fallback.error as any;
+          }
+        }
+        if (ordersErr) throw ordersErr;
+        const orderIds = (orders || []).map((o: any) => o.id);
+
+        // Items sold from order_items
+        let itemsSold = 0;
+        if (orderIds.length > 0) {
+          const { data: items, error: itemsErr } = await supabase
+            .from('order_items')
+            .select('quantity, order_id')
+            .in('order_id', orderIds);
+          if (itemsErr) throw itemsErr;
+          itemsSold = (items || []).reduce((s, it) => s + Number(it.quantity || 0), 0);
+        }
+
+        // Customers served: distinct by customer_id or fallback to customer_email
+        const customerKeys = new Set<string>();
+        (orders || []).forEach(o => {
+          const key = o.customer_id || o.customer_email || '';
+          if (key) customerKeys.add(key);
+        });
+
+        setStats({
+          salesRevenue: Number(sales.total || 0),
+          salesChangePct: Number(sales.growth || 0),
+          ordersCount: (orders || []).length,
+          itemsSold,
+          customersServed: customerKeys.size,
+          salesAvg: Number(sales.avgTransaction || 0),
+          growthPct: Number(sales.growth || 0)
+        });
+      } catch (e: any) {
+        setError(e?.message || 'Failed to load stats');
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStats();
+  }, [selectedPeriod]);
 
   const recentTransactions = [
     { id: 1, customer: 'Clean Home Restaurant', amount: 'R845.99', time: '2 min ago', items: 8, status: 'completed' },
@@ -149,10 +226,10 @@ export default function EnhancedCashierDashboard() {
         <div className="mb-6">
           <div className="backdrop-blur-xl bg-white/80 border border-white/20 rounded-2xl shadow-lg p-2 inline-block">
             <div className="flex space-x-1">
-              {[
-                { key: 'today', label: 'Today' },
-                { key: 'week', label: 'This Week' },
-                { key: 'month', label: 'This Month' }
+              {[ 
+                { key: 'today' as const, label: 'Today' },
+                { key: 'week' as const, label: 'This Week' },
+                { key: 'month' as const, label: 'This Month' }
               ].map((period) => (
                 <button
                   key={period.key}
@@ -180,20 +257,20 @@ export default function EnhancedCashierDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-[#09215F]/80">Sales Revenue</p>
-                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.sales.value}</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">R{stats.salesRevenue.toLocaleString('en-ZA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-green-500 to-green-600 text-white shadow-lg">
                 <RandIcon className="h-8 w-8" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              {currentStats.sales.trend === 'up' ? (
+              {stats.salesChangePct >= 0 ? (
                 <ArrowUpRight className="h-5 w-5 text-green-500 mr-2" />
               ) : (
                 <ArrowDownRight className="h-5 w-5 text-red-500 mr-2" />
               )}
-              <span className={`text-sm font-bold ${currentStats.sales.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                {currentStats.sales.change}
+              <span className={`text-sm font-bold ${stats.salesChangePct >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats.salesChangePct.toFixed(1)}%
               </span>
               <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
@@ -212,20 +289,20 @@ export default function EnhancedCashierDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-[#09215F]/80">Orders Processed</p>
-                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.orders.value}</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{stats.ordersCount}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-[#97CF50] to-[#09215F] text-white shadow-lg">
                 <ShoppingCart className="h-8 w-8" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              {currentStats.orders.trend === 'up' ? (
+              {stats.salesChangePct >= 0 ? (
                 <ArrowUpRight className="h-5 w-5 text-green-500 mr-2" />
               ) : (
                 <ArrowDownRight className="h-5 w-5 text-red-500 mr-2" />
               )}
-              <span className={`text-sm font-bold ${currentStats.orders.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                {currentStats.orders.change}
+              <span className={`text-sm font-bold ${stats.salesChangePct >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats.salesChangePct.toFixed(1)}%
               </span>
               <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
@@ -244,20 +321,20 @@ export default function EnhancedCashierDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-[#09215F]/80">Items Sold</p>
-                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.items.value}</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{stats.itemsSold}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 text-white shadow-lg">
                 <Package className="h-8 w-8" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              {currentStats.items.trend === 'up' ? (
+              {stats.salesChangePct >= 0 ? (
                 <ArrowUpRight className="h-5 w-5 text-green-500 mr-2" />
               ) : (
                 <ArrowDownRight className="h-5 w-5 text-red-500 mr-2" />
               )}
-              <span className={`text-sm font-bold ${currentStats.items.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                {currentStats.items.change}
+              <span className={`text-sm font-bold ${stats.salesChangePct >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats.salesChangePct.toFixed(1)}%
               </span>
               <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>
@@ -276,20 +353,20 @@ export default function EnhancedCashierDashboard() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm font-medium text-[#09215F]/80">Customers Served</p>
-                <p className="text-3xl font-bold text-[#09215F] mt-1">{currentStats.customers.value}</p>
+                <p className="text-3xl font-bold text-[#09215F] mt-1">{stats.customersServed}</p>
               </div>
               <div className="p-4 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 text-white shadow-lg">
                 <Users className="h-8 w-8" />
               </div>
             </div>
             <div className="mt-4 flex items-center">
-              {currentStats.customers.trend === 'up' ? (
+              {stats.salesChangePct >= 0 ? (
                 <ArrowUpRight className="h-5 w-5 text-green-500 mr-2" />
               ) : (
                 <ArrowDownRight className="h-5 w-5 text-red-500 mr-2" />
               )}
-              <span className={`text-sm font-bold ${currentStats.customers.trend === 'up' ? 'text-green-600' : 'text-red-600'}`}>
-                {currentStats.customers.change}
+              <span className={`text-sm font-bold ${stats.salesChangePct >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                {stats.salesChangePct.toFixed(1)}%
               </span>
               <span className="text-sm text-[#09215F]/80 ml-2">vs last {selectedPeriod}</span>
             </div>

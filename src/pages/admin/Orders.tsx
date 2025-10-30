@@ -179,7 +179,7 @@ export default function AdminOrders() {
               <div class="title">Order Details</div>
               <div>Status: ${order.status}</div>
               <div>Payment: ${order.payment_status}</div>
-              <div class="muted">Placed: ${new Date(order.created_at).toLocaleString()}</div>
+              <div class="muted">Placed: ${new Date(order.created_at).toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg' })}</div>
             </div>
           </div>
           <div style="margin-top:16px">
@@ -571,7 +571,7 @@ export default function AdminOrders() {
                           {order.status}
                         </span>
                       </td>
-                      <td className="px-4 py-3 text-sm text-gray-700">{new Date(order.created_at).toLocaleDateString()}</td>
+                      <td className="px-4 py-3 text-sm text-gray-700">{new Date(order.created_at).toLocaleDateString('en-ZA', { timeZone: 'Africa/Johannesburg' })}</td>
                       <td className="px-4 py-3 text-right">
                         <Button
                           variant="outline"
@@ -618,7 +618,7 @@ export default function AdminOrders() {
                 <div className="flex items-center justify-between">
                   <div>
                     <h3 className="text-2xl font-bold text-gray-900">Order {selectedOrder.order_number}</h3>
-                    <p className="text-sm text-gray-600">Placed on {new Date(selectedOrder.created_at).toLocaleString()}</p>
+                    <p className="text-sm text-gray-600">Placed on {new Date(selectedOrder.created_at).toLocaleString('en-ZA', { timeZone: 'Africa/Johannesburg' })}</p>
                   </div>
                   <button
                     onClick={() => setIsDetailsOpen(false)}
