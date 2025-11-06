@@ -10,6 +10,7 @@ import ShareableCartNotifications from './ShareableCartNotifications';
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const { user, profile, signOut, isAtLeastRole } = useAuth();
   const { items: favouriteItems } = useFavourites();
   const { notifications } = useStockNotifications();
@@ -22,6 +23,20 @@ export default function Navbar() {
       setIsProfileOpen(false);
     } catch (error) {
       console.error('Sign out error:', error);
+    }
+  };
+
+  const handleSearch = (query: string) => {
+    if (query.trim()) {
+      navigate(`/products?search=${encodeURIComponent(query.trim())}`);
+      setSearchQuery('');
+      setIsMenuOpen(false); // Close mobile menu after search
+    }
+  };
+
+  const handleSearchKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch(searchQuery);
     }
   };
 
@@ -211,9 +226,21 @@ export default function Navbar() {
               <input
                 type="text"
                 placeholder="Search cleaning products..."
-                className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent bg-[#F8F9FA]/50 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 transition-colors text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyPress={handleSearchKeyPress}
+                className="w-full pl-10 pr-10 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] focus:border-transparent bg-[#F8F9FA]/50 dark:bg-gray-800 hover:bg-white dark:hover:bg-gray-700 transition-colors text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
               />
               <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#97CF50] dark:text-green-400" />
+              {searchQuery && (
+                <button
+                  onClick={() => handleSearch(searchQuery)}
+                  className="absolute right-3 top-2.5 text-[#97CF50] dark:text-green-400 hover:text-[#09215F] dark:hover:text-white transition-colors"
+                  title="Search"
+                >
+                  <Search className="h-5 w-5" />
+                </button>
+              )}
             </div>
           </div>
 
@@ -359,9 +386,21 @@ export default function Navbar() {
                   <input
                     type="text"
                     placeholder="Search cleaning products..."
-                    className="w-full pl-10 pr-4 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] bg-[#F8F9FA]/50 dark:bg-gray-800 text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onKeyPress={handleSearchKeyPress}
+                    className="w-full pl-10 pr-10 py-2 border border-[#B0E0E6] dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#97CF50] bg-[#F8F9FA]/50 dark:bg-gray-800 text-[#09215F] dark:text-gray-200 placeholder-gray-500 dark:placeholder-gray-400"
                   />
                   <Search className="absolute left-3 top-2.5 h-5 w-5 text-[#97CF50] dark:text-green-400" />
+                  {searchQuery && (
+                    <button
+                      onClick={() => handleSearch(searchQuery)}
+                      className="absolute right-3 top-2.5 text-[#97CF50] dark:text-green-400 hover:text-[#09215F] dark:hover:text-white transition-colors"
+                      title="Search"
+                    >
+                      <Search className="h-5 w-5" />
+                    </button>
+                  )}
                 </div>
               </div>
 

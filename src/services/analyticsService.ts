@@ -19,7 +19,12 @@ function getRangeStart(range: TimeRange): string {
       start.setFullYear(now.getFullYear() - 1);
       break;
   }
-  return start.toISOString();
+  const isoString = start.toISOString();
+  // Debug logging
+  if (process.env.NODE_ENV === 'development') {
+    console.log('📅 getRangeStart:', { range, start: isoString, now: now.toISOString() });
+  }
+  return isoString;
 }
 
 function isCompletedStatus(status?: string | null): boolean {
@@ -38,7 +43,7 @@ export async function getSummary(range: TimeRange) {
   ] = await Promise.all([
     supabase
       .from("orders")
-      .select("id, total, total_amount, status, created_at")
+      .select("id, total, status, created_at")
       .gte("created_at", since),
     // Avoid head:true to work around some RLS/count header issues
     supabase
@@ -66,8 +71,20 @@ export async function getSummary(range: TimeRange) {
 
   const orders = ordersData || [];
   const completedOrders = orders.filter(o => isCompletedStatus(o.status));
-  const grossSales = orders.reduce((sum, o) => sum + Number(o.total ?? o.total_amount ?? 0), 0);
-  let sales = completedOrders.reduce((sum, o) => sum + Number(o.total ?? o.total_amount ?? 0), 0);
+  const grossSales = orders.reduce((sum, o) => sum + Number(o.total ?? 0), 0);
+  let sales = completedOrders.reduce((sum, o) => sum + Number(o.total ?? 0), 0);
+  
+  // Debug logging
+  if (process.env.NODE_ENV === 'development') {
+    console.log('📊 getSummary:', { 
+      range, 
+      since, 
+      totalOrders: orders.length, 
+      completedOrders: completedOrders.length,
+      grossSales,
+      sales 
+    });
+  }
 
   // Fallback A: if completed sales is 0 but gross > 0, show gross
   if (!sales && grossSales > 0) {
@@ -100,7 +117,7 @@ export async function getSalesTimeSeries(range: TimeRange) {
   const since = getRangeStart(range);
   const { data, error } = await supabase
     .from("orders")
-    .select("id, total, total_amount, status, created_at")
+    .select("id, total, status, created_at")
     .gte("created_at", since)
     .order("created_at", { ascending: true });
   if (error) throw error;
@@ -112,7 +129,7 @@ export async function getSalesTimeSeries(range: TimeRange) {
     const d = new Date(r.created_at);
     const key = d.toISOString().slice(0, 10);
     const entry = map.get(key) || { date: key, revenue: 0, orders: 0 };
-    entry.revenue += Number(r.total ?? r.total_amount ?? 0);
+    entry.revenue += Number(r.total ?? 0);
     entry.orders += 1;
     map.set(key, entry);
   }
@@ -239,7 +256,7 @@ export async function getRevenueBreakdown(range: TimeRange) {
   // Orders in range
   const { data: orders, error } = await supabase
     .from('orders')
-    .select('id, status, subtotal, tax_amount, shipping_amount, discount_amount, total, total_amount, created_at')
+    .select('id, status, subtotal, tax_amount, shipping_amount, discount_amount, total, created_at')
     .gte('created_at', since);
   if (error) throw error;
 
@@ -249,8 +266,7 @@ export async function getRevenueBreakdown(range: TimeRange) {
   const tax = sum(completed, 'tax_amount');
   const shipping = sum(completed, 'shipping_amount');
   const discount = sum(completed, 'discount_amount');
-  let total = sum(completed, 'total');
-  if (!total) total = sum(completed, 'total_amount');
+  const total = sum(completed, 'total');
 
   // Fallback: compute from items if totals missing
   if (!total && completed.length) {
@@ -267,13 +283,13 @@ export async function getRevenueBreakdown(range: TimeRange) {
 
 export async function getInventoryKpis() {
   const [{ data: products, error: pErr }] = await Promise.all([
-    supabase.from('products').select('id, stock_quantity, status')
+    supabase.from('products').select('id, stock_quantity, is_active')
   ]);
   if (pErr) throw pErr;
   const all = products || [];
   const outOfStock = all.filter(p => (p.stock_quantity || 0) === 0).length;
   const lowStock = all.filter(p => (p.stock_quantity || 0) > 0 && (p.stock_quantity || 0) <= 5).length;
-  const active = all.filter(p => (p as any).status === 'active').length;
+  const active = all.filter(p => (p as any).is_active === true).length;
   return { totalProducts: all.length, active, outOfStock, lowStock };
 }
 
@@ -314,7 +330,7 @@ export async function getTopCustomers(range: TimeRange, limit = 5) {
   const since = getRangeStart(range);
   const { data: orders, error } = await supabase
     .from('orders')
-    .select('id, status, total, total_amount, customer_id, customer_email, created_at')
+    .select('id, status, total, customer_id, customer_email, created_at')
     .gte('created_at', since);
   if (error) throw error;
   const completed = (orders || []).filter(o => isCompletedStatus(o.status));
@@ -322,7 +338,7 @@ export async function getTopCustomers(range: TimeRange, limit = 5) {
   for (const o of completed) {
     const key = o.customer_id || o.customer_email || 'unknown';
     const rec = map.get(key) || { id: key, name: '', email: o.customer_email || '', total: 0, orders: 0 };
-    rec.total += Number(o.total ?? o.total_amount ?? 0);
+    rec.total += Number(o.total ?? 0);
     rec.orders += 1;
     map.set(key, rec);
   }
@@ -349,7 +365,7 @@ export async function getBusinessValue(range: TimeRange) {
   const [{ data: orders, error: oErr }] = await Promise.all([
     supabase
       .from('orders')
-      .select('id, status, total, total_amount, customer_id, created_at')
+      .select('id, status, total, customer_id, created_at')
       .gte('created_at', since)
   ]);
   if (oErr) throw oErr;
@@ -367,7 +383,7 @@ export async function getBusinessValue(range: TimeRange) {
   }
 
   // AOV and items per order
-  const revenue = completed.reduce((s, o) => s + Number(o.total ?? o.total_amount ?? 0), 0);
+  const revenue = completed.reduce((s, o) => s + Number(o.total ?? 0), 0);
   const ordersCount = completed.length;
   const itemsCount = items.reduce((s, it) => s + Number(it.quantity || 0), 0);
   const aov = ordersCount ? revenue / ordersCount : 0;
@@ -443,14 +459,14 @@ export async function getSalesMix(range: TimeRange) {
   // Pull orders in range with commonly available columns
   const { data: orders, error } = await supabase
     .from('orders')
-    .select('id, status, created_at, total, total_amount, channel, payment_method, customer_id, customer_email')
+    .select('id, status, created_at, total, channel, payment_method, customer_id, customer_email')
     .gte('created_at', since);
   if (error) throw error;
 
   const completed = (orders || []).filter(o => isCompletedStatus(o.status));
 
   // Helper to amount
-  const getAmount = (o: any) => Number(o.total ?? o.total_amount ?? 0);
+  const getAmount = (o: any) => Number(o.total ?? 0);
 
   // Channel split (fallback to 'online' when missing)
   const channelAgg = new Map<string, { revenue: number; orders: number }>();
@@ -714,7 +730,7 @@ export async function getUserAnalytics(range: TimeRange) {
   // Get customer order data for engagement analysis
   const { data: orders, error: ordersError } = await supabase
     .from('orders')
-    .select('customer_id, status, created_at, total, total_amount')
+    .select('customer_id, status, created_at, total')
     .gte('created_at', since);
   
   if (ordersError) throw ordersError;
@@ -745,7 +761,7 @@ export async function getUserAnalytics(range: TimeRange) {
     };
     
     existing.totalOrders += 1;
-    existing.totalSpent += Number(order.total ?? order.total_amount ?? 0);
+    existing.totalSpent += Number(order.total ?? 0);
     existing.lastOrderDate = existing.lastOrderDate > order.created_at ? existing.lastOrderDate : order.created_at;
     
     customerEngagement.set(customerId, existing);
@@ -800,7 +816,7 @@ export async function getOrderAnalytics(range: TimeRange) {
   // Get all orders in range
   const { data: orders, error: ordersError } = await supabase
     .from('orders')
-    .select('id, order_number, status, payment_status, created_at, updated_at, total, total_amount, customer_id, customer_email, subtotal, tax_amount, shipping_amount, discount_amount, channel, payment_method');
+    .select('id, order_number, status, payment_status, created_at, updated_at, total, customer_id, customer_email, subtotal, tax_amount, shipping_amount, discount_amount, channel, payment_method');
   
   if (ordersError) throw ordersError;
   
@@ -822,7 +838,7 @@ export async function getOrderAnalytics(range: TimeRange) {
   }
   
   // Order value analysis
-  const orderValues = completedOrders.map(o => Number(o.total ?? o.total_amount ?? 0));
+  const orderValues = completedOrders.map(o => Number(o.total ?? 0));
   const totalRevenue = orderValues.reduce((sum, val) => sum + val, 0);
   const avgOrderValue = orderValues.length > 0 ? totalRevenue / orderValues.length : 0;
   const minOrderValue = orderValues.length > 0 ? Math.min(...orderValues) : 0;
@@ -842,7 +858,7 @@ export async function getOrderAnalytics(range: TimeRange) {
     const date = order.created_at.slice(0, 10);
     const existing = dailyOrders.get(date) || { orders: 0, revenue: 0 };
     existing.orders += 1;
-    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    existing.revenue += Number(order.total ?? 0);
     dailyOrders.set(date, existing);
   }
   
@@ -868,7 +884,7 @@ export async function getOrderAnalytics(range: TimeRange) {
     const channel = (order as any).channel || 'online';
     const existing = channelDistribution.get(channel) || { orders: 0, revenue: 0 };
     existing.orders += 1;
-    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    existing.revenue += Number(order.total ?? 0);
     channelDistribution.set(channel, existing);
   }
   
@@ -878,7 +894,7 @@ export async function getOrderAnalytics(range: TimeRange) {
     const method = (order as any).payment_method || 'unknown';
     const existing = paymentMethodDistribution.get(method) || { orders: 0, revenue: 0 };
     existing.orders += 1;
-    existing.revenue += Number(order.total ?? order.total_amount ?? 0);
+    existing.revenue += Number(order.total ?? 0);
     paymentMethodDistribution.set(method, existing);
   }
   
@@ -965,7 +981,7 @@ export async function getCustomerLifetimeValue(range: TimeRange) {
   // Get all completed orders with customer info
   const { data: orders } = await supabase
     .from('orders')
-    .select('customer_id, customer_email, total, total_amount, status, created_at')
+    .select('customer_id, customer_email, total, status, created_at')
     .gte('created_at', since);
   
   const completedOrders = (orders || []).filter(o => isCompletedStatus(o.status));
@@ -996,7 +1012,7 @@ export async function getCustomerLifetimeValue(range: TimeRange) {
     };
     
     existing.totalOrders += 1;
-    existing.totalSpent += Number(order.total ?? order.total_amount ?? 0);
+    existing.totalSpent += Number(order.total ?? 0);
     existing.firstOrder = existing.firstOrder < order.created_at ? existing.firstOrder : order.created_at;
     existing.lastOrder = existing.lastOrder > order.created_at ? existing.lastOrder : order.created_at;
     
@@ -1225,7 +1241,7 @@ export async function getSeasonalTrends(range: TimeRange) {
   // Get all orders with detailed date information
   const { data: orders } = await supabase
     .from('orders')
-    .select('id, total, total_amount, status, created_at')
+    .select('id, total, status, created_at')
     .gte('created_at', since)
     .order('created_at', { ascending: true });
   
@@ -1240,7 +1256,7 @@ export async function getSeasonalTrends(range: TimeRange) {
   
   for (const order of completedOrders) {
     const date = new Date(order.created_at);
-    const amount = Number(order.total ?? order.total_amount ?? 0);
+    const amount = Number(order.total ?? 0);
     
     // Daily aggregation
     const dayKey = date.toISOString().slice(0, 10);

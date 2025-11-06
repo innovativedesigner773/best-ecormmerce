@@ -236,7 +236,8 @@ export default function AdminDashboard() {
         .select(`
           product_id,
           quantity,
-          price,
+          unit_price,
+          total_price,
           product:products(name)
         `);
 
@@ -254,7 +255,8 @@ export default function AdminDashboard() {
             revenue: 0 
           };
           existing.sales += item.quantity || 0;
-          existing.revenue += (item.quantity || 0) * (item.price || 0);
+          const itemRevenue = Number(item.total_price ?? ((item.unit_price || 0) * (item.quantity || 0)));
+          existing.revenue += itemRevenue;
           productSales.set(item.product_id, existing);
         }
       });
@@ -340,9 +342,15 @@ export default function AdminDashboard() {
       setProductAnalytics(productData as any);
       setUserAnalytics(userData as any);
       setOrderAnalytics(orderData as any);
-    } catch (error) {
+    } catch (error: any) {
       console.error('❌ Error refreshing data:', error);
-      setError('Failed to refresh dashboard data');
+      console.error('Error details:', {
+        message: error?.message,
+        stack: error?.stack,
+        range
+      });
+      // Don't set error state - let it fail silently to avoid UI disruption
+      // setError('Failed to refresh dashboard data');
     } finally {
       setLoading(false);
     }
