@@ -21,6 +21,7 @@ export default function Cart() {
     applied_promotions,
     loyalty_points_used,
     loyalty_discount,
+    free_shipping,
     updateQuantity,
     removeFromCart,
     clearCart,
@@ -562,7 +563,7 @@ export default function Cart() {
                 <div className="flex justify-between text-lg">
                   <span className="text-[#09215F]/80">Shipping</span>
                   <span className="font-semibold text-[#09215F]">
-                    {total >= 500 ? (
+                    {free_shipping || total >= 500 ? (
                       <span className="text-green-600">FREE</span>
                     ) : (
                       'R50.00'
@@ -570,14 +571,23 @@ export default function Cart() {
                   </span>
                 </div>
 
+                {free_shipping && (
+                  <div className="bg-green-50 border border-green-200 rounded-xl p-4">
+                    <p className="text-green-800 font-medium flex items-center">
+                      <Tag className="h-4 w-4 mr-2" />
+                      Free shipping applied via promotion!
+                    </p>
+                  </div>
+                )}
+
                 <div className="border-t border-gray-200 pt-4">
                   <div className="flex justify-between text-2xl font-bold text-[#09215F]">
                     <span>Total</span>
-                    <span>R{(total + (total >= 500 ? 0 : 50)).toFixed(2)}</span>
+                    <span>R{(total + (free_shipping || total >= 500 ? 0 : 50)).toFixed(2)}</span>
                   </div>
                 </div>
 
-                {total < 500 && (
+                {!free_shipping && total < 500 && (
                   <div className="bg-green-50 border border-green-200 rounded-xl p-4">
                     <p className="text-green-800 font-medium">
                       Add R{(500 - total).toFixed(2)} more for free shipping!

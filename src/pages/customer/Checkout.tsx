@@ -18,7 +18,7 @@ import { toast } from 'sonner';
 
 
 export default function Checkout() {
-  const { items, subtotal, discount_amount, total, loyalty_points_used, loyalty_discount, clearCart } = useCart();
+  const { items, subtotal, discount_amount, total, loyalty_points_used, loyalty_discount, free_shipping, clearCart } = useCart();
   const { user, userProfile } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -62,7 +62,7 @@ export default function Checkout() {
   const cartDiscount = isSharedCart && sharedCart ? sharedCart.cart_data.discount_amount : discount_amount;
   const cartTotal = isSharedCart && sharedCart ? sharedCart.cart_data.total : total;
   
-  const shippingCost = cartTotal >= 500 ? 0 : 50;
+  const shippingCost = (free_shipping || cartTotal >= 500) ? 0 : 50;
   const finalTotal = cartTotal + shippingCost;
 
   // Load shared cart data if this is a shared cart checkout
