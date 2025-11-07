@@ -21,6 +21,7 @@ import AppRoutes from './routes/AppRoutes';
 import BotpressIframeChat from './components/common/BotpressIframeChat';
 import { useSVGErrorHandler } from './utils/svg-error-handler';
 import { startAutomaticProcessing } from './services/notificationQueueService';
+import { stockNotificationCache } from './services/stockNotificationCacheService';
 import { AnalyticsErrorBoundary, setupAnalyticsErrorSuppression } from './components/common/AnalyticsErrorBoundary';
 
 // Config
@@ -38,6 +39,14 @@ function AppContent() {
   
   // Initialize SVG error handling for the entire app
   useSVGErrorHandler();
+
+  // Initialize stock notification cache on app startup
+  React.useEffect(() => {
+    console.log('🔄 Initializing stock notification cache...');
+    stockNotificationCache.initialize().catch(error => {
+      console.error('Error initializing stock notification cache:', error);
+    });
+  }, []);
 
   // Start automatic notification processing only when admin user is authenticated
   React.useEffect(() => {

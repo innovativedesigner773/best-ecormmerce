@@ -539,6 +539,10 @@ export function ProductManagement() {
         return;
       }
       
+      // Store old stock quantity for notification check
+      const oldStock = productToEdit.stock_quantity || 0;
+      const newStock = editFormData.stock_quantity;
+      
       const { error } = await supabase
         .from('products')
         .update({
@@ -554,6 +558,27 @@ export function ProductManagement() {
 
       if (error) {
         throw new Error(error.message);
+      }
+
+      // Clear product details cache since product was updated
+      const { stockNotificationCache } = await import('../services/stockNotificationCacheService');
+      stockNotificationCache.clearProductDetailsCache(productToEdit.id);
+
+      // Check if stock went from 0 to > 0 and send notifications using cache
+      if (oldStock <= 0 && newStock > 0) {
+        console.log('📧 Stock became available, sending notifications from cache...');
+        const notificationResult = await stockNotificationCache.sendNotificationsForProduct(
+          productToEdit.id,
+          oldStock,
+          newStock
+        );
+        
+        if (notificationResult.sent > 0) {
+          console.log(`✅ Sent ${notificationResult.sent} stock notification(s)`);
+        }
+        if (notificationResult.failed > 0) {
+          console.warn(`⚠️ Failed to send ${notificationResult.failed} notification(s)`);
+        }
       }
 
       console.log('✅ Product updated successfully');

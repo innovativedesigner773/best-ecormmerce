@@ -45,6 +45,7 @@ export default function AdminProductEditor() {
   const [success, setSuccess] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [selectedImage, setSelectedImage] = useState(0);
+  const [originalStock, setOriginalStock] = useState<number>(0);
 
   // Form state mirrors manual add + a few extras (tags/specifications/dimensions)
   const [form, setForm] = useState({
@@ -87,6 +88,8 @@ export default function AdminProductEditor() {
 
         setCategories(cats || []);
         if (product) {
+          const stockQty = product.stock_quantity || 0;
+          setOriginalStock(stockQty);
           setForm({
             name: product.name || '',
             description: product.description || '',
@@ -100,7 +103,7 @@ export default function AdminProductEditor() {
             images: Array.isArray(product.images) ? product.images : [],
             features: Array.isArray(product.features) && product.features.length ? product.features : [''],
             weight_kg: product.weight_kg?.toString?.() || '',
-            stock_quantity: product.stock_quantity?.toString?.() || '',
+            stock_quantity: stockQty.toString(),
             is_active: !!product.is_active,
             is_featured: !!product.is_featured,
             stock_tracking: product.stock_tracking !== false,
@@ -202,6 +205,9 @@ export default function AdminProductEditor() {
       if (cost > price) throw new Error('Cost price cannot exceed selling price');
       if (compareAt !== null && compareAt <= price) throw new Error('Compare at price must be greater than the regular price');
 
+      const oldStock = originalStock;
+      const newStock = form.stock_quantity ? parseInt(form.stock_quantity) : 0;
+
       const payload: any = {
         name: form.name.trim(),
         description: form.description,
@@ -216,7 +222,7 @@ export default function AdminProductEditor() {
         images: form.images.filter(Boolean),
         features: form.features.map(f => f.trim()).filter(Boolean),
         weight_kg: form.weight_kg ? parseFloat(form.weight_kg) : null,
-        stock_quantity: form.stock_quantity ? parseInt(form.stock_quantity) : 0,
+        stock_quantity: newStock,
         is_active: form.is_active,
         is_featured: form.is_featured,
         stock_tracking: form.stock_tracking,
@@ -232,6 +238,31 @@ export default function AdminProductEditor() {
 
       const { error: upErr } = await supabase.from('products').update(payload).eq('id', id);
       if (upErr) throw upErr;
+
+      // Clear product details cache since product was updated
+      if (id) {
+        const { stockNotificationCache } = await import('../../services/stockNotificationCacheService');
+        stockNotificationCache.clearProductDetailsCache(id);
+
+        // Check if stock went from 0 to > 0 and send notifications using cache
+        if (oldStock <= 0 && newStock > 0) {
+          console.log('📧 Stock became available, sending notifications from cache...');
+          const notificationResult = await stockNotificationCache.sendNotificationsForProduct(
+            id,
+            oldStock,
+            newStock
+          );
+          
+          if (notificationResult.sent > 0) {
+            console.log(`✅ Sent ${notificationResult.sent} stock notification(s)`);
+          }
+          if (notificationResult.failed > 0) {
+            console.warn(`⚠️ Failed to send ${notificationResult.failed} notification(s)`);
+          }
+        }
+      }
+
+      setOriginalStock(newStock);
       setSuccess('Product updated successfully');
     } catch (e: any) {
       setError(e?.message || 'Failed to save changes');

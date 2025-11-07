@@ -110,6 +110,19 @@ export const StockNotificationsProvider: React.FC<StockNotificationsProviderProp
         return false;
       }
 
+      // Update cache with new notification
+      if (data) {
+        const { stockNotificationCache } = await import('../services/stockNotificationCacheService');
+        stockNotificationCache.addNotification({
+          id: data.id,
+          user_id: data.user_id,
+          product_id: data.product_id,
+          email: data.email,
+          is_notified: data.is_notified,
+          created_at: data.created_at
+        });
+      }
+
       // Refresh notifications list
       await fetchNotifications();
       return true;
@@ -127,6 +140,14 @@ export const StockNotificationsProvider: React.FC<StockNotificationsProviderProp
     }
 
     try {
+      // Get notification to find product_id before deleting
+      const { data: notification } = await supabase
+        .from('stock_notifications')
+        .select('product_id')
+        .eq('id', notificationId)
+        .eq('user_id', user.id)
+        .single();
+
       const { error } = await supabase
         .from('stock_notifications')
         .delete()
@@ -136,6 +157,12 @@ export const StockNotificationsProvider: React.FC<StockNotificationsProviderProp
       if (error) {
         console.error('Error removing stock notification:', error);
         return false;
+      }
+
+      // Update cache - remove notification
+      if (notification) {
+        const { stockNotificationCache } = await import('../services/stockNotificationCacheService');
+        stockNotificationCache.removeNotification(notificationId, notification.product_id);
       }
 
       // Refresh notifications list
