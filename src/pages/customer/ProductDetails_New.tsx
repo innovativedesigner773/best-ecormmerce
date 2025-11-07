@@ -267,11 +267,11 @@ export default function ProductDetails() {
           {/* Product Images */}
           <div className="space-y-4">
             {/* Main Image */}
-            <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div className="aspect-square bg-white rounded-2xl overflow-hidden shadow-lg flex items-center justify-center">
               <ImageWithFallback
                 src={product.images[selectedImage] || product.images[0]}
                 alt={product.name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-contain"
               />
               {discount > 0 && (
                 <div className="absolute top-4 left-4 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
@@ -296,7 +296,7 @@ export default function ProductDetails() {
                     <ImageWithFallback
                       src={image}
                       alt={`${product.name} ${index + 1}`}
-                      className="w-full h-full object-cover"
+                      className="w-full h-full object-contain"
                     />
                   </button>
                 ))}

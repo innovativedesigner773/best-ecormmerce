@@ -318,9 +318,9 @@ export default function AdminProductEditor() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Images */}
           <div className="space-y-4">
-            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg">
+            <div className="relative aspect-square bg-white rounded-2xl overflow-hidden shadow-lg flex items-center justify-center">
               {form.images.length > 0 ? (
-                <ImageWithFallback src={form.images[selectedImage]} alt={form.name} className="w-full h-full object-cover" />
+                <ImageWithFallback src={form.images[selectedImage]} alt={form.name} className="w-full h-full object-contain" />
               ) : (
                 <div className="w-full h-full flex items-center justify-center text-gray-400">No image</div>
               )}
@@ -339,7 +339,7 @@ export default function AdminProductEditor() {
                       <Trash2 className="h-3 w-3 text-red-600" />
                     </button>
                     <button onClick={() => setSelectedImage(idx)} className="w-full h-full">
-                      <ImageWithFallback src={img} alt={`${form.name} ${idx + 1}`} className="w-full h-full object-cover" />
+                      <ImageWithFallback src={img} alt={`${form.name} ${idx + 1}`} className="w-full h-full object-contain" />
                     </button>
                   </div>
                 ))}

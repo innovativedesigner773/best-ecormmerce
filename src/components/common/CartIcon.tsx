@@ -144,11 +144,11 @@ export default function CartIcon({ className = '' }: CartIconProps) {
                       className="flex items-center space-x-3 p-3 hover:bg-gray-50 rounded-xl transition-colors"
                     >
                       {/* Item Image */}
-                      <div className="flex-shrink-0">
+                      <div className="flex-shrink-0 bg-gray-50 rounded-lg flex items-center justify-center overflow-hidden">
                         <ImageWithFallback
                           src={item.image_url}
                           alt={item.name}
-                          className="w-12 h-12 object-cover rounded-lg"
+                          className="w-12 h-12 object-contain rounded-lg"
                         />
                       </div>
 

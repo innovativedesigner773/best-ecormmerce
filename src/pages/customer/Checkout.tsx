@@ -735,11 +735,13 @@ export default function Checkout() {
               <div className="space-y-4 mb-6 max-h-80 overflow-y-auto">
                 {cartItems.map((item) => (
                   <div key={item.id} className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl border border-gray-200">
-                    <ImageWithFallback
-                      src={item.image_url || 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=60&h=60&fit=crop'}
-                      alt={item.name}
-                      className="w-16 h-16 object-cover rounded-xl shadow-md"
-                    />
+                    <div className="flex-shrink-0 bg-white rounded-xl flex items-center justify-center overflow-hidden">
+                      <ImageWithFallback
+                        src={item.image_url || 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=60&h=60&fit=crop'}
+                        alt={item.name}
+                        className="w-16 h-16 object-contain rounded-xl shadow-md"
+                      />
+                    </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-semibold text-[#09215F] truncate">{item.name}</p>
                       <p className="text-sm text-[#09215F]/60">Qty: {item.quantity}</p>

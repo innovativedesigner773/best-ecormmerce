@@ -187,11 +187,11 @@ export default function ProductCard({ product, featured = false, className = '',
     >
   <Link to={linkTo || `/products/${product.id}`} className="flex flex-col h-full">
         {/* Product Image - Fixed height */}
-        <div className="relative overflow-hidden bg-gray-50 flex-shrink-0">
+        <div className="relative overflow-hidden bg-gray-50 flex-shrink-0 flex items-center justify-center">
           <ImageWithFallback
             src={imageUrl}
             alt={product.name}
-            className="w-full h-48 sm:h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+            className="w-full h-48 sm:h-56 object-contain group-hover:scale-105 transition-transform duration-500"
           />
           
           {/* Badges and overlays */}

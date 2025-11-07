@@ -311,11 +311,11 @@ export default function Cart() {
                         index !== items.length - 1 ? 'border-b border-gray-100' : ''
                       }`}>
                         <div className="flex-shrink-0">
-                          <div className="relative">
+                          <div className="relative bg-gray-50 rounded-xl flex items-center justify-center overflow-hidden">
                             <ImageWithFallback
                               src={item.image_url || 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=100&h=100&fit=crop'}
                               alt={item.name}
-                              className="w-20 h-20 object-cover rounded-xl shadow-md"
+                              className="w-20 h-20 object-contain rounded-xl shadow-md"
                             />
                             {item.promotion_id && (
                               <div className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full">

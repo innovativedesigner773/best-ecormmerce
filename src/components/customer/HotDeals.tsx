@@ -305,11 +305,11 @@ export function HotDeals({ maxPromotions = 6, showViewAll = true }: HotDealsProp
                     transition={{ delay: index * 0.1 }}
                     className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow group"
                   >
-                    <div className="relative">
+                    <div className="relative bg-gray-50 flex items-center justify-center overflow-hidden">
                       <ImageWithFallback
                         src={product.images?.[0] || ''}
                         alt={product.name}
-                        className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300"
                       />
                       {discountPercentage > 0 && (
                         <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-bold">

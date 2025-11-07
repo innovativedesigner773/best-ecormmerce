@@ -628,11 +628,11 @@ export default function Products() {
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* Product Image */}
                     <div className="flex-shrink-0 md:w-48">
-                      <div className="relative">
+                      <div className="relative bg-gray-50 rounded-lg flex items-center justify-center">
                         <ImageWithFallback
                           src={product.image_url}
                           alt={product.name}
-                          className="w-full h-48 object-cover rounded-lg"
+                          className="w-full h-48 object-contain rounded-lg"
                         />
                         {product.promotion_badge && (
                           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-xs font-medium">

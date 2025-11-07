@@ -178,12 +178,12 @@ export default function Favourites() {
                         transition={{ duration: 0.3, delay: index * 0.1 }}
                         className="bg-white border border-gray-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
                       >
-                        <div className="relative mb-4">
-                          <Link to={`/products/${item.product_id}`}>
+                        <div className="relative mb-4 bg-gray-50 rounded-xl overflow-hidden flex items-center justify-center">
+                          <Link to={`/products/${item.product_id}`} className="w-full h-48 flex items-center justify-center">
                             <ImageWithFallback
                               src={item.image_url || 'https://images.unsplash.com/photo-1584464491033-06628f3a6b7b?w=300&h=300&fit=crop'}
                               alt={item.name}
-                              className="w-full h-48 object-cover rounded-xl"
+                              className="w-full h-full object-contain rounded-xl"
                             />
                           </Link>
                           
