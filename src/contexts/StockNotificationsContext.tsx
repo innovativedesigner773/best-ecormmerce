@@ -8,6 +8,8 @@ interface StockNotification {
   product_name: string;
   product_image: string;
   product_price: number;
+  product_stock_quantity?: number;
+  product_updated_at?: string;
   email: string;
   created_at: string;
   is_notified: boolean;

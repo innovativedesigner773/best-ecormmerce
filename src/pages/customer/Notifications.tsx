@@ -23,6 +23,22 @@ export default function Notifications() {
     }
   };
 
+  // Helper function to get the image URL (handles JSON strings)
+  const getImageUrl = (image: string | undefined): string => {
+    if (!image) return '';
+    try {
+      // Try to parse as JSON if it's a JSON string
+      const parsed = JSON.parse(image);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        return parsed[0];
+      }
+      return parsed || '';
+    } catch {
+      // If not JSON, return as is
+      return image;
+    }
+  };
+
   const pendingNotifications = notifications.filter(n => !n.is_notified);
   const sentNotifications = notifications.filter(n => n.is_notified);
 
@@ -127,7 +143,7 @@ export default function Notifications() {
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
                       <ImageWithFallback
-                        src={notification.product_image}
+                        src={getImageUrl(notification.product_image)}
                         alt={notification.product_name}
                         className="w-16 h-16 object-cover rounded-lg"
                       />
@@ -136,9 +152,25 @@ export default function Notifications() {
                       <h3 className="text-lg font-semibold text-gray-900 mb-1">
                         {notification.product_name}
                       </h3>
-                      <p className="text-sm text-gray-600 mb-2">
-                        We'll notify you when this product is back in stock
-                      </p>
+                      {notification.product_stock_quantity !== undefined && notification.product_stock_quantity > 0 ? (
+                        <div className="mb-2">
+                          <p className="text-sm font-medium text-green-600 mb-1">
+                            ✅ Product updated and back in stock!
+                          </p>
+                          <p className="text-xs text-gray-600">
+                            Stock available: {notification.product_stock_quantity} units
+                            {notification.product_updated_at && (
+                              <span className="ml-2">
+                                • Updated {new Date(notification.product_updated_at).toLocaleDateString()}
+                              </span>
+                            )}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="text-sm text-gray-600 mb-2">
+                          We'll notify you when this product is back in stock
+                        </p>
+                      )}
                       <div className="flex items-center space-x-4 text-sm text-gray-500">
                         <div className="flex items-center">
                           <Mail className="h-4 w-4 mr-1" />
@@ -196,7 +228,7 @@ export default function Notifications() {
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0">
                       <ImageWithFallback
-                        src={notification.product_image}
+                        src={getImageUrl(notification.product_image)}
                         alt={notification.product_name}
                         className="w-16 h-16 object-cover rounded-lg"
                       />

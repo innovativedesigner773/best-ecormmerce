@@ -25,6 +25,12 @@ CREATE INDEX IF NOT EXISTS idx_stock_notifications_created_at ON public.stock_no
 -- Enable RLS (Row Level Security)
 ALTER TABLE public.stock_notifications ENABLE ROW LEVEL SECURITY;
 
+-- Drop existing policies if they exist (to allow re-running this script)
+DROP POLICY IF EXISTS "Users can view their own stock notifications" ON public.stock_notifications;
+DROP POLICY IF EXISTS "Users can create their own stock notifications" ON public.stock_notifications;
+DROP POLICY IF EXISTS "Users can update their own stock notifications" ON public.stock_notifications;
+DROP POLICY IF EXISTS "Users can delete their own stock notifications" ON public.stock_notifications;
+
 -- Create RLS policies
 -- Users can only see their own notifications
 CREATE POLICY "Users can view their own stock notifications" ON public.stock_notifications
@@ -59,14 +65,19 @@ AS $$
     );
 $$;
 
+-- Drop the function if it exists (to allow changing return type)
+DROP FUNCTION IF EXISTS public.get_user_stock_notifications(UUID);
+
 -- Create a function to get user's stock notifications
-CREATE OR REPLACE FUNCTION public.get_user_stock_notifications(user_id_param UUID)
+CREATE FUNCTION public.get_user_stock_notifications(user_id_param UUID)
 RETURNS TABLE (
     id UUID,
     product_id UUID,
     product_name TEXT,
     product_image TEXT,
     product_price DECIMAL,
+    product_stock_quantity INTEGER,
+    product_updated_at TIMESTAMP WITH TIME ZONE,
     email VARCHAR,
     created_at TIMESTAMP WITH TIME ZONE,
     is_notified BOOLEAN
@@ -78,8 +89,14 @@ AS $$
         sn.id,
         sn.product_id,
         p.name as product_name,
-        COALESCE(p.images::text, '') as product_image,
+        CASE 
+            WHEN jsonb_typeof(p.images) = 'array' AND jsonb_array_length(p.images) > 0 THEN p.images->>0
+            WHEN p.images IS NULL THEN ''
+            ELSE COALESCE(p.images::text, '')
+        END as product_image,
         p.price as product_price,
+        COALESCE(p.stock_quantity, 0) as product_stock_quantity,
+        p.updated_at as product_updated_at,
         sn.email,
         sn.created_at,
         sn.is_notified

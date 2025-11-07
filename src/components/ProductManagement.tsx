@@ -564,6 +564,16 @@ export function ProductManagement() {
       const { stockNotificationCache } = await import('../services/stockNotificationCacheService');
       stockNotificationCache.clearProductDetailsCache(productToEdit.id);
 
+      // Reset notifications for customers who have stock notifications for this product
+      // This makes the notification show up again in their notification icon
+      const { resetNotificationsForProductUpdate } = await import('../services/stockNotificationService');
+      const resetResult = await resetNotificationsForProductUpdate(productToEdit.id);
+      if (resetResult.success && resetResult.resetCount > 0) {
+        console.log(`📢 Reset ${resetResult.resetCount} notification(s) for product update`);
+        // Refresh the cache after resetting notifications
+        await stockNotificationCache.refreshNotificationsAfterProductUpdate(productToEdit.id);
+      }
+
       // Check if stock went from 0 to > 0 and send notifications using cache
       if (oldStock <= 0 && newStock > 0) {
         console.log('📧 Stock became available, sending notifications from cache...');
@@ -652,6 +662,10 @@ export function ProductManagement() {
       setProducts(prev => prev.map(p => p.id === product.id ? { ...p, is_active: !next } : p));
       setError('Failed to update active status');
     } else {
+      // Reset notifications for customers who have stock notifications for this product
+      const { resetNotificationsForProductUpdate } = await import('../services/stockNotificationService');
+      await resetNotificationsForProductUpdate(product.id);
+      
       setSuccessMessage(`Product "${product.name}" ${next ? 'activated' : 'deactivated'}.`);
       setTimeout(() => setSuccessMessage(null), 2000);
     }
@@ -665,6 +679,10 @@ export function ProductManagement() {
       setProducts(prev => prev.map(p => p.id === product.id ? { ...p, is_featured: !next } : p));
       setError('Failed to update featured status');
     } else {
+      // Reset notifications for customers who have stock notifications for this product
+      const { resetNotificationsForProductUpdate } = await import('../services/stockNotificationService');
+      await resetNotificationsForProductUpdate(product.id);
+      
       setSuccessMessage(`Product "${product.name}" ${next ? 'marked as featured' : 'unfeatured'}.`);
       setTimeout(() => setSuccessMessage(null), 2000);
     }

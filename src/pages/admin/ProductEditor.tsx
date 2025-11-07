@@ -244,6 +244,16 @@ export default function AdminProductEditor() {
         const { stockNotificationCache } = await import('../../services/stockNotificationCacheService');
         stockNotificationCache.clearProductDetailsCache(id);
 
+        // Reset notifications for customers who have stock notifications for this product
+        // This makes the notification show up again in their notification icon
+        const { resetNotificationsForProductUpdate } = await import('../../services/stockNotificationService');
+        const resetResult = await resetNotificationsForProductUpdate(id);
+        if (resetResult.success && resetResult.resetCount > 0) {
+          console.log(`📢 Reset ${resetResult.resetCount} notification(s) for product update`);
+          // Refresh the cache after resetting notifications
+          await stockNotificationCache.refreshNotificationsAfterProductUpdate(id);
+        }
+
         // Check if stock went from 0 to > 0 and send notifications using cache
         if (oldStock <= 0 && newStock > 0) {
           console.log('📧 Stock became available, sending notifications from cache...');

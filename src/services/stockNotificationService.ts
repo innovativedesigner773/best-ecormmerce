@@ -264,6 +264,71 @@ export const sendNotificationsForRestockedProducts = async (): Promise<{
 };
 
 /**
+ * Reset stock notifications for a product when it's updated
+ * This makes notifications show up again in the customer's notification icon
+ */
+export const resetNotificationsForProductUpdate = async (productId: string): Promise<{
+  success: boolean;
+  resetCount: number;
+}> => {
+  try {
+    // Find all notifications for this product that were already notified
+    const { data: notifiedNotifications, error: fetchError } = await supabase
+      .from('stock_notifications')
+      .select('id')
+      .eq('product_id', productId)
+      .eq('is_notified', true);
+
+    if (fetchError) {
+      console.error('Error fetching notified notifications:', fetchError);
+      return {
+        success: false,
+        resetCount: 0
+      };
+    }
+
+    if (!notifiedNotifications || notifiedNotifications.length === 0) {
+      return {
+        success: true,
+        resetCount: 0
+      };
+    }
+
+    // Reset is_notified to false and clear notified_at for all notified notifications
+    // We need to update based on the IDs we found, not by querying again
+    const notificationIds = notifiedNotifications.map(n => n.id);
+    const { error: updateError } = await supabase
+      .from('stock_notifications')
+      .update({
+        is_notified: false,
+        notified_at: null
+      })
+      .in('id', notificationIds);
+
+    if (updateError) {
+      console.error('Error resetting notifications:', updateError);
+      return {
+        success: false,
+        resetCount: 0
+      };
+    }
+
+    console.log(`✅ Reset ${notifiedNotifications.length} notification(s) for product ${productId} after product update`);
+    
+    return {
+      success: true,
+      resetCount: notifiedNotifications.length
+    };
+  } catch (error) {
+    console.error('Error resetting notifications for product update:', error);
+    return {
+      success: false,
+      resetCount: 0
+    };
+  }
+};
+
+/**
  * Test email functionality
  */
 export const testStockNotificationEmail = async (testEmail: string): Promise<boolean> => {

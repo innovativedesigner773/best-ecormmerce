@@ -211,6 +211,45 @@ class StockNotificationCacheService {
   }
 
   /**
+   * Refresh notifications for a product after it's been updated
+   * This will reload notifications that were previously marked as notified
+   */
+  async refreshNotificationsAfterProductUpdate(productId: string): Promise<void> {
+    try {
+      // Reload all notifications for this product (including those that were notified)
+      const { data, error } = await supabase
+        .from('stock_notifications')
+        .select('*')
+        .eq('product_id', productId)
+        .eq('is_notified', false); // Only get those that are not notified (after reset)
+
+      if (error) {
+        console.error('Error refreshing notifications after product update:', error);
+        return;
+      }
+
+      // Update cache with refreshed notifications
+      if (data && data.length > 0) {
+        this.cache.set(productId, data);
+      } else {
+        // If no pending notifications, check if we should remove from cache
+        // But keep it if there are any notifications at all (even if notified)
+        const { data: allNotifications } = await supabase
+          .from('stock_notifications')
+          .select('id')
+          .eq('product_id', productId)
+          .limit(1);
+
+        if (!allNotifications || allNotifications.length === 0) {
+          this.cache.delete(productId);
+        }
+      }
+    } catch (error) {
+      console.error('Error refreshing notifications after product update:', error);
+    }
+  }
+
+  /**
    * Send notifications for a product when stock becomes available
    * This uses the pre-loaded cache for instant access
    */
